@@ -1,0 +1,17 @@
+<suite parallel="tests" thread-count="2" name="cross-browser">
+<test thread-count="2" parallel="methods" name="ChromeTest">
+<parameter name="browser" value="Chrome"/>
+<classes>
+<class name="runner.TestRunner"/>
+</classes>
+</test>
+<!--  Test  -->
+<test name="EdgeTest">
+<parameter name="browser" value="Edge"/>
+<classes>
+<class name="runner.TestRunner"/>
+</classes>
+</test>
+<!--  Test  -->
+</suite>
+<!--  Suite  -->

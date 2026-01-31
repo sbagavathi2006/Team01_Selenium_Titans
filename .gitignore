@@ -1,0 +1,17 @@
+/target/
+/.classpath
+/bin
+.settings/
+logs/
+test-output/
+# Windows system files
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.log
+
+# IDE / workspace
+/.metadata/
+/*.iml
+/.vscode/
+

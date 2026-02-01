@@ -1,7 +1,6 @@
 package driverFactorySetUp;
 
 import java.time.Duration;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -9,15 +8,11 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-
 import utilities.ConfigReader;
 
 public class DriverFactory {
-	
-	
-	    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-	    private static ThreadLocal<String> browserName = new ThreadLocal<>();
-
+	private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+	private static ThreadLocal<String> browserName = new ThreadLocal<>();
 	    public static void inItBrowser() {
 	       String browserName = getBrowser();
 	       boolean isHeadless = isHeadless();
@@ -96,6 +91,12 @@ public class DriverFactory {
 	    public static void setBrowserName(String browserName) {
 	       DriverFactory.browserName.set(browserName);
 	    }
-	}
+         }
+
+
+
+
+
+
 
 

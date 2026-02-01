@@ -14,5 +14,8 @@ $RECYCLE.BIN/
 /.metadata/
 /*.iml
 /.vscode/
-
 .idea/
+
+.project
+# Mac
+.DS_Store

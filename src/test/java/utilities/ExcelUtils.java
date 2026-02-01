@@ -18,7 +18,7 @@ public class ExcelUtils {
 	private String filePath;
 
     public ExcelUtils(String filePath) {
-        this.filePath = filePath;
+        this.filePath = ConfigReader.getProperty("test_data_path");
     }
     
 	public List<Map<String, String>> getDataAll(String sheetName){

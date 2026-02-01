@@ -11,16 +11,35 @@ import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.java.Scenario;
 import utilities.ConfigReader;
+import utilities.GoogleDriveDownloader;
 
 
 public class Hooks {
 
 private static Logger logger = LogManager.getLogger();
+private static boolean isExcelDownloaded = false;
+
 
 @BeforeAll
 public static void loadConfigProp() {
     if (ConfigReader.getProp() == null) {
        ConfigReader.loadProperties();
+    }
+}
+
+@BeforeAll
+public static void downloadTestData() {
+    if (!isExcelDownloaded) {
+        String fileId = "1EoabtMzSHkckM33lWEhj-7crq78AJsjl"; 
+        String localPath = ConfigReader.getProperty("test_data_path");
+        try {
+            GoogleDriveDownloader.downloadExcelFromDrive(fileId, localPath);
+            isExcelDownloaded = true;
+            logger.info("Test data Excel downloaded successfully: " + localPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to download test data Excel. Tests cannot run.");
+        }
     }
 }
 

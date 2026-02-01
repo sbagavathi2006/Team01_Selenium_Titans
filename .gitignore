@@ -17,7 +17,5 @@ $RECYCLE.BIN/
 .idea/
 
 .project
-.settings/
-
 # Mac
 .DS_Store

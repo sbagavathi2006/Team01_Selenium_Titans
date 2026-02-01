@@ -1,0 +1,116 @@
+Feature: Weight Tracking UI Verification
+
+  Background:
+Given User is on Her balance Home page after successful login
+
+  Scenario: Verify if the Header text is displayed
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then Header text "Weight Tracking" should be displayed
+
+  Scenario: Verify subtitle Free Plan-7 Days Tracking is displayed
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then Subtitle text "free Plan - 7 Days Tracking" should be displayed
+
+  Scenario: Verify if Back to Dashboard button is visible
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then "Back to Dashboard" button should be visible
+
+  Scenario Outline:  Verify if 3 Cards for Weight info are displayed
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then The mentioned "<Cards>" for Weight info should be displayed
+    Examples:
+      | Cards |
+    |   Starting Weight      |
+    |   Current Weight      |
+    |   Goal Weight         |
+
+  Scenario: Verify Labels and weight values are aligned
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then Labels and weight values should be aligned correctly
+
+  Scenario:  Verify if Starting weight value is displayed
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then Starting Weight value should be mapped from the onboarding process
+
+  Scenario:  Verify if Current weight and starting weight value is same for new user
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then Current Weight and starting weight value should be same value for new user
+
+  Scenario:  Verify if Current weight value is displayed based on recent weight log for existing user
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then according to the recent weight log, Weight value should be mapped
+
+  Scenario:  Verify if Goal weight value is displayed
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then Goal weight should be displayed
+
+  Scenario: Verify if Progress overview section is visible
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then Header should be displayed as  "Progress overview"
+
+  Scenario: Verify if Subtext in progress bar section is displayed
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then Subtext "Weight Loss Progress" text should be displayed
+
+  Scenario: Verify if Completion percentage is shown
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then Completion percentage should be displayed
+
+  Scenario: Verify if Weight lost is displayed
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then  Weight lost value should be displayed
+
+  Scenario: Verify if Remaining weight is displayed
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then Remaining weight value should be displayed
+
+  Scenario: Verify if Graph section header is displayed
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then Graph section header "Weight Progression over Time" should be displayed
+
+  Scenario Outline: Verify if X-axis labels are displayed
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then Graph should be visible with x axis "<values>" showing days
+    Examples:
+      | values |
+        | Day 1  |
+#        | Day 2  |
+#        | Day 3  |
+#        | Day 4  |
+#        | Day 5  |
+#        | Day 6  |
+#        | Day 7  |
+
+
+  Scenario: Verify if Y-axis labels are displayed
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then Y-axis should display weight values in "Weight kg"
+
+  Scenario: Verify if Log section header is visible
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then "Log Today's Weight" should be visible
+
+  Scenario Outline: Verify if Fields in log section is displayed
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then mentioned "<fields>" should be displayed
+    Examples:
+      | fields               |
+      | Weight(kg)           |
+      | BMI(Auto-calculated) |
+      | Note(Optional)       |
+
+  Scenario: Verify if Tracking details are displayed
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then Section should indicate the current tracking day
+
+  Scenario: Verify if Log Weight button appears in default state
+    When User navigates to the Activity Insights tab - Weight Tracking page
+    Then "Log Weight" button should be disabled
+
+  Scenario:Verify if BMI is auto-calculated after entering weight
+    When User enters valid value in weight as "70" in Log Today's weight section
+    Then "BMI" field should auto-calculate
+
+
+
+

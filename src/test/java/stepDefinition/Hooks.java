@@ -12,7 +12,6 @@ import io.cucumber.java.BeforeAll;
 import io.cucumber.java.Scenario;
 import utilities.ConfigReader;
 import utilities.GoogleDriveDownloader;
-import org.testng.annotations.AfterClass;
 
 public class Hooks {
 
@@ -21,6 +20,12 @@ private static boolean isExcelDownloaded = false;
 
 @BeforeAll
 public static void downloadTestData() {
+	
+	 if (ConfigReader.getProp() == null) {
+         ConfigReader.loadProperties();
+         logger.info("Config properties loaded successfully");
+     }
+	 
     if (!isExcelDownloaded) {
         String fileId = "1EoabtMzSHkckM33lWEhj-7crq78AJsjl"; 
         String localPath = ConfigReader.getProperty("test_data_path");
@@ -58,19 +63,6 @@ public void tearDown() {
 	logger.info("Closing WebDriver...");
     DriverFactory.quitDriver(); 
 }
-
-/*    logger.info("Executing scenario: " + scenario.getName()); 
-    ConfigReader.loadProperties();
-    //  String browser = DriverFactory.getBrowserName();
-    String browser = System.getProperty("browser", ConfigReader.getProperty("browser"));
-    System.out.println("Set browser type from before setup:" + browser);
-    if (browser == null) {
-       browser = ConfigReader.getProperty("browser");
-    }
-  //  DriverFactory.inItBrowser();
-    DriverFactory.setBrowserName(browser);
-    DriverFactory.setupBrowser();
-}   */
 
 
 

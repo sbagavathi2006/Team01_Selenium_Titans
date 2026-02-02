@@ -37,7 +37,7 @@ public class EditYourProfileStepDef {
 	    
 	}
 
-	@Then("Back Button should be visible")
+	@Then("Back button should be visible")
 	public void back_button_should_be_visible() {
 	  
 	}
@@ -174,8 +174,8 @@ public class EditYourProfileStepDef {
 	   
 	}
 
-	@Then("{string} should be visible")
-	public void should_be_visible(String string) {
+	@Then("{string} should be visible in edit profile")
+	public void should_be_visible_in_edit_profile(String string) {
 	   
 	}
 

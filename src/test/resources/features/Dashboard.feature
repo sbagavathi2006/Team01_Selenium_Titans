@@ -1,17 +1,14 @@
 @dashboard
 Feature: Dashboard page
 
-  Background:
-    Given: User is on login page
-
   #Free Plan Dashboard UI
   
-  @wip
+  @checking
   Scenario: Verify the Title of the Dashboard
     When User clicks login in button after entering  a valid credential
     Then User should see "Free Plan Dashboard" title
 
-@try
+@checking
     Scenario: Verify the Profile Name visibility
       When User clicks login in button after entering  a valid credential
       Then User should see user name on the top right side

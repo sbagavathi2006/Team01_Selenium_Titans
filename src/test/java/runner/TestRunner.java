@@ -1,7 +1,5 @@
 package runner;
 
-
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
@@ -16,7 +14,7 @@ import io.cucumber.testng.CucumberOptions;
 				  "json:target/cucumber-reports/Team01_Selenium_Titans.json", "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"},
 
 		monochrome = false,
-	//	tags = "@try",
+	//	tags = "@checking",
 		features = {"src/test/resources/features/"},
 		glue = {"stepDefinition"})
 		

@@ -27,7 +27,7 @@ Feature: Edit Your Profile page
   
   Scenario: Verify Back Button Presence
     When User clicks on profile name and click on edit profile
-  Then Back Button should be visible
+  Then Back button should be visible
   
   #Edit Your Profile-Basic Information -UI verifications
   
@@ -137,7 +137,7 @@ Then User should see " Body Metric " section
 Scenario: Verify Header text 
  When User navigates to Edit Profile
 And User clicks Preferences & Health Tab
-Then " Preferences & Health " should be visible 
+Then " Preferences & Health " should be visible in edit profile
 
 Scenario: Verify Sub text for header 
  When User navigates to Edit Profile

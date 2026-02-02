@@ -1,23 +1,39 @@
 package stepDefinition;
 
+import org.testng.Assert;
+import context.TestContextSetup;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class DashboardStepDef {
 
+
+public class DashboardStepDef{
+
+	
+		private TestContextSetup testContext;
+	    
+	    public DashboardStepDef(TestContextSetup context) {
+	    	 this.testContext = context;
+	    }
+	       
+	    
 	/*-------------- Free Plan Dashboard UI --------------*/
-	
-	
-	
-	@Given("User is on login page")
-	public void user_is_on_login_page() {
-	      
-	}
 	
 	@When("User clicks login in button after entering  a valid credential")
 	public void user_clicks_login_in_button_after_entering_a_valid_credential() {
-	      
+		testContext.dashboardPage().tempLogin();
+		// **** Setting the Shared data 
+		String weight = "mathu";
+		testContext.setScenarioData("Onboardingweight", weight);
+	}
+	
+	@Then("User should see {string} title")
+	public void user_should_see_title(String expectedTitle) {
+		Assert.assertEquals(testContext.dashboardPage().getTitle(), expectedTitle);
+		
+		////******* Getting the Shared data 
+		System.out.println("Getting shared data "+ testContext.getScenarioData("sharableData"));
 	}
 	
 	@Then("Weekly target should be {double} kg")
@@ -144,10 +160,7 @@ public class DashboardStepDef {
 	      
 	}
 	
-	@Then("User should see {string} title")
-	public void user_should_see_title(String string) {
-	      
-	}
+
 	
 	@Then("Labels {string}, {string}, {string}, and {string} should be visible and color-coded accordingly")
 	public void labels_and_should_be_visible_and_color_coded_accordingly(String string, String string2, String string3, String string4) {

@@ -11,22 +11,22 @@ Feature: Dashboard page
     When User clicks login in button after entering  a valid credential
     Then User should see "Free Plan Dashboard" title
 
-@wip
+@try
     Scenario: Verify the Profile Name visibility
       When User clicks login in button after entering  a valid credential
       Then User should see user name on the top right side
 
-@wip
+@try
      Scenario: Verify Profile icon Visibility
        When User clicks login in button after entering  a valid credential
        Then User should see profile icon near user name
 
-@wip
+
        Scenario: Verify Notification Icon visibility
          When User clicks login in button after entering  a valid credential
          Then User should see bell icon for notification
 
-@wip
+
       Scenario: Verify user should see bell icon for notification
         When User clicks login in button after entering  a valid credential
         Then User should see search bar in dashboard

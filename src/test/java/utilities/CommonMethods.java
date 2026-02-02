@@ -1,6 +1,8 @@
 package utilities;
 
 import java.time.Duration;
+import java.util.Random;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,6 +27,16 @@ public class CommonMethods {
 
        public  WebElement waitForPresence(By locator) {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-}
+    }
     
+       public static String generateRandomString() {
+           String CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+           StringBuilder salt = new StringBuilder();
+           Random rnd = new Random();
+           while (salt.length() < 10) { // random string length
+               int index = rnd.nextInt(CHARSET.length());
+               salt.append(CHARSET.charAt(index));
+           }
+           return salt.toString();
+       }
 }

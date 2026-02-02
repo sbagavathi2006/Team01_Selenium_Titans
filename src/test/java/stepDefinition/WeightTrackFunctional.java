@@ -4,7 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class activityInsight_WT_Functional {
+public class WeightTrackFunctional {
 
 
     @Given("User is on Activity Insights tab - Weight Tracking page after successful login")

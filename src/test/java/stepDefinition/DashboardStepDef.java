@@ -6,12 +6,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-
-
 public class DashboardStepDef{
 
-	
 		private TestContextSetup testContext;
+	    private String userName = "mathu";
 	    
 	    public DashboardStepDef(TestContextSetup context) {
 	    	 this.testContext = context;
@@ -24,17 +22,32 @@ public class DashboardStepDef{
 	public void user_clicks_login_in_button_after_entering_a_valid_credential() {
 		testContext.dashboardPage().tempLogin();
 		// **** Setting the Shared data 
-		String weight = "mathu";
-		testContext.setScenarioData("Onboardingweight", weight);
+//		String weight = "mathu";
+//		testContext.setScenarioData("Onboardingweight", weight);
 	}
 	
 	@Then("User should see {string} title")
 	public void user_should_see_title(String expectedTitle) {
 		Assert.assertEquals(testContext.dashboardPage().getTitle(), expectedTitle);
-		
-		////******* Getting the Shared data 
-		System.out.println("Getting shared data "+ testContext.getScenarioData("sharableData"));
+//		////******* Getting the Shared data 
+//		System.out.println("Getting shared data "+ testContext.getScenarioData("sharableData"));
 	}
+	
+	@Then("User should see user name on the top right side")
+	public void user_should_see_user_name_on_the_top_right_side() {
+    Assert.assertEquals(testContext.dashboardPage().getDashboardUserName(), userName);
+	}
+	
+	@Then("User should see profile icon near user name")
+	public void user_should_see_profile_icon_near_user_name() {
+		  Assert.assertEquals(testContext.dashboardPage().isIconDisplayed(),true);
+	}
+
+	@Then("User should see bell icon for notification")
+	public void user_should_see_bell_icon_for_notification() {
+		Assert.assertEquals(testContext.dashboardPage().isIconDisplayed(),true);
+	}
+
 	
 	@Then("Weekly target should be {double} kg")
 	public void weekly_target_should_be_kg(Double double1) {
@@ -66,10 +79,6 @@ public class DashboardStepDef{
 	      
 	}
 	
-	@Then("User should see bell icon for notification")
-	public void user_should_see_bell_icon_for_notification() {
-	      
-	}
 
 	
 	@Then("Should display weight entered by user")
@@ -78,10 +87,6 @@ public class DashboardStepDef{
 	}
 
 	
-	@Then("User should see profile icon near user name")
-	public void user_should_see_profile_icon_near_user_name() {
-	      
-	}
 
 	
 	@Then("Goal weight should be displayed as the difference from the weekly target")
@@ -135,10 +140,7 @@ public class DashboardStepDef{
 	      
 	}
 	
-	@Then("User should see user name on the top right side")
-	public void user_should_see_user_name_on_the_top_right_side() {
-	      
-	}
+	
 	
 	@Then("Daily weigh in should be {string}")
 	public void daily_weigh_in_should_be(String string) {

@@ -39,4 +39,23 @@ public class CommonMethods {
            }
            return salt.toString();
        }
+       
+       
+       public boolean isDisplayed(By locator) {
+    	   try {
+               return waitForVisibility(locator).isDisplayed();
+           } catch (Exception e) {
+               return false;
+           }
+       }
+       
+       public String getText(By locator) {
+           return waitForVisibility(locator).getText().trim();
+       }
+       
+       public void click(By locator) {
+	        waitForClickable(locator).click();
+	    }
+       
+       
 }

@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utilities.CommonMethods;
 
 import java.time.Duration;
 
@@ -21,7 +22,7 @@ public class WeightTrackFieldPage {
     }
 
     @FindBy(xpath = "//*[contains(text(), 'Activity Insights')]")
-    WebElement activityInsightBtn
+    WebElement activityInsightBtn;
 
     public void loginToPortal() {
         driver.findElement(By.xpath("//input[@type='email']")).sendKeys("herbalanceteam1@gmail.com");
@@ -31,10 +32,8 @@ public class WeightTrackFieldPage {
 
 
     public void navigateToActivityInsight() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-                WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(
-                        By.xpath("//*[contains(text(), 'Activity Insights')]")));
-                menu.click();
+        CommonMethods.waitForClickable(activityInsightBtn);
+        activityInsightBtn.click();
        // driver.findElement(By.xpath("//button[contains(text(),'Activity Insights')]")).click();
         driver.findElement(By.xpath("//a[@href='/track/weight']")).click();
     }

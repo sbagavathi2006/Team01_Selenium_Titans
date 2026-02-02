@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CommonMethods {
 	  WebDriver driver;
-	   WebDriverWait wait; 
+	   static WebDriverWait wait;
 	  
 	   public CommonMethods(WebDriver driver) {
 	        this.driver = driver;
@@ -21,7 +21,7 @@ public class CommonMethods {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
     
-    public  WebElement waitForClickable(By locator) {
+    public static WebElement waitForClickable(By locator) {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 

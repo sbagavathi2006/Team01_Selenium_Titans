@@ -7,25 +7,27 @@ import io.cucumber.java.en.When;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.Test;
-import pageObjects.ActivityInsightFieldPage;
+import pageObjects.WeightTrackFieldPage;
 
-public class activityInsight_WT_Field {
+public class WeightTrackField {
 
     private static Logger logger = LogManager.getLogger();
-    private ActivityInsightFieldPage activityInsightFieldPage;
+    private WeightTrackFieldPage weightTrackFieldPage;
 
-    public activityInsight_WT_Field() {
-        activityInsightFieldPage = new ActivityInsightFieldPage(DriverFactory.getDriver());
+    public WeightTrackField() {
+        weightTrackFieldPage = new WeightTrackFieldPage(DriverFactory.getDriver());
     }
     //Background
     @Test
     @Given("User is on Her balance Home page after successful login")
     public void user_is_on_her_balance_home_page_after_successful_login() {
-        activityInsightFieldPage.loginToPortal();
+        weightTrackFieldPage.loginToPortal();
+        logger.info("Login successful, user is on Her Balance Home page");
     }
     @When("User navigates to the Activity Insights tab - Weight Tracking page")
     public void user_navigates_to_the_activity_insights_tab_weight_tracking_page() {
-        activityInsightFieldPage.navigateToActivityInsight();
+        weightTrackFieldPage.navigateToActivityInsight();
+        logger.info("Navigated to Activity Insights tab - Weight Tracking page");
     }
 
     @Then("Header text {string} should be displayed")

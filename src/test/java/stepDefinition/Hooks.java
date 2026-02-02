@@ -45,7 +45,7 @@ public void setUp(Scenario scenario) {
 
     logger.info("Executing scenario: " + scenario.getName());     
     System.out.println("Set browser type from before setup:" + DriverFactory.getBrowser());
-    DriverFactory.inItBrowser();
+    DriverFactory.getDriver();
     DriverFactory.setupBrowser();
 }
 

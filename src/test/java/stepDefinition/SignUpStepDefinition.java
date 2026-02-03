@@ -9,6 +9,7 @@ import pageObjects.SignUpPage;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import context.TestContextSetup;
 import driverFactorySetUp.DriverFactory;
 import utilities.CommonMethods;
 import utilities.ConfigReader;
@@ -20,12 +21,13 @@ public class SignUpStepDefinition {
 
     WebDriver driver;
     SignUpPage signUp;
+    TestContextSetup testContext;
 
     @Given("user is on the HerBalance launch page")
     public void user_is_on_the_her_balance_launch_page() {
         driver = DriverFactory.getDriver();
        // driver.get(ConfigReader.getProperty("url"));
-        signUp = new SignUpPage(driver);
+        signUp = new SignUpPage(driver, testContext);
     }
 
     @When("user clicks the Sign Up button")

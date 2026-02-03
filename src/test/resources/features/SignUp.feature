@@ -52,7 +52,6 @@ Feature: Sign Up Page
     When user clicks the Sign Up button
     Then background gradient and fonts should match the HerBalance theme
 
- 
   Scenario: Successful registration with valid credentials
     Given user is on the HerBalance auth page
     When user enters valid Email ID, Password, and Confirm Password and clicks Register

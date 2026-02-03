@@ -2,6 +2,9 @@ package pageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import utilities.CommonMethods;
 
 public class OnBoarding1Page {
 	
@@ -11,12 +14,12 @@ public class OnBoarding1Page {
         this.driver = driver;
     }	  
     
-    private By btnSignUp = By.xpath("//button[text()='Sign Up']");
-    private By emailID = By.id(":r5:-form-item");
-    private By pwd = By.name("password");
-    private By confpwd = By.name("confirmPassword");
-    private By termCondi = By.id(":r8:-form-item");
-	private By btnRegister = By.xpath("//button[text()='Register']");
+//    private By btnSignUp = By.xpath("//button[text()='Sign Up']");
+//    private By emailID = By.id(":r5:-form-item");
+//    private By pwd = By.name("password");
+//    private By confpwd = By.name("confirmPassword");
+//    private By termCondi = By.id(":r8:-form-item");
+//	private By btnRegister = By.xpath("//button[text()='Register']");
 	private By pageTitle = By.xpath("//h2[text() ='Upload Your Recent Blood Work']");
 	private By supportingText =  By.xpath("//p[contains(text(), 'Welcome to')]");
 	private By onboardingProgress = By.xpath("//span[text() = 'Onboarding Progress']");
@@ -28,63 +31,78 @@ public class OnBoarding1Page {
 	private By btnContWithOutReport = By.xpath("//button[text() = 'Continue Without Report']");
 	private By secNote = By.xpath("//p[contains(text(), ' third parties')]");	
 
-	public void clickbtnSignUp() {
-        driver.findElement(btnSignUp).click();
+//	public void clickbtnSignUp() {
+//        driver.findElement(btnSignUp).click();
+//	}
+//	
+//	public void clickBtnRegister(String email, String password) {
+//	    driver.findElement(emailID).sendKeys(email);
+//	    driver.findElement(pwd).sendKeys(password);
+//	    driver.findElement(confpwd).sendKeys(password);
+//	    driver.findElement(termCondi).click();
+//	    driver.findElement(btnRegister).click();
+//	}
+	
+	public boolean isOBPage1TitleDisplayed() {
+		return  driver.findElement(pageTitle).isDisplayed();
 	}
 	
-	public void clickBtnRegister(String email, String password) {
-	    driver.findElement(emailID).sendKeys(email);
-	    driver.findElement(pwd).sendKeys(password);
-	    driver.findElement(confpwd).sendKeys(password);
-	    driver.findElement(termCondi).click();
-	    driver.findElement(btnRegister).click();
+	public boolean  isSupportingTextDisplayed() {
+		return driver.findElement(supportingText).isDisplayed();
 	}
 	
-	public void isOBPage1TitleDisplayed() {
-		driver.findElement(pageTitle).isDisplayed();
+	public boolean isOnBoardingProgressDisplayed() {
+		return driver.findElement(onboardingProgress).isDisplayed();
 	}
 	
-	public void isSupportingTextDisplayed() {
-		driver.findElement(supportingText).isDisplayed();
+	public boolean isProgressBar1_10Displayed() {
+		return driver.findElement(currentStep1).isDisplayed();
 	}
 	
-	public void isOnBoardingProgressDisplayed() {
-		driver.findElement(onboardingProgress).isDisplayed();
+	public void clickContWithOutRt() {
+		driver.findElement(btnContWithOutReport).click();
 	}
 	
-	public void isProgressBar1_10Displayed() {
-		driver.findElement(currentStep1).isDisplayed();
+	public boolean isUploadBtnDisplayed() {
+		return driver.findElement(btnUploadPDF).isDisplayed();
 	}
 	
-	public void isUploadBtnDisplayed() {
-		driver.findElement(btnUploadPDF).isDisplayed();
+	public boolean isUploadBtnEnabled() {
+		return driver.findElement(btnUploadPDF).isEnabled();
 	}
 	
-	public void isUploadBtnEnabled() {
-		driver.findElement(btnUploadPDF).isEnabled();
+	public boolean isMax10MBDisplayed() {
+		return driver.findElement(pdfFileSize).isDisplayed();
+	}
+//	--changed not using
+	public boolean isSkipNowCardDisplayed() {
+		return driver.findElement(skipNow).isDisplayed();
+	}
+//	Added Newly due to element not found, so implement wait
+	public WebElement getSkipNowCard() {
+        return CommonMethods.waitForVisibility(skipNow);
+    }
+	
+	public boolean isskipNowTextDisplayed() {
+		return driver.findElement(skipNowText).isDisplayed();
 	}
 	
-	public void isMax10MBDisplayed() {
-		driver.findElement(pdfFileSize).isDisplayed();
+//	Added Newly due to element not found, so implement wait
+	public WebElement getContWithOutReportBtn() {
+        return CommonMethods.waitForVisibility(btnContWithOutReport);
+    }
+	
+	public boolean isContWithOutReportBtnDisplayed() {
+		return driver.findElement(btnContWithOutReport).isDisplayed();
 	}
 	
-	public void isSkipNowCardDisplayed() {
-		driver.findElement(skipNow).isDisplayed();
+	public boolean isContWithOutReportBtnEnabled() {
+		return driver.findElement(btnContWithOutReport).isEnabled();
 	}
 	
-	public void isskipNowTextDisplayed() {
-		driver.findElement(skipNowText).isDisplayed();
-	}
+
 	
-	public void isContWithOutReportBtnDisplayed() {
-		driver.findElement(btnContWithOutReport).isDisplayed();
-	}
-	
-	public void isContWithOutReportBtnEnabled() {
-		driver.findElement(btnContWithOutReport).isEnabled();
-	}
-	
-	public void issecNoteDisplayed() {
-		driver.findElement(btnContWithOutReport).isDisplayed();
+	public boolean issecNoteDisplayed() {
+		return driver.findElement(secNote).isDisplayed();
 	}
 }

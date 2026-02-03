@@ -20,7 +20,7 @@ public class DriverFactory {
 	          EdgeOptions options = new EdgeOptions();
 	          if(isHeadless) {
 	          options.addArguments("--headless");
-	          }
+	          } 
 	          driver.set(new EdgeDriver(options));
 
 	       } else if (browserName.equalsIgnoreCase("Chrome")) {

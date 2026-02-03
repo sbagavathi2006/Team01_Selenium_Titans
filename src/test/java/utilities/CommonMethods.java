@@ -82,6 +82,18 @@ public class CommonMethods {
             return false;
         }
     }
-       
+    
+    
+    //jaanvi
+    public void waitForPopupToDisappear() {
+    	try {
+    		wait.until(ExpectedConditions.invisibilityOfElementLocated(
+    				By.xpath("//li[@role='status']") 
+    				));
+    } catch (Exception e) { 
+    	LoggerLoad.info("Pop up cannot be closed");
+    }
+    }
+	  
        
 }

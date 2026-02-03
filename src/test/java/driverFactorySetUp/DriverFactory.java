@@ -82,6 +82,7 @@ public class DriverFactory {
 	       localDriver.get(ConfigReader.getProperty("url"));
 	       localDriver.manage().window().maximize();
 	       localDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		   localDriver.manage().deleteAllCookies();
 	    }
 	    
 	    public static String getBrowserName() {

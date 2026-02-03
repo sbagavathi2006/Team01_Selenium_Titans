@@ -4,6 +4,8 @@ package pageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import context.TestContextSetup;
 import utilities.CommonMethods;
 import utilities.ExcelUtils;
 import utilities.ConfigReader;
@@ -17,9 +19,11 @@ public class SignUpPage {
     WebDriver driver;
     CommonMethods common;
     ExcelUtils excel;
+	private TestContextSetup testContext;
 
-    public SignUpPage(WebDriver driver){
+    public SignUpPage(WebDriver driver, TestContextSetup testContext){
         this.driver = driver;
+        this.testContext = testContext;
         this.common = new CommonMethods(driver);
         this.excel = new ExcelUtils(ConfigReader.getProperty("test_data_path"));
     }
@@ -88,6 +92,10 @@ public class SignUpPage {
     public boolean isShowPasswordIconVisible(){
         return driver.findElement(showPasswordIcon).isDisplayed();
     }
+    
+    public boolean isRegisterButtonDisplayed(){
+        return driver.findElement(registerButton).isEnabled();
+    }
 
     public boolean isRegisterButtonEnabled(){
         return driver.findElement(registerButton).isEnabled();
@@ -144,6 +152,9 @@ public class SignUpPage {
         String random = CommonMethods.generateRandomString();
         String email = random + "@gmail.com";
         String password = random + "@@123";
+        
+        testContext.setScenarioData("EMAIL", email);
+        testContext.setScenarioData("PASSWORD", password);
 
         enterEmail(email);
         enterPassword(password);

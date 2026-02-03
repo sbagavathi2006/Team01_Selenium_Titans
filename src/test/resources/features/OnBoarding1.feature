@@ -1,9 +1,13 @@
+@OnBoarding1
 Feature: OnBoarding1
 
-  Background: 
-    Given User is on sign up page
-    When User clicks register button after entering valid details    
+#Blood Report Upload Modal  navigation
 
+  Background: 
+  
+    Given User is on sign up page
+    When User clicks register button after entering valid details 
+    
   Scenario: Title of the onboarding step one
     Then Title of the page should be Upload Your Recent Blood Work
 

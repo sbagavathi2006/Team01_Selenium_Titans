@@ -28,10 +28,10 @@ public class WorkoutPage {
 		this.driver = driver;
 		this.commonMethods = new CommonMethods(driver);
 	}
-	// By workoutBtn = By.cssSelector("button.group");
+	// By workoutBtn = By.cssSelector("button.group");////a[@href='/workouts']/button/span
 
 	By backToDashboard = By.xpath("//*[@class='text-sm']");
-	By workoutButton = By.xpath("//a[@href='/workouts']/button/span");
+	By workoutButton = By.cssSelector("button.group");
 	By DailyPersonalisedWorkout = By.xpath("//h1[text()='Daily Personalized Workouts']");
 	By DailyWorkoutPlan = By.xpath("//h2[text()='Daily Workout Plan']");
 	By AIDescription = By.xpath("//*[contains(text(), 'Fresh AI-powered workout tailored to your current cycle phase')]");

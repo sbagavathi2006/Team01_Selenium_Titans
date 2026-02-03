@@ -2,8 +2,10 @@ package stepDefinition;
 
 import java.time.Duration;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -48,7 +50,16 @@ public class WorkoutStepDefintion {
 
 	@When("user clicks workout button on navigation bar")
 	public void user_clicks_workout_button_on_navigation_bar() {
-		workoutPage.ClickWorkoutButton();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		By popupId=By.xpath("//div[contains(text(),'Logged in successfully')]");
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("popupId")));
+	//	WebElement workoutButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button.group")));
+		WebElement element = driver.findElement(By.cssSelector("button.group"));
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].click();", element);
+
+	//	workoutPage.ClickWorkoutButton();
+		WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(10));
 
 	}
 

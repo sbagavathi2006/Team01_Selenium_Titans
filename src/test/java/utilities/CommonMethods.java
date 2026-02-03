@@ -123,4 +123,13 @@ public class CommonMethods {
        public static int generateRandomAge() {
     	    return new Random().nextInt(83) + 18;
        }
+
+    public static double extractNumber(String text) {
+        return Double.parseDouble(text.replaceAll("[^0-9.]", ""));
+    }
+
+
 }
+
+
+

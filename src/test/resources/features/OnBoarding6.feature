@@ -16,23 +16,23 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
-@tag
+
 Feature: Onboarding step 6 Functionality and Step 7 UI verification
- 
+
 Background:
-   User completes onboarding until step 5
- 
+   Given User completes onboarding until step 5
+
  Scenario: Error message for without selecting last menstrual date
     When User clicks continue button without selecting last menstrual date
     Then Error message "Please select your last period start date" should be displayed
-    
+  @test
  Scenario: Navigate back to step 5 from step 6
-    When User clicks back button in step 6
-    Then User should be navigated back to step 5
-    
- Scenario: Error message for without selecting last menstrual date
-    When User clicks continue button without selecting last menstrual date
-    Then Error message "Please select your last period start date" should be displayed
+ When User clicks back button in step 6
+ Then User should be navigated back to step "5 of 10"
+  
+ ##Scenario: Error message for without selecting last menstrual date
+ ##When User clicks continue button without selecting last menstrual date
+ ##Then Error message "Please select your last period start date" should be displayed
     
     
     

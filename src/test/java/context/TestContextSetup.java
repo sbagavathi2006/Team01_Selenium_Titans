@@ -33,7 +33,7 @@ public class TestContextSetup {
         this.editProfilePage = new EditYourProfilePage(driver);
         this.onBrdPage1 = new OnBoarding1Page(driver);
         this.onBrdPage4 = new OnBoarding4Page(driver);
-        this.signUpPage = new SignUpPage(driver, this);
+        this.signUpPage = new SignUpPage(driver);
 
         this.sharedData = new HashMap<>();
     }

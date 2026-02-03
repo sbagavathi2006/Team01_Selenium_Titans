@@ -6,6 +6,7 @@ import context.TestContextSetup;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import pageObjects.OnBoarding1Page;
 import utilities.LoggerLoad;
 
 public class OnBoarding4StepDef {
@@ -17,69 +18,131 @@ public class OnBoarding4StepDef {
    }
 	
 	@Given("User is in upload blood report page")
-	public void user_is_in_upload_blood_report_page() throws InterruptedException {
-		Thread.sleep(2000);
-		testContext.onBrdPage1().isOBPage1TitleDisplayed();		
+	public void user_is_in_upload_blood_report_page() {
+	  testContext.signUpPage().clickSignUpButton();
+      testContext.signUpPage().registerWithValidDynamicData(testContext);
+		Assert.assertTrue(
+				testContext.onBrdPage1().isProgressBar1_10Displayed(),
+		        "User is not on onboarding step 1"
+		    );
+		LoggerLoad.info("User is on Step1 onboarding page");
+
 	}
 
 	@When("User clicks continue without report")
-	public void user_clicks_continue_without_report() throws InterruptedException {
-		Thread.sleep(5000);
+	public void user_clicks_continue_without_report() {
 	    testContext.onBrdPage1().clickContWithOutRt();
+		Assert.assertTrue(
+				testContext.onBrdPage4().isProgressBar3_10Displayed(),
+		        "User is not on onboarding step 1"
+		    );
+		LoggerLoad.info("User is on step 3 onboarding page");
 
 	}
 
-	@Then("Progress bar shows the current step as Three of Eleven")
-	public void progress_bar_shows_the_current_step_as_three_of_eleven() throws InterruptedException{
-		Thread.sleep(5000);
-
+	@Then("Progress bar shows the current step as Three of Ten")
+	public void progress_bar_shows_the_current_step_as_three_of_ten() {
 		testContext.onBrdPage4().isProgressBar3_10Displayed();
-		Thread.sleep(1000);
+		Assert.assertTrue(
+				testContext.onBrdPage4().isProgressBar3_10Displayed(),
+		        "User is not on onboarding step 3"
+		    );
+		LoggerLoad.info("Progress bar correctly shows 3/10");
+
 	}
 
 	@Then("Back button is displayed")
 	public void back_button_is_displayed() {
-	   
+	   testContext.onBrdPage4().isBackBtnDisplayed();
+		Assert.assertTrue(
+				testContext.onBrdPage4().isBackBtnDisplayed(),
+		        "Back Btn is not displayed"
+		    );
+		LoggerLoad.info("Back btn displayed");
+
 	}
 
 	@Then("Back button should be enabled")
 	public void back_button_should_be_enabled() {
-	    
+	    testContext.onBrdPage4().isBackBtnEnabled();
+		Assert.assertTrue(
+				testContext.onBrdPage4().isBackBtnEnabled(),
+		        "Back Btn is not enabled"
+		    );
+		LoggerLoad.info("Back Btn enabled");
+
 	}
 
 	@Then("Continue button should be visible")
 	public void continue_button_should_be_visible() {
-	    
+	    testContext.onBrdPage4().isContinueBtnDisplayed();
+		Assert.assertTrue(
+				testContext.onBrdPage4().isContinueBtnDisplayed(),
+		        "Continue Btn is not displayed"
+		    );
+		LoggerLoad.info("Continue btn displayed");
+
 	}
 
 	@Then("Continue button should be enabled")
 	public void continue_button_should_be_enabled() {
-	   
+	    testContext.onBrdPage4().isContinueBtnEnabled();
+		Assert.assertTrue(
+				testContext.onBrdPage4().isContinueBtnEnabled(),
+		        "Continue Btn is not enabled"
+		    );
+		LoggerLoad.info("Contineu Btn enabled");
+   
 	}
 
-	@Then("Header should be {string}")
-	public void header_should_be(String string) {
-	    
+	@Then("Header should be Health condition")
+	public void header_should_be_health_condition() {
+	    testContext.onBrdPage4().isStep3HeaderDisplayed();
+		Assert.assertTrue(
+				testContext.onBrdPage4().isStep3HeaderDisplayed(),
+		        "Header is not displayed-Health Condition"
+		    );
+		LoggerLoad.info("Header displayed Health Condition text");
 	}
 
-	@Then("{string} should be displayed")
-	public void should_be_displayed(String string) {
-	   
+	@Then("Sub title should be displayed")
+	public void sub_title_should_be_displayed() {
+	    testContext.onBrdPage4().isSubTitleHeaderDisplayed();
+		Assert.assertTrue(
+				testContext.onBrdPage4().isSubTitleHeaderDisplayed(),
+		        "SubTitel is not displayed- Want to manually enter any key conditions or comorbidities?"
+		    );
+		LoggerLoad.info("Exact sub title text displayed");
 	}
 
 	@Then("Nine radio button should be visible")
 	public void nine_radio_button_should_be_visible() {
-	    
+	    testContext.onBrdPage4().isNineRadioBtnDisplayed();
+		Assert.assertTrue(
+				testContext.onBrdPage4().isNineRadioBtnDisplayed(),
+		        "9 Radio button not visible "
+		    );
+		LoggerLoad.info("9 radio button displayed");
 	}
 
-	@Then("<healthCondition> should be visible")
-	public void health_condition_should_be_visible() {
-	    
+	@Then("Health Condition {string} should be visible")
+	public void health_condition_should_be_visible(String text) {
+	    testContext.onBrdPage4().isCheckBoxTextVisible(text);
+		Assert.assertTrue(
+				testContext.onBrdPage4().isCheckBoxTextVisible(text),
+		        "Health Condition :"+text+" is not visible"
+		    );
+		LoggerLoad.info("Health condition text are visible");
 	}
 
 	@Then("Note text should displayed")
 	public void note_text_should_displayed() {
-	  
+	    testContext.onBrdPage4().isInfoNoteDisplayed();
+		Assert.assertTrue(
+				testContext.onBrdPage4().isInfoNoteDisplayed(),
+		        "Note is not visible"
+		    );
+		LoggerLoad.info("Note is visible");
 	}
 
 }

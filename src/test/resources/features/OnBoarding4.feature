@@ -11,7 +11,7 @@ Feature: OnBoarding4
     Then Onboarding progress bar is displayed
 
   Scenario: Progress bar is visible
-    Then Progress bar shows the current step as Three of Eleven
+    Then Progress bar shows the current step as Three of Ten
 
   Scenario: Back button is visible
     Then Back button is displayed
@@ -26,18 +26,19 @@ Feature: OnBoarding4
     Then Continue button should be enabled
 
   Scenario: Step Three Header is displayed
-    Then Header should be "Health condition"
+    Then Header should be Health condition
 
   Scenario: Sub title for the header
-    Then "Want to manually enter any key conditions or comorbidities?" should be displayed
+    Then Sub title should be displayed
 
   Scenario: Total number of radio button
     Then Nine radio button should be visible
 
-  Scenario Outline: Options text for health condition
-    Then <healthCondition> should be visible
+  Scenario Outline: Options "<healthCondition>" for health condition
+    Then Health Condition "<healthCondition>" should be visible
 
     Examples: 
+    	| healthCondition															|
       | PCOS                                         |
       | Pre-diabetes / Diabetes                      |
       | Sleep apnea                                  |
@@ -45,7 +46,7 @@ Feature: OnBoarding4
       | Kidney Disease                               |
       | Hypothyroidism                               |
       | High cholesterol                             |
-      | Digestive issues                             |
+      | Digestive issues (IBS, leaky gut, etc.)      |
       | Liver Disease                                |
       | I am perimenopausal or menopausal (age ~45+) |
 

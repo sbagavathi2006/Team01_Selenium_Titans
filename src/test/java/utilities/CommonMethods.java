@@ -17,7 +17,7 @@ public class CommonMethods {
 	        this.driver = driver;
 	        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 	    }
-	public  WebElement waitForVisibility(By locator) {
+	public static WebElement waitForVisibility(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
     
@@ -25,7 +25,7 @@ public class CommonMethods {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
-       public  WebElement waitForPresence(By locator) {
+       public WebElement waitForPresence(By locator) {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
     

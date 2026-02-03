@@ -32,7 +32,7 @@ public class WeightTrackFieldPage {
 
 
     public void navigateToActivityInsight() {
-        CommonMethods.waitForClickable(activityInsightBtn);
+//        CommonMethods.waitForClickable(activityInsightBtn);
         activityInsightBtn.click();
        // driver.findElement(By.xpath("//button[contains(text(),'Activity Insights')]")).click();
         driver.findElement(By.xpath("//a[@href='/track/weight']")).click();

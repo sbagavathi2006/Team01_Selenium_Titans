@@ -83,18 +83,19 @@ public class WorkoutStepDefintion {
 	@Then("User should see plan text description as {string}")
 	public void user_should_see_plan_text_description_as(String string) {
 		Assert.assertTrue(workoutPage.isAIDescriptionVisible());
+		LoggerLoad.info("plan text description is visible");
 	}
 
 	@Then("User should see message as {string}")
 	public void user_should_see_message_as(String string) {
 		Assert.assertTrue(workoutPage.isWorkoutTextVisible());
+		
 	}
 
 	@Then("User should see message alignment as {string}")
 	public void user_should_see_message_alignment_as(String string) {
 		workoutPage.messageAlignment();
 	}
-
 	@Then("User should see button text as {string}")
 	public void user_should_see_button_text_as(String string) {
 		Assert.assertTrue(workoutPage.isGenerateWorkoutPlanButtonVisible());
@@ -153,7 +154,7 @@ public class WorkoutStepDefintion {
 	public void user_should_see_premium_plan_section_description_as(String string) {
 		Assert.assertTrue(workoutPage.isSpecialPlanTextDescriptionVisible());
 	}
-	@Then("User should see see Premium Plans button as {string}")
+	@Then("User should see See premium plans button as {string}")
 	public void user_should_see_see_premium_plans_button_as(String string) {
 		Assert.assertTrue(workoutPage.isSeePremiumPlansBtnVisible());
 	}

@@ -14,8 +14,14 @@ import io.cucumber.testng.CucumberOptions;
 				  "json:target/cucumber-reports/Team01_Selenium_Titans.json", "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"},
 
 		monochrome = false,
+<<<<<<< HEAD
 		//tags = "@checking",
+=======
+
+	//	tags = "@checking",
+>>>>>>> main
 		features = {"src/test/resources/features/"},
+
 		glue = {"stepDefinition"})
 		
 public class TestRunner extends AbstractTestNGCucumberTests {

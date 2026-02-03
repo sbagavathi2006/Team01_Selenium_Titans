@@ -20,7 +20,7 @@ public class DriverFactory {
 	          EdgeOptions options = new EdgeOptions();
 	          if(isHeadless) {
 	          options.addArguments("--headless");
-	          }
+	          } 
 	          driver.set(new EdgeDriver(options));
 
 	       } else if (browserName.equalsIgnoreCase("Chrome")) {
@@ -82,6 +82,7 @@ public class DriverFactory {
 	       localDriver.get(ConfigReader.getProperty("url"));
 	       localDriver.manage().window().maximize();
 	       localDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		   localDriver.manage().deleteAllCookies();
 	    }
 	    
 	    public static String getBrowserName() {

@@ -1,17 +1,23 @@
 package stepDefinition;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.testng.Assert;
+
 import context.TestContextSetup;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-
-
 public class DashboardStepDef{
 
-	
 		private TestContextSetup testContext;
+	    private String userName = "mathu";
+	    private String weight = "60";
+	    private String height = "155";
+	    private String subscriptionPlan = "Free Plan";
 	    
 	    public DashboardStepDef(TestContextSetup context) {
 	    	 this.testContext = context;
@@ -23,142 +29,154 @@ public class DashboardStepDef{
 	@When("User clicks login in button after entering  a valid credential")
 	public void user_clicks_login_in_button_after_entering_a_valid_credential() {
 		testContext.dashboardPage().tempLogin();
-		// **** Setting the Shared data 
-		String weight = "mathu";
-		testContext.setScenarioData("Onboardingweight", weight);
+//		String username = "mathu";
+//		testContext.setScenarioData("username", username);
 	}
 	
 	@Then("User should see {string} title")
 	public void user_should_see_title(String expectedTitle) {
 		Assert.assertEquals(testContext.dashboardPage().getTitle(), expectedTitle);
-		
-		////******* Getting the Shared data 
-		System.out.println("Getting shared data "+ testContext.getScenarioData("sharableData"));
+//	System.out.println("Getting shared data "+ testContext.getScenarioData("sharableData"));
 	}
 	
-	@Then("Weekly target should be {double} kg")
-	public void weekly_target_should_be_kg(Double double1) {
-	      
+	@Then("User should see user name on the top right side")
+	public void user_should_see_user_name_on_the_top_right_side() {
+    Assert.assertEquals(testContext.dashboardPage().getDashboardUserName(), userName);
+	}
+	
+	@Then("User should see profile icon near user name")
+	public void user_should_see_profile_icon_near_user_name() {
+		Assert.assertTrue(testContext.dashboardPage().isIconDisplayed());
+	}
+
+	@Then("User should see bell icon for notification")
+	public void user_should_see_bell_icon_for_notification() {
+		Assert.assertTrue(testContext.dashboardPage().isBellIconDisplayed());
+	}
+
+	@Then("User should see search bar in dashboard")
+	public void user_should_see_search_bar_in_dashboard() {
+		Assert.assertTrue(testContext.dashboardPage().isSearchBarDisplayed());
+	}
+	
+	@Then("User should see {string}")
+	public void user_should_see(String menuName) {
+		if(menuName.equalsIgnoreCase("User Name")) {
+			menuName = userName;
+		}
+		 List<String> actualMenus = testContext.dashboardPage().getMenusText();
+		 Assert.assertTrue(actualMenus.contains(menuName));
+	}
+	
+	
+	@Then("User should see below {string}")
+	public void user_should_see_below(String expectedText) {
+		List<String> actualPlansText = testContext.dashboardPage().getDashboardPlansText();
+		 Assert.assertTrue(actualPlansText.contains(expectedText));
+	}
+	
+	@Then("Sub text should be located at the centre of the page")
+	public void sub_text_should_be_located_at_the_centre_of_the_page() {
+	      Assert.assertEquals(testContext.dashboardPage().checkAlign(), "center");
+	}
+	
+	@Then("User should see below dashboard {string}")
+	public void user_should_see_below_dashboard(String expectedText) {
+		List<String> actualDashboardSectionText = testContext.dashboardPage().getDashboardSectionText();
+		 Assert.assertTrue(actualDashboardSectionText.contains(expectedText));
+	}
+	
+	@Then("User should see below body metrics {string}")
+	public void user_should_see_below_body_metrics(String expectedText) {
+		List<String> actualDashboardSectionText = testContext.dashboardPage().getDashboardBodySectionTitle(expectedText);
+		 Assert.assertTrue(actualDashboardSectionText.contains(expectedText));
+	}
+	
+	@Then("App should have following goal {string}")
+	public void app_should_have_following_goal(String expectedText) {
+		List<String> actualDashboardGoalSectionText = testContext.dashboardPage().getDashboardBodySectionTitle(expectedText);
+		 Assert.assertTrue(actualDashboardGoalSectionText.contains(expectedText));
+	}
+	
+	@Then("Should display the user’s weight as entered during the onboarding process.")
+	public void should_display_the_user_s_weight_as_entered_during_the_onboarding_process() {
+	      Assert.assertEquals(testContext.dashboardPage().getDashboardWeight(), weight);
+	}
+	
+	@Then("Should display the user’s Height as entered during the onboarding process.")
+	public void should_display_the_user_s_height_as_entered_during_the_onboarding_process() {
+		  Assert.assertEquals(testContext.dashboardPage().getDashboardHeight(), height);
+	}
+	
+	@Then("BMI should be correctly calculated using the formula")
+	public void bmi_should_be_correctly_calculated_using_the_formula() {
+		int currentWeightInt = Integer.parseInt(testContext.dashboardPage().getDashboardCurrentWeight().split(" ")[0]);
+		double heightInt = (Integer.parseInt(height))/100.0;
+		double bmi = Math.round((currentWeightInt / (heightInt * heightInt))*10.0)/10.0;
+		String expectedBMI = String.valueOf(bmi);
+		 Assert.assertEquals(testContext.dashboardPage().getDashboardBMI(), expectedBMI);
+	}
+	
+	@Then("Goal weight should be displayed as the difference from the weekly target")
+	public void goal_weight_should_be_displayed_as_the_difference_from_the_weekly_target() {
+		String expectedGoalWeight = String.valueOf(Integer.parseInt(weight)-0.7);
+		System.out.println(testContext.dashboardPage().getDashboardGoalWeight());
+		Assert.assertEquals(testContext.dashboardPage().getDashboardGoalWeight(), expectedGoalWeight);
+	}
+	
+	
+	@Then("Daily weigh in should be {string}")
+	public void daily_weigh_in_should_be(String expectedText) {
+		Assert.assertEquals(testContext.dashboardPage().getDashboardCustomText(expectedText), expectedText);
+	}
+	
+	@Then("Subcription details should be present in goal section")
+	public void subcription_details_should_be_present_in_goal_section() {
+		Assert.assertEquals(testContext.dashboardPage().getDashboardSubscription(), subscriptionPlan);
 	}
 	
 	@Then("Slider should be present in BMI reference guide")
 	public void slider_should_be_present_in_bmi_reference_guide() {
 	      
 	}
+	
 	@Then("BMI Reference Guide component should be displayed with a gradient slider and labeled ranges")
 	public void bmi_reference_guide_component_should_be_displayed_with_a_gradient_slider_and_labeled_ranges() {
 	      
 	}
 	
-	
 	@Then("{string} label should be visible above the slider")
 	public void label_should_be_visible_above_the_slider(String string) {
-	      
+	      Assert.assertEquals(testContext.dashboardPage().getDashboardInfo(), "Info");
 	}
 	
-	@Then("{int} section should be visible")
-	public void section_should_be_visible(Integer int1) {
-	      
+	
+	@Then("Following Message should display {string}")
+	public void following_message_should_display(String expectedMessage) {
+	Assert.assertEquals(testContext.dashboardPage().getDashboardFreePlanINfor(), expectedMessage);	
 	}
 	
-	@Then("Weight & Body Metrics,Health Conditions,Blood Report Insights,Menstrual Cycle Insights,Subscription Information")
-	public void weight_body_metrics_health_conditions_blood_report_insights_menstrual_cycle_insights_subscription_information() {
-	      
-	}
-	
-	@Then("User should see bell icon for notification")
-	public void user_should_see_bell_icon_for_notification() {
-	      
-	}
 
-	
-	@Then("Should display weight entered by user")
-	public void should_display_weight_entered_by_user() {
-	      
-	}
-
-	
-	@Then("User should see profile icon near user name")
-	public void user_should_see_profile_icon_near_user_name() {
-	      
-	}
-
-	
-	@Then("Goal weight should be displayed as the difference from the weekly target")
-	public void goal_weight_should_be_displayed_as_the_difference_from_the_weekly_target() {
-	      
-	}
-	
-	@Then("Subcription details should be present in {int}-day goal section")
-	public void subcription_details_should_be_present_in_day_goal_section(Integer int1) {
-	      
-	}
-	
-	@Then("Should display the user’s Height as entered during the onboarding process.")
-	public void should_display_the_user_s_height_as_entered_during_the_onboarding_process() {
-	      
-	}
-	
-	@Then("App should have Starting weight, Goal , Weekly target, Daily Weigh-in")
-	public void app_should_have_starting_weight_goal_weekly_target_daily_weigh_in() {
-	      
-	}
-	
-	@Then("BMI should be correctly calculated using the formula \\(Weight in kg \\/ \\(Height in m)^{int})")
-	public void bmi_should_be_correctly_calculated_using_the_formula_weight_in_kg_height_in_m(Integer int1) {
-	      
-	}
-	
-	@Then("User should see  {string},{string}")
-	public void user_should_see(String string, String string2) {
-	      
-	}
-	
-	@Then("Sub text should be located at the centre of the page")
-	public void sub_text_should_be_located_at_the_centre_of_the_page() {
-	      
-	}
 	
 	@Then("Slider should not allow manual movement; it should remain fixed based on the user’s BMI")
 	public void slider_should_not_allow_manual_movement_it_should_remain_fixed_based_on_the_user_s_bmi() {
 	      
 	}
 	
-	@Then("Should display the user’s weight as entered during the onboarding process.")
-	public void should_display_the_user_s_weight_as_entered_during_the_onboarding_process() {
-	      
-	}
 	
 	
-	@Then("Weight , Height , BMI , {int}-Day Goal,BMI Reference Guide")
-	public void weight_height_bmi_day_goal_bmi_reference_guide(Integer int1) {
-	      
-	}
 	
-	@Then("User should see user name on the top right side")
-	public void user_should_see_user_name_on_the_top_right_side() {
-	      
-	}
 	
-	@Then("Daily weigh in should be {string}")
-	public void daily_weigh_in_should_be(String string) {
-	      
-	}
 	
-	@Then("User should see search bar in dashboard")
-	public void user_should_see_search_bar_in_dashboard() {
-	      
-	}
+	
+
 	
 	@Then("slider should display a continuous gradient from blue → yellow → orange → red, representing increasing BMI values")
 	public void slider_should_display_a_continuous_gradient_from_blue_yellow_orange_red_representing_increasing_bmi_values() {
 	      
 	}
 	
-	@Then("Message “Free plan includes {int} days of limited tracking” should be displayed clearly below the slider")
-	public void message_free_plan_includes_days_of_limited_tracking_should_be_displayed_clearly_below_the_slider(Integer int1) {
-	      
-	}
+	
 	
 
 	
@@ -172,15 +190,7 @@ public class DashboardStepDef{
 	      
 	}
 	
-	@Then("User should see {int} menus in dashboard")
-	public void user_should_see_menus_in_dashboard(Integer int1) {
-	      
-	}
 	
-	@Then("User Name, {string},{string},{string},{string},  {string},{string}, {string},{string},  {string}")
-	public void user_name(String string, String string2, String string3, String string4, String string5, String string6, String string7, String string8, String string9) {
-	      
-	}
 
 	
 	/*-------------- Health Conditions - with condition--------------*/

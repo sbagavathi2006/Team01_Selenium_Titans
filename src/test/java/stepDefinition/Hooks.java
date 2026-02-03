@@ -2,6 +2,7 @@ package stepDefinition;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import driverFactorySetUp.DriverFactory;
@@ -10,6 +11,7 @@ import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.java.Scenario;
+import org.openqa.selenium.WebDriver;
 import utilities.ConfigReader;
 import utilities.GoogleDriveDownloader;
 
@@ -27,6 +29,8 @@ public static void downloadTestData() {
      }
 	 
     if (!isExcelDownloaded) {
+
+
         String fileId = "1EoabtMzSHkckM33lWEhj-7crq78AJsjl"; 
         String localPath = ConfigReader.getProperty("test_data_path");
         try {
@@ -47,6 +51,9 @@ public void setUp(Scenario scenario) {
     System.out.println("Set browser type from before setup:" + DriverFactory.getBrowser());
     DriverFactory.getDriver();
     DriverFactory.setupBrowser();
+    
+    DriverFactory.getDriver().manage().deleteAllCookies();
+    DriverFactory.getDriver().get(ConfigReader.getProperty("url")); 
 }
 
 @AfterStep
@@ -63,8 +70,6 @@ public void tearDown() {
 	logger.info("Closing WebDriver...");
     DriverFactory.quitDriver(); 
 }
-
-
 
 }
 

@@ -19,11 +19,9 @@ public class SignUpPage {
     WebDriver driver;
     CommonMethods common;
     ExcelUtils excel;
-	private TestContextSetup testContext;
 
-    public SignUpPage(WebDriver driver, TestContextSetup testContext){
+    public SignUpPage(WebDriver driver){
         this.driver = driver;
-        this.testContext = testContext;
         this.common = new CommonMethods(driver);
         this.excel = new ExcelUtils(ConfigReader.getProperty("test_data_path"));
     }
@@ -147,14 +145,13 @@ public class SignUpPage {
             return "";
         }
     }
-
-    public void registerWithValidDynamicData() {
+    public void registerWithValidDynamicData(TestContextSetup context) {//passing context as a parameter to set email & pwd values 
         String random = CommonMethods.generateRandomString();
         String email = random + "@gmail.com";
         String password = random + "@@123";
         
-        testContext.setScenarioData("EMAIL", email);
-        testContext.setScenarioData("PASSWORD", password);
+        context.setScenarioData("EMAIL", email);
+        context.setScenarioData("PASSWORD", password);
 
         enterEmail(email);
         enterPassword(password);

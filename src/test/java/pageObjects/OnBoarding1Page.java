@@ -13,13 +13,7 @@ public class OnBoarding1Page {
     public OnBoarding1Page(WebDriver driver) {
         this.driver = driver;
     }	  
-    
-//    private By btnSignUp = By.xpath("//button[text()='Sign Up']");
-//    private By emailID = By.id(":r5:-form-item");
-//    private By pwd = By.name("password");
-//    private By confpwd = By.name("confirmPassword");
-//    private By termCondi = By.id(":r8:-form-item");
-//	private By btnRegister = By.xpath("//button[text()='Register']");
+
 	private By pageTitle = By.xpath("//h2[text() ='Upload Your Recent Blood Work']");
 	private By supportingText =  By.xpath("//p[contains(text(), 'Welcome to')]");
 	private By onboardingProgress = By.xpath("//span[text() = 'Onboarding Progress']");
@@ -30,18 +24,6 @@ public class OnBoarding1Page {
 	private By skipNowText = By.xpath("//p[contains(text(), 'continue without uploading')]");
 	private By btnContWithOutReport = By.xpath("//button[text() = 'Continue Without Report']");
 	private By secNote = By.xpath("//p[contains(text(), ' third parties')]");	
-
-//	public void clickbtnSignUp() {
-//        driver.findElement(btnSignUp).click();
-//	}
-//	
-//	public void clickBtnRegister(String email, String password) {
-//	    driver.findElement(emailID).sendKeys(email);
-//	    driver.findElement(pwd).sendKeys(password);
-//	    driver.findElement(confpwd).sendKeys(password);
-//	    driver.findElement(termCondi).click();
-//	    driver.findElement(btnRegister).click();
-//	}
 	
 	public boolean isOBPage1TitleDisplayed() {
 		return  driver.findElement(pageTitle).isDisplayed();
@@ -74,10 +56,7 @@ public class OnBoarding1Page {
 	public boolean isMax10MBDisplayed() {
 		return driver.findElement(pdfFileSize).isDisplayed();
 	}
-//	--changed not using
-	public boolean isSkipNowCardDisplayed() {
-		return driver.findElement(skipNow).isDisplayed();
-	}
+
 //	Added Newly due to element not found, so implement wait
 	public WebElement getSkipNowCard() {
         return CommonMethods.waitForVisibility(skipNow);

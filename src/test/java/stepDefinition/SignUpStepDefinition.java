@@ -21,13 +21,19 @@ public class SignUpStepDefinition {
 
     WebDriver driver;
     SignUpPage signUp;
-    TestContextSetup testContext;
+    TestContextSetup context;
+    
+    public SignUpStepDefinition(TestContextSetup context) {
+        this.context = context;
+        this.driver = context.getDriver();
+        this.signUp = context.signUpPage();
+    }
 
     @Given("user is on the HerBalance launch page")
     public void user_is_on_the_her_balance_launch_page() {
         driver = DriverFactory.getDriver();
        // driver.get(ConfigReader.getProperty("url"));
-        signUp = new SignUpPage(driver, testContext);
+        signUp = new SignUpPage(driver);
     }
 
     @When("user clicks the Sign Up button")
@@ -81,7 +87,7 @@ public class SignUpStepDefinition {
 
     @When("user enters valid Email ID, Password, and Confirm Password and clicks Register")
     public void register_valid_credentials() {
-        signUp.registerWithValidDynamicData();
+        signUp.registerWithValidDynamicData(context);
     }
 
     @Then("user should be redirected to the onboarding step")

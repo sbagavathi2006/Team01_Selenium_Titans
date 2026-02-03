@@ -1,17 +1,11 @@
 package stepDefinition;
 
-import static org.testng.Assert.assertTrue;
-
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
 import context.TestContextSetup;
-import driverFactorySetUp.DriverFactory;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import pageObjects.OnBoarding1Page;
-import utilities.CommonMethods;
 import utilities.LoggerLoad;
 
 public class OnBoarding1StepDef {
@@ -31,18 +25,7 @@ public class OnBoarding1StepDef {
 
 	@When("User clicks register button after entering valid details")
 	public void user_clicks_register_button_after_entering_valid_details() {
-//		String randomString = CommonMethods.generateRandomString();
-//		System.out.println(randomString);
-//		String email = randomString + "@gmail.com";
-//		testContext.setScenarioData("email", email);
-//		String password = randomString;
-//		testContext.setScenarioData("password", password);
-//		testContext.onBrdPage1().clickBtnRegister(email, password);
-//		LoggerLoad.info("On boarding started for the emailid: " +email);
-		String email = (String) testContext.getScenarioData("EMAIL");
-		String pwd = (String) testContext.getScenarioData("PASSWORD");
-
-		testContext.signUpPage().registerWithValidDynamicData();
+		testContext.signUpPage().registerWithValidDynamicData(testContext);
 		Assert.assertTrue(testContext.onBrdPage1().isOBPage1TitleDisplayed(),
 				"User is not in the onboarding page.");
 	    LoggerLoad.info("Onboarding Page loaded");

@@ -1,7 +1,7 @@
 Feature: Weight Tracking UI Verification
 
   Background:
-Given User is on Her balance Home page after successful login
+  Given User is on Her balance Home page after successful login
 
   Scenario: Verify if the Header text is displayed
     When User navigates to the Activity Insights tab - Weight Tracking page
@@ -9,11 +9,11 @@ Given User is on Her balance Home page after successful login
 
   Scenario: Verify subtitle Free Plan-7 Days Tracking is displayed
     When User navigates to the Activity Insights tab - Weight Tracking page
-    Then Subtitle text "free Plan - 7 Days Tracking" should be displayed
+    Then Subtitle text "Free Plan - 7 Days Tracking" should be displayed
 
   Scenario: Verify if Back to Dashboard button is visible
     When User navigates to the Activity Insights tab - Weight Tracking page
-    Then "Back to Dashboard" button should be visible
+    Then Back to Dashboard button is be displayed
 
   Scenario Outline:  Verify if 3 Cards for Weight info are displayed
     When User navigates to the Activity Insights tab - Weight Tracking page
@@ -42,11 +42,11 @@ Given User is on Her balance Home page after successful login
 
   Scenario:  Verify if Goal weight value is displayed
     When User navigates to the Activity Insights tab - Weight Tracking page
-    Then Goal weight should be displayed
+    Then Goal weight option should be displayed
 
   Scenario: Verify if Progress overview section is visible
     When User navigates to the Activity Insights tab - Weight Tracking page
-    Then Header should be displayed as  "Progress overview"
+    Then Header should be displayed as "Progress overview" text
 
   Scenario: Verify if Subtext in progress bar section is displayed
     When User navigates to the Activity Insights tab - Weight Tracking page
@@ -54,7 +54,7 @@ Given User is on Her balance Home page after successful login
 
   Scenario: Verify if Completion percentage is shown
     When User navigates to the Activity Insights tab - Weight Tracking page
-    Then Completion percentage should be displayed
+    Then Completion percentage should be displayed in percentage format
 
   Scenario: Verify if Weight lost is displayed
     When User navigates to the Activity Insights tab - Weight Tracking page
@@ -88,7 +88,7 @@ Given User is on Her balance Home page after successful login
 
   Scenario: Verify if Log section header is visible
     When User navigates to the Activity Insights tab - Weight Tracking page
-    Then "Log Today's Weight" should be visible
+    Then "Log Today's Weight" section sshould be displayed
 
   Scenario Outline: Verify if Fields in log section is displayed
     When User navigates to the Activity Insights tab - Weight Tracking page
@@ -101,7 +101,7 @@ Given User is on Her balance Home page after successful login
 
   Scenario: Verify if Tracking details are displayed
     When User navigates to the Activity Insights tab - Weight Tracking page
-    Then Section should indicate the current tracking day
+    Then Section should indicate the current tracking day at the left log todays weight section
 
   Scenario: Verify if Log Weight button appears in default state
     When User navigates to the Activity Insights tab - Weight Tracking page
@@ -109,7 +109,7 @@ Given User is on Her balance Home page after successful login
 
   Scenario:Verify if BMI is auto-calculated after entering weight
     When User enters valid value in weight as "70" in Log Today's weight section
-    Then "BMI" field should auto-calculate
+    Then "BMI" field should auto-calculated based on the entered weight value
 
 
 

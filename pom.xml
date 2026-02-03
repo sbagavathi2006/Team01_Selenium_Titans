@@ -3,6 +3,8 @@
   <groupId>Team01_Selenium_Titans</groupId>
   <artifactId>Team01_Selenium_Titans</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
+
   <dependencies>
        <!--
        https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
@@ -108,6 +110,7 @@
              </configuration>
           </plugin>
        </plugins>
-    </build>  
+    </build> 
+  
   
 </project>

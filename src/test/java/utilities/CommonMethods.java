@@ -27,8 +27,8 @@ public class CommonMethods {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
     
-    public static WebElement waitForClickable(By locator) {
-        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    public WebElement waitForClickable(By activityInsightBtn) {
+        return wait.until(ExpectedConditions.elementToBeClickable(activityInsightBtn));
     }
 
        public WebElement waitForPresence(By locator) {
@@ -46,6 +46,7 @@ public class CommonMethods {
            return salt.toString();
        }
        
+
        
        public boolean isDisplayed(By locator) {
     	   try {
@@ -118,5 +119,8 @@ public class CommonMethods {
     	}
        
      
-       
+
+       public static int generateRandomAge() {
+    	    return new Random().nextInt(83) + 18;
+       }
 }

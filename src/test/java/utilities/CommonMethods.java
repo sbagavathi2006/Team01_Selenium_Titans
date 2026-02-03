@@ -5,15 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import driverFactorySetUp.DriverFactory;
+
+
 public class CommonMethods {
-	  WebDriver driver;
-	   static WebDriverWait wait;
+	  public static WebDriver driver;
+	   public static WebDriverWait wait;
 	  
 	   public CommonMethods(WebDriver driver) {
 	        this.driver = driver;
@@ -58,7 +62,41 @@ public class CommonMethods {
        public void click(By locator) {
 	        waitForClickable(locator).click();
 	    }
-       
+
+
+    public static boolean webClickByLocator(By locator) {
+        // Implementation of the Fluent Wait
+        Wait<WebDriver> fluentWait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(15))
+                .pollingEvery(Duration.ofMillis(500))
+                .ignoring(StaleElementReferenceException.class)
+                .ignoring(NoSuchElementException.class);
+
+        try {
+            WebElement element = fluentWait.until(d -> d.findElement(locator));
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            try {
+                Actions action = new Actions(driver);
+                action.moveToElement(element).click().perform();
+            } catch (Exception e) {
+                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+            }
+            return true;
+        } catch (Exception e) {
+            System.err.println("Failed to click element after Fluent Wait: " + locator);
+            return false;
+        }
+    }
+    public static String waitForDomAttribute(By locator, String attribute, int timeoutInSeconds) {
+	    try {
+	        WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(timeoutInSeconds));
+	        return wait.until(driver -> driver.findElement(locator).getDomAttribute(attribute));
+	    } catch (Exception e) {
+	        LoggerLoad.error("Failed to get DOM attribute '" + attribute + "' for element: " 
+	                         + locator + ". Exception: " + e.getMessage());
+	        return "";
+	    }
+	}    
        
        public int getElementsCount(By locator) {
            return driver.findElements(locator).size();

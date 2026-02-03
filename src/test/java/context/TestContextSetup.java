@@ -9,7 +9,7 @@ import driverFactorySetUp.DriverFactory;
 import pageObjects.DashboardPage;
 import pageObjects.EditYourProfilePage;
 import pageObjects.OnBoarding1Page;
-import pageObjects.OnBoarding4Page;
+import pageObjects.OnBoarding3Page;
 import pageObjects.SignUpPage;
 
 public class TestContextSetup {
@@ -18,7 +18,7 @@ public class TestContextSetup {
 	private DashboardPage dashboardPage;
     private EditYourProfilePage editProfilePage;
 	private OnBoarding1Page onBrdPage1;
-	private OnBoarding4Page onBrdPage4;
+	private OnBoarding3Page onBrdPage4;
 	private SignUpPage signUpPage;
 
     
@@ -32,7 +32,7 @@ public class TestContextSetup {
         this.dashboardPage = new DashboardPage(driver);
         this.editProfilePage = new EditYourProfilePage(driver);
         this.onBrdPage1 = new OnBoarding1Page(driver);
-        this.onBrdPage4 = new OnBoarding4Page(driver);
+        this.onBrdPage4 = new OnBoarding3Page(driver);
         this.signUpPage = new SignUpPage(driver);
 
         this.sharedData = new HashMap<>();
@@ -55,7 +55,7 @@ public class TestContextSetup {
         return onBrdPage1;
     }
 
-    public OnBoarding4Page onBrdPage4() {
+    public OnBoarding3Page onBrdPage4() {
         return onBrdPage4;
     }
     

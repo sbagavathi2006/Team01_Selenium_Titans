@@ -6,14 +6,13 @@ import context.TestContextSetup;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import pageObjects.OnBoarding1Page;
 import utilities.LoggerLoad;
 
-public class OnBoarding4StepDef {
+public class OnBoarding3StepDef {
 	
 	private TestContextSetup testContext;
 	
-    public OnBoarding4StepDef(TestContextSetup context) {
+    public OnBoarding3StepDef(TestContextSetup context) {
    	 this.testContext = context;
    }
 	

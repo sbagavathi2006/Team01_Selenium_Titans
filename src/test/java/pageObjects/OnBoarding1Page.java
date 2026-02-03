@@ -14,12 +14,12 @@ public class OnBoarding1Page {
         this.driver = driver;
     }	  
     
-    private By btnSignUp = By.xpath("//button[text()='Sign Up']");
-    private By emailID = By.id(":r5:-form-item");
-    private By pwd = By.name("password");
-    private By confpwd = By.name("confirmPassword");
-    private By termCondi = By.id(":r8:-form-item");
-	private By btnRegister = By.xpath("//button[text()='Register']");
+//    private By btnSignUp = By.xpath("//button[text()='Sign Up']");
+//    private By emailID = By.id(":r5:-form-item");
+//    private By pwd = By.name("password");
+//    private By confpwd = By.name("confirmPassword");
+//    private By termCondi = By.id(":r8:-form-item");
+//	private By btnRegister = By.xpath("//button[text()='Register']");
 	private By pageTitle = By.xpath("//h2[text() ='Upload Your Recent Blood Work']");
 	private By supportingText =  By.xpath("//p[contains(text(), 'Welcome to')]");
 	private By onboardingProgress = By.xpath("//span[text() = 'Onboarding Progress']");

@@ -23,8 +23,8 @@ public class OnBoarding1StepDef {
    }
 	@Given("User is on sign up page")
 	public void user_is_on_sign_up_page() {
-		testContext.signUpPage().clickbtnSignUp();
-		Assert.assertTrue(testContext.signUpPage().isBtnSignUpRegisterDisplayed(),
+		testContext.signUpPage().clickSignUpButton();
+		Assert.assertTrue(testContext.signUpPage().isRegisterButtonDisplayed(),
 				"User is not in the auth page.");
 	    LoggerLoad.info("Signup Page loaded");
 	}
@@ -42,7 +42,7 @@ public class OnBoarding1StepDef {
 		String email = (String) testContext.getScenarioData("EMAIL");
 		String pwd = (String) testContext.getScenarioData("PASSWORD");
 
-		testContext.signUpPage().doRegisterForValidData(email,pwd);
+		testContext.signUpPage().registerWithValidDynamicData();
 		Assert.assertTrue(testContext.onBrdPage1().isOBPage1TitleDisplayed(),
 				"User is not in the onboarding page.");
 	    LoggerLoad.info("Onboarding Page loaded");

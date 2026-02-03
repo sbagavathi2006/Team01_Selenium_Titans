@@ -6,7 +6,7 @@ Feature: OnBoarding4
   Background: 
     Given User is in upload blood report page
     When User clicks continue without report
-@tagBaga
+
   Scenario: Display onboarding progress
     Then Onboarding progress bar is displayed
 

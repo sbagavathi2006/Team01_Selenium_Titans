@@ -8,7 +8,6 @@ Feature: OnBoarding1
     Given User is on sign up page
     When User clicks register button after entering valid details 
     
-    @tagBaga   
   Scenario: Title of the onboarding step one
     Then Title of the page should be Upload Your Recent Blood Work
 

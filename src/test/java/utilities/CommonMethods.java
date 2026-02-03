@@ -1,6 +1,8 @@
 package utilities;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.*;
@@ -95,5 +97,26 @@ public class CommonMethods {
 	        return "";
 	    }
 	}    
+       
+       public int getElementsCount(By locator) {
+           return driver.findElements(locator).size();
+       }
+       
+       public List<String> getElementsListText(By locator) {
+
+    	    List<WebElement> elements = driver.findElements(locator);
+    	    List<String> texts = new ArrayList<>();
+
+    	    for (WebElement element : elements) {
+    	        String text = element.getText().trim();
+    	        if (!text.isEmpty()) {
+    	            texts.add(text);
+    	        }
+    	    }
+    	
+    	    return texts;
+    	}
+       
+     
        
 }

@@ -10,6 +10,9 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import driverFactorySetUp.DriverFactory;
+
+
 public class CommonMethods {
 	  public static WebDriver driver;
 	   public static WebDriverWait wait;
@@ -82,6 +85,15 @@ public class CommonMethods {
             return false;
         }
     }
-       
+    public static String waitForDomAttribute(By locator, String attribute, int timeoutInSeconds) {
+	    try {
+	        WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(timeoutInSeconds));
+	        return wait.until(driver -> driver.findElement(locator).getDomAttribute(attribute));
+	    } catch (Exception e) {
+	        LoggerLoad.error("Failed to get DOM attribute '" + attribute + "' for element: " 
+	                         + locator + ". Exception: " + e.getMessage());
+	        return "";
+	    }
+	}    
        
 }

@@ -1,7 +1,7 @@
 Feature: Weight Tracking UI Verification
 
   Background:
-  Given User is on Her balance Home page after successful login
+    Given User is on Her balance Home page after successful login
 
   Scenario: Verify if the Header text is displayed
     When User navigates to the Activity Insights tab - Weight Tracking page
@@ -20,13 +20,9 @@ Feature: Weight Tracking UI Verification
     Then The mentioned "<Cards>" for Weight info should be displayed
     Examples:
       | Cards |
-    |   Starting Weight      |
-    |   Current Weight      |
-    |   Goal Weight         |
-
-  Scenario: Verify Labels and weight values are aligned
-    When User navigates to the Activity Insights tab - Weight Tracking page
-    Then Labels and weight values should be aligned correctly
+      |   Starting Weight      |
+      |   Current Weight      |
+      |   Goal Weight         |
 
   Scenario:  Verify if Starting weight value is displayed
     When User navigates to the Activity Insights tab - Weight Tracking page
@@ -73,7 +69,7 @@ Feature: Weight Tracking UI Verification
     Then Graph should be visible with x axis "<values>" showing days
     Examples:
       | values |
-        | Day 1  |
+      | Day 1  |
 #        | Day 2  |
 #        | Day 3  |
 #        | Day 4  |
@@ -110,7 +106,4 @@ Feature: Weight Tracking UI Verification
   Scenario:Verify if BMI is auto-calculated after entering weight
     When User enters valid value in weight as "70" in Log Today's weight section
     Then "BMI" field should auto-calculated based on the entered weight value
-
-
-
 

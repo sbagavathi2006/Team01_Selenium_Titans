@@ -11,3 +11,6 @@ Feature: Menstrual Cycle Tracker - UI Verification
       | ExpectedOutcome                                                                                                         |
       | 5 sections should be visible(Current Cycle Status, Upcoming Phases, Recommended Activities, Nutrtion Tips, Next Period) |
       | "Update Cycle Information" button should be visible                                                                     |
+      |"Back to Dashboard" button is visible|
+      |"Add Period Log" button should be visible |
+   #   |"Cycle Overview" tab should be visible |

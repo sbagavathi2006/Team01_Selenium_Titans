@@ -56,7 +56,6 @@ public class WorkoutStepDefintion {
 	public void user_clicks_workout_button_on_navigation_bar() {
 		  workoutPage.ClickWorkoutButton();	
 		  Assert.assertEquals(workoutPage.getWorkoutButtonText(), "Workout");
-
 	}
 	
 

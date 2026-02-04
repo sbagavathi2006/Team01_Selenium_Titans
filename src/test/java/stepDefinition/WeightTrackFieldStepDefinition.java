@@ -9,6 +9,8 @@ import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import pageObjects.WeightTrackFieldPage;
 
+import java.util.List;
+
 public class WeightTrackFieldStepDefinition {
 
     private static Logger logger = LogManager.getLogger();
@@ -23,7 +25,7 @@ public class WeightTrackFieldStepDefinition {
     @Given("User is on Her balance Home page after successful login")
     public void user_is_on_her_balance_home_page_after_successful_login() {
         weightTrackFieldPage.loginToPortal();
-         logger.info("Login successful, user is on Her Balance Home page");
+        logger.info("Login successful, user is on Her Balance Home page");
     }
 
     @When("User navigates to the Activity Insights tab - Weight Tracking page")
@@ -58,16 +60,15 @@ public class WeightTrackFieldStepDefinition {
     }
 
     @Then("The mentioned {string} for Weight info should be displayed")
-    public void the_mentioned_for_weight_info_should_be_displayed(String string) {
-
-
+    public void the_mentioned_for_weight_info_should_be_displayed(String cardName) {
+        List<String> actualcards = weightTrackFieldPage.getCardText(cardName);
+        Assert.assertEquals(actualcards.size(), 3, "Expected 3 cards are displayed");
+        Assert.assertTrue(actualcards.get(0).contains("Starting Weight"),  "Starting Weight card name is not matching");
+        Assert.assertTrue(actualcards.get(1).contains("Current Weight") , "Current Weight card name is not matching");
+        Assert.assertTrue(actualcards.get(2).contains("Goal Weight") , "Goal Weight card name is not matching");
+        logger.info("Card names are verified and matched successfully " );
     }
 
-    @Then("Labels and weight values should be aligned correctly")
-    public void labels_and_weight_values_should_be_aligned_correctly() {
-
-
-    }
 
     @Then("Starting Weight value should be mapped from the onboarding process")
     public void starting_weight_value_should_be_mapped_from_the_onboarding_process() {
@@ -77,17 +78,29 @@ public class WeightTrackFieldStepDefinition {
 
     @Then("Current Weight and starting weight value should be same value for new user")
     public void current_weight_and_starting_weight_value_should_be_same_value_for_new_user() {
+        weightTrackFieldPage.verifyCurrentWeight();
+        if(weightTrackFieldPage.getLatestLogWeight()== null){
+            //new user
+            Assert.assertEquals(weightTrackFieldPage.verifyCurrentWeight(),weightTrackFieldPage.verifyStartWeight(), "New user current and starting weight are not same");
+            logger.info("As user is new, Current weight and Starting weight values are same");
+        }
+        //existing user
+        else{
+            Assert.assertEquals(weightTrackFieldPage.verifyCurrentWeight(), weightTrackFieldPage.getLatestLogWeight(), "Existing user current weight and latest log weight are not same");
+            logger.info("Existing user current weight and latest log weight are same");
 
+        }
     }
 
     @Then("according to the recent weight log, Weight value should be mapped")
     public void according_to_the_recent_weight_log_weight_value_should_be_mapped() {
 
+
     }
 
     @Then("Goal weight option should be displayed")
     public void goal_weight_option_should_be_displayed() {
-
+        weightTrackFieldPage.getGoalWeight();
     }
 
     @Then("Header should be displayed as {string} text")

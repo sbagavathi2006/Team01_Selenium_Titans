@@ -79,10 +79,12 @@ public class DriverFactory {
 	    
 	    public static void setupBrowser() {
 	       WebDriver localDriver = driver.get();
+	       localDriver.manage().deleteAllCookies();
 	       localDriver.get(ConfigReader.getProperty("url"));
 	       localDriver.manage().window().maximize();
 	       localDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		   localDriver.manage().deleteAllCookies();
+
 	    }
 	    
 	    public static String getBrowserName() {

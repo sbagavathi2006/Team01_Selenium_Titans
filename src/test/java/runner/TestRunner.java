@@ -15,6 +15,8 @@ import io.cucumber.testng.CucumberOptions;
 		monochrome = false,
 
 	//	tags = "@checking",
+
+		tags = "@checking",
 		features = {"src/test/resources/features/"},
 		glue = {"stepDefinition"})
 		

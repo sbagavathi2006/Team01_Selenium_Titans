@@ -1,84 +1,114 @@
 package stepDefinition;
 
+import java.util.List;
+
+import org.testng.Assert;
+
+import context.TestContextSetup;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class EditYourProfileStepDef {
 
+	private TestContextSetup testContext;
+	private String userName = "mathu";
+	private int age = 40;
+	private int weight = 58;
+	private int height = 155;
+	
+    public EditYourProfileStepDef(TestContextSetup context) {
+    	 this.testContext = context;
+    }
+    
+	@When("User is on Dashboard page")
+	public void user_is_on_dashboard_page() {
+		testContext.dashboardPage().tempLogin();
+	}	
+	
 	/*-------------- Free Plan Dashboard UI --------------*/
 	
 	@When("User clicks on profile name and click on edit profile")
 	public void user_clicks_on_profile_name_and_click_on_edit_profile() {
-	    
+	    testContext.editProfilePage().clickUName();
+	    testContext.editProfilePage().clickEditProfile();	
 	}
 
-	@Then("Edit your Profile should be visible")
-	public void edit_your_profile_should_be_visible() {
-	   
+	@Then("{string} should be visible")
+	public void should_be_visible(String expectedText) {
+	 Assert.assertEquals(testContext.editProfilePage().getEditProfileText(), expectedText);
 	}
 
-	@Then("Update your personal information and preferences should be visible")
-	public void update_your_personal_information_and_preferences_should_be_visible() {
-	  
+	@Then("{string} text should be visible")
+	public void text_should_be_visible(String expectedText) {
+		Assert.assertEquals(testContext.editProfilePage().getEditProfileSubText(), expectedText);
 	}
 
-	@Then("There should be exactly {int} tabs")
-	public void there_should_be_exactly_tabs(Integer int1) {
-	   
+	@Then("User should see below tabs {string}")
+	public void user_should_see_below_tabs(String expectedTab) {
+		List<String> actualTab = testContext.editProfilePage().getEditYourProfileTabs();
+		 Assert.assertTrue(actualTab.contains(expectedTab));
 	}
 
-	@Then("“Basic Information” ,“Body Metrics”,“Preferences & Health” tabs should be visible")
-	public void basic_information_body_metrics_preferences_health_tabs_should_be_visible() {
-	
-	}
 
-	@Then("Basic Information should be visible by default")
-	public void basic_information_should_be_visible_by_default() {
-	    
+	@Then("{string} should be visible by default")
+	public void should_be_visible_by_default(String expectedText) {
+		Assert.assertEquals(testContext.editProfilePage().getEditYourProfileTabs().get(0), expectedText);
+
 	}
 
 	@Then("Back button should be visible")
 	public void back_button_should_be_visible() {
-	  
+		 Assert.assertTrue(testContext.editProfilePage().backIsDisplayed());
 	}
 	
 	/*-------------- Edit Your Profile-Basic Information -UI verifications --------------*/
 	
-	@When("User navigates to Edit Profile")
-	public void user_navigates_to_edit_profile() {
-	   
+	@Then("Basic Information should be visible inside section")
+	public void basic_information_should_be_visible_inside_section() {
+	    Assert.assertTrue(testContext.editProfilePage().basicInfoTabIsDisplayed());
 	}
 
-	
-	@When("User clicks Basic Information tab")
-	public void user_clicks_basic_information_tab() {
-	    
-	}
-
-	@Then("{string} should be visible inside section")
-	public void should_be_visible_inside_section(String string) {
-	  
-	}
 
 	@Then("{string} sub text should be visible")
-	public void sub_text_should_be_visible(String string) {
-	    
+	public void sub_text_should_be_visible(String expectedText) {
+	    Assert.assertEquals(testContext.editProfilePage().getBasicInfoSubText(), expectedText);
 	}
 
 	@Then("Should display the user’s Name and age as entered during the onboarding process.")
 	public void should_display_the_user_s_name_and_age_as_entered_during_the_onboarding_process() {
-	   
+	   Assert.assertEquals(testContext.editProfilePage().getBasicInfoName(), userName);
+	  Assert.assertEquals(Integer.parseInt(testContext.editProfilePage().getBasicInfoAge()), age);
 	}
+	
+	@When("User clicks {string} button")
+	public void user_clicks_button(String string) {
+	   testContext.editProfilePage().clickNextBodyMetrics();
+	}
+	
+	@Then("User should see {string} next Section")
+	public void user_should_see_next_section(String expectedText) {
+	Assert.assertEquals(testContext.editProfilePage().getBodyMetricsText(), expectedText);
+	}
+
+	@When("User clicks on Back button on Body Metric section")
+	public void user_clicks_on_back_button_on_body_metric_section() {
+	   testContext.editProfilePage().clickBackSub();
+	}
+
+	@Then("User should see {string} previous section")
+	public void user_should_see_previous_section(String expectedText) {
+		Assert.assertEquals(testContext.editProfilePage().getBasicInfoText(), expectedText);
+		
+	}
+	
+	
 
 	@Then("Name and Age fields should be properly aligned vertically with equal spacing")
 	public void name_and_age_fields_should_be_properly_aligned_vertically_with_equal_spacing() {
 	   
 	}
 
-	@When("User clicks {string} Button")
-	public void user_clicks_button(String string) {
-	   
-	}
+
 
 	@Then("“Next: Body Metrics” button should be visible and enabled")
 	public void next_body_metrics_button_should_be_visible_and_enabled() {
@@ -89,28 +119,27 @@ public class EditYourProfileStepDef {
 	
 	@When("User clicks Body Metrics Tab")
 	public void user_clicks_body_metrics_tab() {
-	 
+	 testContext.editProfilePage().clickBodyMetricsTab();
 	}
 
 	@Then("Should display the user’s Weight and Height are as entered during the onboarding process")
 	public void should_display_the_user_s_weight_and_height_are_as_entered_during_the_onboarding_process() {
-	   
+	 Assert.assertEquals(Integer.parseInt(testContext.editProfilePage().getBodyMetricsWeight()), weight);
+		  Assert.assertEquals(Integer.parseInt(testContext.editProfilePage().getBodyMetricsHeight()), height);
+		
 	}
 
-	@Then("Please enter your height in decimal format should be visible")
-	public void please_enter_your_height_in_decimal_format_should_be_visible() {
+
+	@Then("following {string} should be visible")
+	public void following__should_be_visible(String expectedText) {
+	    List<String> actualText = testContext.editProfilePage().getBodyMetricsWeightDD();
 	 
 	}
 
-	@Then("\"kg\"or {string} unit values in dropdown should be visible and enabled")
-	public void kg_or_unit_values_in_dropdown_should_be_visible_and_enabled(String string) {
-	    
-	}
-
-	@Then("{string} or {string} unit values in dropdown should be visible and enabled")
-	public void or_unit_values_in_dropdown_should_be_visible_and_enabled(String string, String string2) {
-	   
-	}
+//	@Then("{string} or {string} unit values in dropdown should be visible and enabled")
+//	public void or_unit_values_in_dropdown_should_be_visible_and_enabled(String string, String string2) {
+//	   
+//	}
 
 	@Then("Weight and Height fields should be properly aligned vertically with equal spacing")
 	public void weight_and_height_fields_should_be_properly_aligned_vertically_with_equal_spacing() {
@@ -141,20 +170,7 @@ public class EditYourProfileStepDef {
 	public void next_preferences_button_should_be_visible_and_enabled() {
 	   
 	}
-	@Then("User should see Body Metric Section")
-	public void user_should_see_body_metric_section() {
 	
-	}
-
-	@When("User clicks on Back Button on Body Metric section")
-	public void user_clicks_on_back_button_on_body_metric_section() {
-	   
-	}
-
-	@Then("User should see {string} section")
-	public void user_should_see_section(String string) {
-	  
-	}
 
 	@Then("User should see  Prefrences & Health Section")
 	public void user_should_see_prefrences_health_section() {

@@ -1,8 +1,23 @@
-<suite name="cross-browser">
-    <test name="ChromeTest">
-        <parameter name="browser" value="Chrome"/>
-        <classes>
-            <class name="runner.TestRunner"/>
-        </classes>
-    </test>
+
+<suite name="cross-browser" parallel="tests" thread-count="2">
+  
+  <listeners>
+    <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+  </listeners>
+
+  <test thread-count="2" parallel="methods" name="ChromeTest">
+    <parameter name="browser" value="Chrome"/>
+    <classes>
+      <class name="runner.TestRunner"/>
+    </classes>
+  </test>
+
+  <test name="EdgeTest">
+    <parameter name="browser" value="Edge"/>
+    <classes>
+      <class name="runner.TestRunner"/>
+    </classes>
+  </test>
+
 </suite>
+

@@ -1,3 +1,4 @@
+
 <suite name="cross-browser" parallel="tests" thread-count="2">
   
   <listeners>
@@ -19,3 +20,4 @@
   </test>
 
 </suite>
+

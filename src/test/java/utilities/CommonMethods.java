@@ -1,6 +1,8 @@
 package utilities;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.*;
@@ -10,6 +12,9 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import driverFactorySetUp.DriverFactory;
+
+
 public class CommonMethods {
 	  public static WebDriver driver;
 	   public static WebDriverWait wait;
@@ -18,15 +23,15 @@ public class CommonMethods {
 	        this.driver = driver;
 	        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 	    }
-	public  WebElement waitForVisibility(By locator) {
+	public static WebElement waitForVisibility(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
     
-    public static WebElement waitForClickable(By locator) {
-        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    public WebElement waitForClickable(By activityInsightBtn) {
+        return wait.until(ExpectedConditions.elementToBeClickable(activityInsightBtn));
     }
 
-       public  WebElement waitForPresence(By locator) {
+       public WebElement waitForPresence(By locator) {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
     
@@ -41,6 +46,7 @@ public class CommonMethods {
            return salt.toString();
        }
        
+
        
        public boolean isDisplayed(By locator) {
     	   try {
@@ -81,10 +87,8 @@ public class CommonMethods {
             System.err.println("Failed to click element after Fluent Wait: " + locator);
             return false;
         }
-    }
-    
-    
-    //jaanvi
+    }    
+  
     public void waitForPopupToDisappear() {
     	try {
     		wait.until(ExpectedConditions.invisibilityOfElementLocated(
@@ -95,5 +99,50 @@ public class CommonMethods {
     }
     }
 	  
+
+    public static String waitForDomAttribute(By locator, String attribute, int timeoutInSeconds) {
+	    try {
+	        WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(timeoutInSeconds));
+	        return wait.until(driver -> driver.findElement(locator).getDomAttribute(attribute));
+	    } catch (Exception e) {
+	        LoggerLoad.error("Failed to get DOM attribute '" + attribute + "' for element: " 
+	                         + locator + ". Exception: " + e.getMessage());
+	        return "";
+	    }
+	}    
        
+       public int getElementsCount(By locator) {
+           return driver.findElements(locator).size();
+       }
+
+       
+       public List<String> getElementsListText(By locator) {
+
+    	    List<WebElement> elements = driver.findElements(locator);
+    	    List<String> texts = new ArrayList<>();
+
+    	    for (WebElement element : elements) {
+    	        String text = element.getText().trim();
+    	        if (!text.isEmpty()) {
+    	            texts.add(text);
+    	        }
+    	    }
+    	
+    	    return texts;
+    	}
+       
+     
+
+       public static int generateRandomAge() {
+    	    return new Random().nextInt(83) + 18;
+       }
+
+    public static double extractNumber(String text) {
+        return Double.parseDouble(text.replaceAll("[^0-9.]", ""));
+    }
+
+
 }
+
+
+

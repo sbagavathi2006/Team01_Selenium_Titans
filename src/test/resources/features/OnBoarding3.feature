@@ -1,5 +1,5 @@
-@OnBoarding4
-Feature: OnBoarding4
+@OnBoarding3
+Feature: OnBoarding3
 
   #Onboarding Scenarios  Step 3  UI verifcation
   

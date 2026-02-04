@@ -82,7 +82,7 @@ public class DriverFactory {
 	       localDriver.manage().deleteAllCookies();
 	       localDriver.get(ConfigReader.getProperty("url"));
 	       localDriver.manage().window().maximize();
-	       localDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+	       localDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // 30 was value 
 		   localDriver.manage().deleteAllCookies();
 
 	    }

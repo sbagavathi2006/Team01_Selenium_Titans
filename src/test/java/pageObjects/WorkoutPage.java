@@ -2,7 +2,6 @@ package pageObjects;
 
 import java.time.Duration;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -14,7 +13,6 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import utilities.CommonMethods;
 import utilities.ConfigReader;
 import utilities.LoggerLoad;
@@ -26,12 +24,15 @@ public class WorkoutPage {
 	
 	public WorkoutPage(WebDriver driver) {
 		this.driver = driver;
-		this.commonMethods = new CommonMethods(driver);
+		this.commonMethods = new CommonMethods(driver);			
 	}
-	// By workoutBtn = By.cssSelector("button.group");
-
+	
+	By navbarItems = By.xpath("//div[@class='max-w-7xl mx-auto flex items-center justify-center space-x-4']//button");
 	By backToDashboard = By.xpath("//*[@class='text-sm']");
-	By workoutButton = By.xpath("//a[@href='/workouts']/button/span");
+	By workoutButton =  By.xpath("//a[@href='/workouts']/button"); 
+	By toastCloseBtn = By.xpath("//button[@toast-close]"); 
+
+
 	By DailyPersonalisedWorkout = By.xpath("//h1[text()='Daily Personalized Workouts']");
 	By DailyWorkoutPlan = By.xpath("//h2[text()='Daily Workout Plan']");
 	By AIDescription = By.xpath("//*[contains(text(), 'Fresh AI-powered workout tailored to your current cycle phase')]");
@@ -49,16 +50,23 @@ public class WorkoutPage {
     By PremiumPlanSection=By.xpath("//h3[contains(text(),'Ready to Transform Your Health Journey?')]");
     By PremiumPlanSectionDescription = By.xpath("//p[contains(text(),'Upgrade to access personalized')]");
     By SeePremiumPlansBtn = By.xpath("//button[contains(text(),'See Premium Plans')]");
+    
     public void waitforWorkoutButton() {
 		commonMethods.waitForClickable(workoutButton);
 	}	
+    public void ClickWorkoutButton() {
+    	
+    	    List<WebElement> items = driver.findElements(navbarItems);
+    	    WebElement workout = items.get(2);
 
-	public void ClickWorkoutButton() {		
-		commonMethods.waitForClickable(workoutButton).click();
-		LoggerLoad.info("URL after click: " + driver.getCurrentUrl());
-		LoggerLoad.info("WorkoutButton clicked");
-	}
-
+    	    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", workout);
+    	    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", workout);
+    	}    
+    public String getWorkoutButtonText() { 
+    	WebElement btn = commonMethods.waitForVisibility(workoutButton);
+    	return btn.getText(); 
+    	}
+    
 	public void ClickBackToDashboard() {
 		commonMethods.waitForClickable(backToDashboard).click();
 		LoggerLoad.info("BackToDashboard link clicked");

@@ -87,7 +87,19 @@ public class CommonMethods {
             System.err.println("Failed to click element after Fluent Wait: " + locator);
             return false;
         }
+    }    
+  
+    public void waitForPopupToDisappear() {
+    	try {
+    		wait.until(ExpectedConditions.invisibilityOfElementLocated(
+    				By.xpath("//li[@role='status']") 
+    				));
+    } catch (Exception e) { 
+    	LoggerLoad.info("Pop up cannot be closed");
     }
+    }
+	  
+
     public static String waitForDomAttribute(By locator, String attribute, int timeoutInSeconds) {
 	    try {
 	        WebDriverWait wait = new WebDriverWait(DriverFactory.getDriver(), Duration.ofSeconds(timeoutInSeconds));
@@ -102,6 +114,7 @@ public class CommonMethods {
        public int getElementsCount(By locator) {
            return driver.findElements(locator).size();
        }
+
        
        public List<String> getElementsListText(By locator) {
 

@@ -1,5 +1,8 @@
 package stepDefinition;
 
+import java.util.List;
+import java.util.Map;
+
 import org.testng.Assert;
 
 import driverFactorySetUp.DriverFactory;
@@ -7,7 +10,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pageObjects.OnBoarding6Page;
+
 import utilities.CommonMethods;
+import utilities.ExcelUtils;
 import utilities.LoggerLoad;
 
 public class OnBoarding6StepDef {
@@ -16,24 +21,19 @@ public class OnBoarding6StepDef {
 	
 	  public OnBoarding6StepDef() {
 		  onBrdPage6 = new OnBoarding6Page(DriverFactory.getDriver());
+		  
 	    }
 	
 	@Given("User completes onboarding until step {int}")
 	public void user_completes_onboarding_until_step(Integer int1) {
-		onBrdPage6.continueToStep1_2();
-		LoggerLoad.info("On boarding for step1&2 is succesfull");
-		onBrdPage6.continueToStep3();
-		LoggerLoad.info("On boarding for step3 is succesfull");
-		onBrdPage6.continueToStep4();
-		LoggerLoad.info("On boarding for step4 is succesfull");
-		onBrdPage6.continueToStep5();
-		LoggerLoad.info("On boarding for step5 is succesfull");
-		LoggerLoad.info("sucessfull on step6");
+		
+		onBrdPage6 .onBoarding_step(int1);
+		LoggerLoad.info("sucessfull on step 6");
 	}
 
 	@When("User clicks continue button without selecting last menstrual date")
 	public void user_clicks_continue_button_without_selecting_last_menstrual_date() {
-		onBrdPage6.clickstep6ContinueButton();
+		onBrdPage6 .clickContinueButton();
 	}
 
 	@Then("Error message {string} should be displayed")
@@ -50,5 +50,43 @@ public class OnBoarding6StepDef {
 		String actualError=onBrdPage6.verify_step6back_button();
 	    Assert.assertEquals(actualError,expectedError);
 	}
-
-}
+	@When("User clicks continue button after entering invalid value in date")
+	public void user_clicks_continue_button_after_entering_invalid_value_in_date() {
+		ExcelUtils excel = new ExcelUtils("src/test/resources/testdata/step7_onboarding.xlsx");
+	    List<Map<String, String>> step7Data = excel.getDataAll("OnBoardingStep7");
+	    for (Map<String, String> row : step7Data) {
+	        String date = row.get("InvalidDate");
+	        onBrdPage6.passingDate(date);
+	    }
+		
+	}
+	@When("User selects last menstrual date")
+	public void user_selects_last_menstrual_date() {
+		ExcelUtils excel = new ExcelUtils("src/test/resources/testdata/step7_onboarding.xlsx");
+	    List<Map<String, String>> step7Data = excel.getDataAll("OnBoardingStep7");
+	    for (Map<String, String> row : step7Data) {
+	        String date = row.get("validDate");
+	        onBrdPage6.passingDate(date);
+	    }
+		
+	}
+	@Then("{string} should be displayed")
+	public void should_be_displayed(String elementName) {
+		Assert.assertTrue(onBrdPage6.verifyUIElements_forStep6(elementName), elementName + " is not displayed");
+	}
+	@When("User clicks continue after selecting last menstrual date")
+	public void user_clicks_continue_after_selecting_last_menstrual_date() {
+		ExcelUtils excel = new ExcelUtils("src/test/resources/testdata/step7_onboarding.xlsx");
+	    List<Map<String, String>> step7Data = excel.getDataAll("OnBoardingStep7");
+	    for (Map<String, String> row : step7Data) {
+	        String date = row.get("InvalidDate");
+	        onBrdPage6.passingDate(date);
+	    }
+		onBrdPage6 .clickContinueButton();
+	}
+	@Then("{string} should be displayed for step7")
+	public void should_be_displayed_for_step7(String string) {
+		Assert.assertTrue(onBrdPage6.verifyStep7Element(string), string + " is not displayed");
+	}
+	
+	}

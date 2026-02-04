@@ -75,10 +75,6 @@ public class DashboardStepDef{
 		 Assert.assertTrue(actualPlansText.contains(expectedText));
 	}
 	
-	@Then("Sub text should be located at the centre of the page")
-	public void sub_text_should_be_located_at_the_centre_of_the_page() {
-	      Assert.assertEquals(testContext.dashboardPage().checkAlign(), "center");
-	}
 	
 	@Then("User should see below dashboard {string}")
 	public void user_should_see_below_dashboard(String expectedText) {

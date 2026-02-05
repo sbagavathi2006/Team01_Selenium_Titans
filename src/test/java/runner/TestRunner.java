@@ -7,14 +7,15 @@ import driverFactorySetUp.DriverFactory;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
-@CucumberOptions(plugin = { 
-		"pretty", "html:target/cucumber-reports/Team01_Selenium_Titans.html",
-		"json:target/cucumber-reports/Team01_Selenium_Titans.json",
-		"io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm" },
-		monochrome = false, 
-		dryRun = false,
-		features = { "src/test/resources/features/MenstrualPhaseLog.feature" }, 
-		glue = { "stepDefinition" })
+
+@CucumberOptions(
+		plugin = {"pretty", "html:target/cucumber-reports/Team01_Selenium_Titans.html",
+				  "json:target/cucumber-reports/Team01_Selenium_Titans.json", "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"},
+		monochrome = false,
+
+		tags = "@checking",
+		features = {"src/test/resources/features/"},
+		glue = {"stepDefinition"})
 
 public class TestRunner extends AbstractTestNGCucumberTests {
 	@Parameters({ "browser" })

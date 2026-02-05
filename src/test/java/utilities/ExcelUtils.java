@@ -50,4 +50,22 @@ public class ExcelUtils {
             }
             return sheetData;
         }
+	 public Map<String, String> getRowDataByScenario(String sheetName, String scenarioName) {
+
+	        List<Map<String, String>> allData = getDataAll(sheetName);
+
+	        for (Map<String, String> row : allData) {
+
+	            if (row.containsKey("Scenario") &&
+	                row.get("Scenario").equalsIgnoreCase(scenarioName)) {
+
+	                return row;
+	            }
+	        }
+
+	        throw new RuntimeException(
+	                "No data found in Excel for scenario: " + scenarioName);
+	    }
+	
+	
 }

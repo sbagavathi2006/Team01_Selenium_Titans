@@ -19,3 +19,4 @@ $RECYCLE.BIN/
 .project
 # Mac
 .DS_Store
+${project.build.directory}/

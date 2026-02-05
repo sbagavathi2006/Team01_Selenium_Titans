@@ -7,10 +7,7 @@ import java.util.Random;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 
 import driverFactorySetUp.DriverFactory;
 
@@ -154,7 +151,8 @@ public class CommonMethods {
     public static double extractNumber(String text) {
         return Double.parseDouble(text.replaceAll("[^0-9.]", ""));
     }
-
+    
+  
     public String getAlertMsg(By locator) {
     	try {
 	    	WebElement element = driver.findElement(locator);
@@ -197,6 +195,30 @@ public class CommonMethods {
     	            wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     	    scrollIntoView(element);
     }
+    
+    public String getAlertText() {
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        return alert.getText();
+    }
+    
+    public void enterTextAndAcceptAlert(String text) {
+    	 Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+    	        alert.sendKeys(text);
+    	    alert.accept();
+    }
+    
+    public void dismissAlert() {
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        alert.dismiss();
+    }
+
+
+    public static void sendKeys(By locator, String text) {
+        WebElement element = waitForVisibility(locator);
+        element.clear();
+        element.sendKeys(text);
+    }
+
 }
 
 

@@ -17,6 +17,7 @@ import utilities.GoogleDriveDownloader;
 
 public class Hooks {
 
+    private WebDriver driver;
 private static Logger logger = LogManager.getLogger();
 private static boolean isExcelDownloaded = false;
 
@@ -53,7 +54,19 @@ public void setUp(Scenario scenario) {
     DriverFactory.setupBrowser();
     
     DriverFactory.getDriver().manage().deleteAllCookies();
-    DriverFactory.getDriver().get(ConfigReader.getProperty("url")); 
+   // DriverFactory.getDriver().get(ConfigReader.getProperty("url")); 
+    // Default URL for ALL scenarios
+    String url = ConfigReader.getProperty("url");
+
+    // Override ONLY for UI login/signup validations
+    if (scenario.getSourceTagNames().contains("@ui")) {
+        url = ConfigReader.getProperty("ui_url");
+        logger.info("UI scenario detected → Navigating to UI URL");
+    } else {
+        logger.info("Functional scenario detected → Navigating to Functional URL");
+    }
+
+    DriverFactory.getDriver().get(url);
 }
 
 @AfterStep
@@ -67,8 +80,11 @@ public void afterStep(Scenario scenario) {
 
 @After
 public void tearDown() {
-	logger.info("Closing WebDriver...");
-    DriverFactory.quitDriver(); 
+    if (driver != null) {
+        logger.info("Closing WebDriver instance...");
+        DriverFactory.quitDriver();
+        driver = null;
+    }
 }
 
 }

@@ -1,16 +1,20 @@
 package stepDefinition;
 
 import java.util.List;
+import java.util.Map;
 
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import context.TestContextSetup;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import utilities.ExcelUtils;
 
 public class EditYourProfileStepDef {
 
 	private TestContextSetup testContext;
+	private ExcelUtils excel;
 	private String userName = "mathu";
 	private int age = 40;
 	private int weight = 58;
@@ -100,25 +104,14 @@ public class EditYourProfileStepDef {
 		Assert.assertEquals(testContext.editProfilePage().getBasicInfoText(), expectedText);
 		
 	}
-	
-	
-
-	@Then("Name and Age fields should be properly aligned vertically with equal spacing")
-	public void name_and_age_fields_should_be_properly_aligned_vertically_with_equal_spacing() {
-	   
-	}
 
 
-
-	@Then("“Next: Body Metrics” button should be visible and enabled")
-	public void next_body_metrics_button_should_be_visible_and_enabled() {
-	   
-	}
 	
 	/*-------------- Edit Your Profile-Body Metrics -UI verifications --------------*/
 	
 	@When("User clicks Body Metrics Tab")
 	public void user_clicks_body_metrics_tab() {
+	
 	 testContext.editProfilePage().clickBodyMetricsTab();
 	}
 
@@ -130,136 +123,183 @@ public class EditYourProfileStepDef {
 	}
 
 
+	@When("User clicks on Weight Dropdown")
+	public void users_clicks_on_weight_dropdown() {
+	 testContext.editProfilePage().clickBodyMetricsDD();
+	}
+	
+	
 	@Then("following {string} should be visible")
 	public void following__should_be_visible(String expectedText) {
 	    List<String> actualText = testContext.editProfilePage().getBodyMetricsWeightDD();
-	 
+	    Assert.assertTrue(actualText.contains(expectedText));
+	 }
+
+
+	@Then("{string} button should be visible and enabled")
+	public void button_should_be_visible_and_enabled(String string) {
+	    Assert.assertTrue(testContext.editProfilePage().backSubIsDisplayed());
+	}
+	
+	
+	@When("User clicks {string} next button")
+	public void user_clicks_next_button(String string) {
+	   testContext.editProfilePage().clickBodyMetricsNext();
 	}
 
-//	@Then("{string} or {string} unit values in dropdown should be visible and enabled")
-//	public void or_unit_values_in_dropdown_should_be_visible_and_enabled(String string, String string2) {
-//	   
-//	}
-
-	@Then("Weight and Height fields should be properly aligned vertically with equal spacing")
-	public void weight_and_height_fields_should_be_properly_aligned_vertically_with_equal_spacing() {
-	   
+	
+	@Then("User should see {string} last section")
+	public void user_should_see_last_section(String expectedText) {
+	   Assert.assertEquals(testContext.editProfilePage().getPreferenceTab(), expectedText);
 	}
 
+	@Then("User clicks on Back button on  Preferences & Health section")
+	public void user_clicks_on_back_button_on_preferences_health_section() {
+		testContext.editProfilePage().clickBackSub();
+	}
+
+	@Then("User should see {string} section")
+	public void user_should_see_section(String expectedText) {
+	Assert.assertEquals(testContext.editProfilePage().getBodyMetricsText(), expectedText);
+	}
+	
 	@Then("BMI Calculation Number should be displayed with a gradient slider and labels")
 	public void bmi_calculation_number_should_be_displayed_with_a_gradient_slider_and_labels() {
-	  
+		 String actualText = testContext.editProfilePage().getBMICalcText();
+		    Assert.assertTrue(actualText.contains("BMI Calculation"));
+	
 	}
 
 	@Then("BMI Category section should present with BMI Category")
 	public void bmi_category_section_should_present_with_bmi_category() {
-	  
+		 String actualText = testContext.editProfilePage().getBMICategoryText();
+		    Assert.assertTrue(actualText.contains("BMI Category"));
 	}
-
+	
 	@Then("BMI Category note should be visible")
 	public void bmi_category_note_should_be_visible() {
-	   
+	   Assert.assertTrue(testContext.editProfilePage().BMICategoryNoteIsDisplayed());
 	}
 
-	@Then("{string} Button should be visible and enabled")
-	public void button_should_be_visible_and_enabled(String string) {
-	    
-	}
-
-	@Then("“Next: Preferences” button should be visible and enabled")
-	public void next_preferences_button_should_be_visible_and_enabled() {
-	   
+	
+	@Then("edit slider should display a continuous gradient from blue → yellow → orange → red, representing increasing BMI values")
+	public void edit_slider_should_display_a_continuous_gradient_from_blue_yellow_orange_red_representing_increasing_bmi_values() {
+		//Blue color
+		SoftAssert sa = new SoftAssert();
+		sa.assertTrue(testContext.editProfilePage().getEditSlider().contains("from-[#90CAF9]"));
+		//Green color
+		sa.assertTrue(testContext.editProfilePage().getEditSlider().contains("via-[#A5D6A7]"));
+		//Yello/Orange color
+		sa.assertTrue(testContext.editProfilePage().getEditSlider().contains("via-[#FFB74D]"));
+		//Red color
+		sa.assertTrue(testContext.editProfilePage().getEditSlider().contains("to-[#EF5350]"));
+				sa.assertAll();
 	}
 	
 
-	@Then("User should see  Prefrences & Health Section")
-	public void user_should_see_prefrences_health_section() {
-	   
-	}
-
-	@Then("User clicks on Back Button on  Preferences & Health section")
-	public void user_clicks_on_back_button_on_preferences_health_section() {
-	   
-	}
-
+	
 	
 	/*-------------- Edit Your Profile-Prefrences and Health  -UI verifications --------------*/
 	
 	@When("User clicks Preferences & Health Tab")
 	public void user_clicks_preferences_health_tab() {
-	   
+		 testContext.editProfilePage().clickPreferencesTab();
 	}
 
 	@Then("{string} should be visible in edit profile")
-	public void should_be_visible_in_edit_profile(String string) {
-	   
+	public void should_be_visible_in_edit_profile(String expectedText) {
+		Assert.assertEquals(testContext.editProfilePage().getPreferenceTab(), expectedText);
 	}
 
-	@Then("{string}, {string},{string}, {string} RadioButtons should be visible and enabled")
-	public void radio_buttons_should_be_visible_and_enabled(String string, String string2, String string3, String string4) {
-	 
+	@Then("{string} preference should be visible")
+	public void preference_should_be_visible(String expectedText) {
+		Assert.assertEquals(testContext.editProfilePage().getPreferenceSubText(), expectedText);
 	}
-
-	@When("User clicks on Save Profile on  Preferences & Health section after editing values in any field")
-	public void user_clicks_on_save_profile_on_preferences_health_section_after_editing_values_in_any_field() {
-	    
-	}
-
-	@Then("User should see success message {string}")
-	public void user_should_see_success_message(String string) {
-	  
-	}
-
-	@When("User clicks on Add Medication button")
-	public void user_clicks_on_add_medication_button() {
-	  
-	}
-
-	@Then("User should see a Pop Up {string}")
-	public void user_should_see_a_pop_up(String string) {
 	
+	@Then("{string} radioButtons should be visible and enabled")
+	public void radio_buttons_should_be_visible_and_enabled(String expectedText) {
+		 List<String> actualText = testContext.editProfilePage().getPreferencesDiet();
+		    Assert.assertTrue(actualText.contains(expectedText));
+	}
+
+	@Then("{string} preference button should be visible and enabled")
+	public void preference_button_should_be_visible_and_enabled(String string) {
+	    Assert.assertTrue(testContext.editProfilePage().isDisplayedAddMedication());
+	}
+	
+	@Then("{string} medication should be visible")
+	public void medication_should_be_visible(String expectedText) {
+	 Assert.assertEquals(testContext.editProfilePage().getPreferenceMedication(), expectedText);
+	}
+	
+	@Then("{string} save button should be visible and enabled")
+	public void save_button_should_be_visible_and_enabled(String expectedText) {
+	    Assert.assertEquals(testContext.editProfilePage().getSaveEditButton(),expectedText);
 	}
 	
 	@When("User navigates to Preferences & Health Tab")
 	public void user_navigates_to_preferences_health_tab() {
-	  
+		 testContext.editProfilePage().clickUName();
+		    testContext.editProfilePage().clickEditProfile();	
+		    testContext.editProfilePage().clickPreferencesTab();
 	}
+	
+	@When("User clicks on Save Profile on  Preferences & Health section after editing values in any field")
+	public void user_clicks_on_save_profile_on_preferences_health_section_after_editing_values_in_any_field() {
+		testContext.editProfilePage().clickSaveEditButton();
+	}
+
+	@Then("User should see success message {string}")
+	public void user_should_see_success_message(String expectedText) {
+	  Assert.assertEquals(testContext.editProfilePage().getEditMessage(), expectedText);
+	}
+
+	@When("User clicks on Add Medication button")
+	public void user_clicks_on_add_medication_button() {
+	  testContext.editProfilePage().clickAddMedication();
+	}
+
+	@Then("User should see a Pop Up {string}")
+	public void user_should_see_a_pop_up(String expectedText) {
+		Assert.assertEquals(testContext.editProfilePage().getAlertMedication(),expectedText);
+	}
+	
+	
 	
 	/*-------------- Preferences & Health -Add Medication UI verification --------------*/
 	
-	@Then("Enter Medication name should be visible")
-	public void enter_medication_name_should_be_visible() {
-	   
+	@Then("{string} alert should be visible")
+	public void alert_should_be_visible(String expectedText) {
+		Assert.assertEquals(testContext.editProfilePage().getAlertMedication(),expectedText);
 	}
 
-	@Then("Should display empty input field for entering medication name")
-	public void should_display_empty_input_field_for_entering_medication_name() {
-	  
-	}
-	
-	@Then("{string} and {string} buttons should displayed")
-	public void and_buttons_should_displayed(String string, String string2) {
-	
-	}
 	
 	@When("User navigates to Add Medication button")
 	public void user_navigates_to_add_medication_button() {
-	   
+		 testContext.editProfilePage().clickUName();
+		    testContext.editProfilePage().clickEditProfile();
+		    testContext.editProfilePage().clickPreferencesTab();
+		 testContext.editProfilePage().clickAddMedication();
 	}
 
 	@When("User clicks on Ok button after adding medication")
-	public void user_clicks_on_ok_button_after_adding_medication() {
-	   
+	public void user_clicks_on_ok_button_after_adding_medication() throws Exception {
+		excel = new ExcelUtils(null);
+		Map<String, String> testData =
+	            excel.getRowDataByScenario("EditYourProfile", "AlertText");
+	    String medicationName = testData.get("Value");
+	   testContext.editProfilePage().enterMedicationIsDisplayed(medicationName);
 	}
 
 	@When("User clicks on cancel button without adding medication details")
 	public void user_clicks_on_cancel_button_without_adding_medication_details() {
-	  
+	  testContext.editProfilePage().cancelAlert();
 	}
 
-	@Then("User should naviagte back to Preferences & Health Section page")
-	public void user_should_naviagte_back_to_preferences_health_section_page() {
-	  
+	@Then("User should naviagte back to {string} Section page")
+	public void user_should_naviagte_back_to_preferences_health_section_page(String expectedText) {
+		Assert.assertEquals(testContext.editProfilePage().getPreferenceTab(), expectedText);
+
 	}
 
 	

@@ -7,10 +7,7 @@ import java.util.Random;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 
 import driverFactorySetUp.DriverFactory;
 
@@ -168,8 +165,13 @@ public class CommonMethods {
         Alert alert = wait.until(ExpectedConditions.alertIsPresent());
         alert.dismiss();
     }
-    
-    
+
+
+    public static void sendKeys(By locator, String text) {
+        WebElement element = waitForVisibility(locator);
+        element.clear();
+        element.sendKeys(text);
+    }
 
 }
 

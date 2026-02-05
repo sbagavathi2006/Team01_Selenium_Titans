@@ -17,6 +17,7 @@ import utilities.GoogleDriveDownloader;
 
 public class Hooks {
 
+    private WebDriver driver;
 private static Logger logger = LogManager.getLogger();
 private static boolean isExcelDownloaded = false;
 
@@ -79,8 +80,11 @@ public void afterStep(Scenario scenario) {
 
 @After
 public void tearDown() {
-	logger.info("Closing WebDriver...");
-    DriverFactory.quitDriver(); 
+    if (driver != null) {
+        logger.info("Closing WebDriver instance...");
+        DriverFactory.quitDriver();
+        driver = null;
+    }
 }
 
 }

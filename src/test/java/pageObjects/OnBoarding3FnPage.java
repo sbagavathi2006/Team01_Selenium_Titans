@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -122,14 +123,22 @@ public class OnBoarding3FnPage {
 	    
 	    WebElement continueBtn = comMethods.waitForClickable(btnContinue);
 	    
-	    try {
-	        comMethods.waitForClickable(btnContinue).click();
-	    } catch (ElementClickInterceptedException e) {
+//	    try {
+//	        comMethods.waitForClickable(btnContinue).click();
+//	    } catch (ElementClickInterceptedException e) {
 //	        comMethods.waitForPopupToDisappear();
-	        comMethods.scrollIntoView(continueBtn);
+//	        comMethods.scrollIntoView(continueBtn);
+//	        continueBtn.click();
+//	    }
+	    
+	    try {
+	    	comMethods.scrollIntoView(continueBtn);
 	        continueBtn.click();
+	    } catch (ElementClickInterceptedException e) {
+	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", continueBtn);
 	    }
 	}
+	
 	
 	public String alertMsgValidationName() {
 		return comMethods.getAlertMsg(firstName);
@@ -154,14 +163,21 @@ public class OnBoarding3FnPage {
 		LoggerLoad.info("Selected Health Condition: => " + text);
 		testContext.setScenarioData("BPSTATUS", text);
 		
-		comMethods.scrollIntoView(selectedBPStatus);
+//		comMethods.scrollIntoView(selectedBPStatus);
 		
-		try {
-		    selectedBPStatus.click();
-		} catch (ElementClickInterceptedException e) {
+//		try {
+//		    selectedBPStatus.click();
+//		} catch (ElementClickInterceptedException e) {
 //		    comMethods.waitForPopupToDisappear();
-	        comMethods.scrollIntoView(selectedBPStatus);
-		    selectedBPStatus.click();
-		}
+//	        comMethods.scrollIntoView(selectedBPStatus);
+//		    selectedBPStatus.click();
+//		}
+		
+		 try {
+		    	comMethods.scrollIntoView(selectedBPStatus);
+		    	selectedBPStatus.click();
+		    } catch (ElementClickInterceptedException e) {
+		        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", selectedBPStatus);
+		    }
 	}
 }

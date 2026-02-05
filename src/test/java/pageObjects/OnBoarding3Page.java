@@ -64,6 +64,8 @@ public class OnBoarding3Page {
 		
 	    String selectedHealthCondition = randomCheckbox.getText().trim();
 	    LoggerLoad.info("Selected Health Condition: => " + selectedHealthCondition);
+	    
+    	comMethods.scrollIntoView(randomCheckbox);
 
 		randomCheckbox.click();
 

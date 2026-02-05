@@ -123,21 +123,25 @@ public class OnBoarding3FnPage {
 	    
 	    WebElement continueBtn = comMethods.waitForClickable(btnContinue);
 	    
-//	    try {
-//	        comMethods.waitForClickable(btnContinue).click();
-//	    } catch (ElementClickInterceptedException e) {
-//	        comMethods.waitForPopupToDisappear();
-//	        comMethods.scrollIntoView(continueBtn);
-//	        continueBtn.click();
-//	    }
-	    
+        comMethods.scrollIntoView(continueBtn);
+
 	    try {
+	        comMethods.waitForClickable(btnContinue).click();
+	    } catch (ElementClickInterceptedException e) {
+//	        comMethods.waitForPopupToDisappear();
+	        comMethods.scrollIntoView(continueBtn);
+	        continueBtn.click();
+	    }
+	    
+	}
+	    
+/*	    try {
 	    	comMethods.scrollIntoView(continueBtn);
 	        continueBtn.click();
 	    } catch (ElementClickInterceptedException e) {
 	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", continueBtn);
 	    }
-	}
+	}*/
 	
 	
 	public String alertMsgValidationName() {
@@ -163,21 +167,23 @@ public class OnBoarding3FnPage {
 		LoggerLoad.info("Selected Health Condition: => " + text);
 		testContext.setScenarioData("BPSTATUS", text);
 		
-//		comMethods.scrollIntoView(selectedBPStatus);
+		comMethods.scrollIntoView(selectedBPStatus);
 		
-//		try {
-//		    selectedBPStatus.click();
-//		} catch (ElementClickInterceptedException e) {
+		try {
+	    selectedBPStatus.click();
+		} catch (ElementClickInterceptedException e) {
 //		    comMethods.waitForPopupToDisappear();
-//	        comMethods.scrollIntoView(selectedBPStatus);
-//		    selectedBPStatus.click();
-//		}
+	        comMethods.scrollIntoView(selectedBPStatus);
+		    selectedBPStatus.click();
+		}
 		
-		 try {
+	}
+		
+/*		 try {
 		    	comMethods.scrollIntoView(selectedBPStatus);
 		    	selectedBPStatus.click();
 		    } catch (ElementClickInterceptedException e) {
 		        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", selectedBPStatus);
 		    }
-	}
+	}*/
 }

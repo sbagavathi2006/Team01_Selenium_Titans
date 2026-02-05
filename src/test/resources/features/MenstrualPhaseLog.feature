@@ -88,22 +88,22 @@ Feature: Menstrual Cycle Tracker - UI Verification
      #When User clicks on Menstrual Phase Logs from dashboard      
      #Then Menstrual Phase, Follicular Phase, Ovulation Phase, Luteal Phase are displayed
      #
-     #Scenario: Correct start date for each phase 
-     #When User clicks on Menstrual Phase Logs from dashboard      
-     #Then Start date should be diaplayed correctly as per the cycle data entered during onboarding process
-     #
-     #Scenario: Start date format
-     #When User clicks on Menstrual Phase Logs from dashboard      
-     #Then All phase start dates should be displayed in "Starts MMM dd" format
-     #
-     #Scenario: Current Phase Start date format
-     #When User clicks on Menstrual Phase Logs from dashboard      
-     #Then Current phase date should be displayed in "Started MMM dd" format 
-     #
-     #Scenario: Current Phase subsection is highlighted
-     #When User clicks on Menstrual Phase Logs from dashboard      
-     #Then "Current Phase" subsection is highlighted based on cycle data entered during onboarding process 
-     #
+     Scenario: Correct start date for each phase 
+     When User clicks on Menstrual Phase Logs from dashboard      
+     Then Start date should be diaplayed correctly as per the cycle data entered during onboarding process
+     
+     Scenario: Start date format
+     When User clicks on Menstrual Phase Logs from dashboard      
+     Then All phase start dates should be displayed in "Starts MMM dd" format
+     
+     Scenario: Current Phase Start date format
+     When User clicks on Menstrual Phase Logs from dashboard      
+     Then Current phase date should be displayed in "Started MMM dd" format 
+     
+     Scenario: Current Phase subsection is highlighted
+     When User clicks on Menstrual Phase Logs from dashboard      
+     Then "Current Phase" subsection is highlighted based on cycle data entered during onboarding process 
+     
      #Recommended Activities- UI Verification
      #Scenario: Section heading text for Recommended Activities
       #When User clicks on Menstrual Phase Logs from dashboard    

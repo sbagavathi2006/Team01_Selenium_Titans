@@ -218,6 +218,12 @@ public class CommonMethods {
         element.clear();
         element.sendKeys(text);
     }
+    
+    public void scrollIntoViewWait(WebElement element) {
+        ((JavascriptExecutor) driver)
+                .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", element);
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
 
 }
 

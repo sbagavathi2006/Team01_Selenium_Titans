@@ -56,6 +56,10 @@ public class MenstrualPhaseLogPage {
     By upcomingPhasesHeader = By.xpath("//h3[contains(text(),'Upcoming Phases')]");
     By UcomingPhasesText = By.xpath("//p[contains(text(),'Plan ahead with your cycle phases')]");
     By all5PhaseSideSections = By.xpath("//div[contains(@class,'p-3') and contains(@class,'rounded-lg')]");
+    By menstrualDate = By.xpath("///*[@id=\"radix-:r3t:-content-overview\"]/div[1]/div[2]/div[1]/div[2]/div/div[1]/div[2]/span");
+    By follicularDate = By.xpath("//*[@id=\"radix-:r3t:-content-overview\"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div[2]");
+    By ovulationDate = By.xpath("//*[@id=\"radix-:r3t:-content-overview\"]/div[1]/div[2]/div[1]/div[2]/div/div[3]/div[2]");
+    By lutealDate  = By.xpath("//*[@id=\"radix-:r3t:-content-overview\"]/div[1]/div[2]/div[1]/div[2]/div/div[4]/div[2]");
 
 
 	public void waitforActiviyInsightsButton() {
@@ -215,6 +219,17 @@ public class MenstrualPhaseLogPage {
         return FivePhases.size() == 5;
     }
 
+    public boolean AllFourPhaseDatesDisplayed() {
+                    String menstrualDateUI     = commonMethods.waitForVisibility(menstrualDate).getText();
+            String follicularDateUI    = commonMethods.waitForVisibility(follicularDate).getText();
+            String ovulationDateUI    = commonMethods.waitForVisibility(ovulationDate).getText();
+            String lutealDateUI        = commonMethods.waitForVisibility(lutealDate).getText();
+            LoggerLoad.info("Menstrual Date: " + menstrualDateUI);
+            LoggerLoad.info("Follicular Date: " + follicularDateUI);
+            LoggerLoad.info("Ovulation Date: " + ovulationDateUI);
+            LoggerLoad.info("Luteal Date: " + lutealDateUI);
+            return true;    
+    }
 
 
 }

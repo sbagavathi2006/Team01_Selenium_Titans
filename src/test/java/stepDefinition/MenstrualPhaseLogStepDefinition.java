@@ -191,8 +191,8 @@ public class MenstrualPhaseLogStepDefinition {
 
 	@Then("Start date should be diaplayed correctly as per the cycle data entered during onboarding process")
 	public void start_date_should_be_diaplayed_correctly_as_per_the_cycle_data_entered_during_onboarding_process() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		Assert.assertTrue(menstrualPhaseLog.AllFourPhaseDatesDisplayed());
+		LoggerLoad.info("we can see date displayed in UI : " + menstrualPhaseLog.AllFourPhaseDatesDisplayed());
 	}
 
 	@Then("All phase start dates should be displayed in {string} format")

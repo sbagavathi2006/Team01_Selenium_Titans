@@ -140,7 +140,26 @@ public class CommonMethods {
     public static double extractNumber(String text) {
         return Double.parseDouble(text.replaceAll("[^0-9.]", ""));
     }
+    
+  
 
+    public String getAlertText() {
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        return alert.getText();
+    }
+    
+    public void enterTextAndAcceptAlert(String text) {
+    	 Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+    	        alert.sendKeys(text);
+    	    alert.accept();
+    }
+    
+    public void dismissAlert() {
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        alert.dismiss();
+    }
+    
+    
 
 }
 

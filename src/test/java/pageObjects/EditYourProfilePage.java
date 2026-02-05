@@ -34,7 +34,20 @@ public class EditYourProfilePage {
 	By editProfileBackSub = By.xpath("//div[@class='flex justify-between']/button[contains(text(),'Back')]");
 	By bodyMetricsWeight = By.xpath("//input[@id='weight']");
 	By bodyMetricsHeight = By.xpath("//input[@id='height']");
-	By bodyMetricsWeightDD = By.xpath("//div[@role='presentation']/div/span/following-sibling::span");
+	By bodyMetricsWeightDDValues = By.xpath("//div[@role='presentation']/div/span/following-sibling::span");
+	By bodyMetricsWeightDD = By.xpath("//button[@role='combobox']");
+	By bodyMetricsNextTab = By.xpath("//div[@class='flex justify-between']/button[contains(text(),'Next: Preferences')]");
+	By preferencesTab = By.xpath("//button[normalize-space()='Preferences & Health']");
+	By editBMICalculation = By.xpath("//div[@class='mt-6 p-4 bg-gray-50 rounded-lg']/h4");
+	By editBMICategory = By.xpath("//div[@class='mt-6 p-4 bg-gray-50 rounded-lg']//h5");
+	By editBMICategoryNote = By.xpath("//div[@class='mt-6 p-4 bg-gray-50 rounded-lg']//p");
+	By editSlider = By.xpath("//div[contains(@class,'bg-gradient-to-r')]");
+	By perferenceSubText = By.xpath("//p[@class='text-sm text-muted-foreground']");
+	By preferenceDietOptions = By.xpath("//div[@class='grid grid-cols-1 md:grid-cols-2 gap-3']/div//label");
+	By preferenceAddMedication = By.xpath("//div[@class='flex justify-between items-center']/button");
+	By preferenceMedicationText = By.xpath("//div[@class='flex justify-between items-center']/label");
+	By editSaveButton = By.xpath("//*[@class='flex justify-between']/button[@type='submit']");
+	By editMessage = By.xpath("//div[@class='grid gap-1 flex-1']/div[@class='text-base opacity-95']");
 	
 	
 	public void clickUName() {
@@ -42,6 +55,7 @@ public class EditYourProfilePage {
 	}
 	
 	public void clickEditProfile() {
+		  commonMethods.waitForPopupToDisappear();
 		commonMethods.waitForClickable(editProfileLink);
 		commonMethods.click(editProfileLink);
 	}
@@ -101,8 +115,15 @@ public class EditYourProfilePage {
 		commonMethods.click(editProfileBackSub);
 	}
 	
+	public boolean backSubIsDisplayed() {
+		return commonMethods.isDisplayed(editProfileBackSub);
+	}
 	public void clickBodyMetricsTab() {
 		commonMethods.click(bodyMetricsTab);
+	}
+	
+	public void clickPreferencesTab() {
+		commonMethods.click(preferencesTab);
 	}
 	
 	public String getBodyMetricsWeight() {
@@ -116,8 +137,81 @@ public class EditYourProfilePage {
 	}
 	
 	public List<String> getBodyMetricsWeightDD(){
-		return commonMethods.getElementsListText(bodyMetricsWeightDD);
+		return commonMethods.getElementsListText(bodyMetricsWeightDDValues);
 	}
 	
+	public void clickBodyMetricsDD() {
+		commonMethods.click(bodyMetricsWeightDD);
+	}
 	
+	public void clickBodyMetricsNext() {
+
+		commonMethods.waitForClickable(bodyMetricsNextTab);
+		commonMethods.click(bodyMetricsNextTab);
+	}
+	
+	public String getPreferenceTab() {
+		return commonMethods.getText(preferencesTab);
+	}
+	
+	public String getPreferenceSubText() {
+		return commonMethods.getText(perferenceSubText);
+	}
+	
+	public String getBMICalcText() {
+		return commonMethods.getText(editBMICalculation);
+	}
+	
+	public String getBMICategoryText() {
+		return commonMethods.getText(editBMICategory);
+	}
+	
+	public boolean BMICategoryNoteIsDisplayed() {
+		return commonMethods.isDisplayed(editBMICategoryNote);
+	}
+	
+	public String getEditSlider() {
+		commonMethods.waitForPresence(editSlider);
+		return driver.findElement(editSlider).getAttribute("class");
+	}
+	
+	public List<String> getPreferencesDiet(){
+		return commonMethods.getElementsListText(preferenceDietOptions);
+	}
+	
+	public boolean isDisplayedAddMedication() {
+		return commonMethods.isDisplayed(preferenceAddMedication);
+	}
+	
+	public String getPreferenceMedication() {
+		return commonMethods.getText(preferenceMedicationText);
+	}
+	
+	public String getSaveEditButton() {
+		return commonMethods.getText(editSaveButton);
+	}
+	
+	public void clickSaveEditButton() {
+		commonMethods.click(editSaveButton);
+	}
+	
+	public String getEditMessage() {
+		return commonMethods.getText(editMessage);
+	}
+	
+	public void clickAddMedication() {
+		commonMethods.click(preferenceAddMedication);
+	}
+	
+	public String getAlertMedication() {
+		return commonMethods.getAlertText();
+	}
+	
+	public void enterMedicationIsDisplayed(String text) {
+		commonMethods.enterTextAndAcceptAlert(text);
+	}
+	
+	public void cancelAlert() {
+		commonMethods.dismissAlert();
+	}
 }

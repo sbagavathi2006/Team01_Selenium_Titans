@@ -12,9 +12,10 @@ import io.cucumber.testng.CucumberOptions;
 		plugin = {"pretty", "html:target/cucumber-reports/Team01_Selenium_Titans.html",
 				  "json:target/cucumber-reports/Team01_Selenium_Titans.json", "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"},
 		monochrome = false,
+		dryRun=true,
 
-		tags = "@checking",
-		features = {"src/test/resources/features/"},
+	//	tags = "@checking",
+		features = {"src/test/resources/features/MenstrualPhaseLog.feature"},
 		glue = {"stepDefinition"})
 
 public class TestRunner extends AbstractTestNGCucumberTests {

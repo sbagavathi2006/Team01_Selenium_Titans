@@ -1,14 +1,24 @@
 package pageObjects;
 
+import java.util.List;
+import java.util.Random;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import context.TestContextSetup;
+import utilities.CommonMethods;
+import utilities.LoggerLoad;
 
 public class OnBoarding3Page {
 	
 	WebDriver driver;
+	CommonMethods comMethods;
     
     public OnBoarding3Page(WebDriver driver) {
         this.driver = driver;
+        this.comMethods = new CommonMethods(driver);
     }	  
     
 	private By pageHeader = By.xpath("//h2[text() ='Health Conditions']");
@@ -19,7 +29,7 @@ public class OnBoarding3Page {
 	private By checkbox9 = By.xpath("//div[contains(@class, 'grid')]//input[@type='checkbox']");
 	private By subTitleHeader = By.xpath("//p[text() = 'Want to manually enter any key conditions or comorbidities?']");
 	private By note = By.xpath("//p[contains(text(), 'insulin resistance affect')]");
-	
+	private By checkboxes = By.xpath("//label[contains(@class, 'text-[#333333]')]");
 	
 	public boolean isProgressBar3_10Displayed() {
 		return driver.findElement(currentStep3).isDisplayed();	
@@ -38,11 +48,27 @@ public class OnBoarding3Page {
 	}
 	
 	public boolean isContinueBtnDisplayed() {
+		CommonMethods.waitForVisibility(btnContinue);
 		return driver.findElement(btnContinue).isDisplayed();
 	}
 	
 	public boolean isContinueBtnEnabled() {
 		return driver.findElement(btnContinue).isEnabled();
+	}
+	
+	public  void clickBtnContinue(TestContextSetup testContext) {
+		List<WebElement> checkboxesNew = driver.findElements(checkboxes);
+		Random random = new Random();
+		int randomIndex = random.nextInt(checkboxesNew.size());
+		WebElement randomCheckbox = checkboxesNew.get(randomIndex);
+		
+	    String selectedHealthCondition = randomCheckbox.getText().trim();
+	    LoggerLoad.info("Selected Health Condition: => " + selectedHealthCondition);
+
+		randomCheckbox.click();
+
+		testContext.setScenarioData("HC", selectedHealthCondition);
+		driver.findElement(btnContinue).click();		
 	}
 	
 	public boolean isStep3HeaderDisplayed() {

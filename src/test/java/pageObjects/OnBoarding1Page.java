@@ -57,7 +57,6 @@ public class OnBoarding1Page {
 		return driver.findElement(pdfFileSize).isDisplayed();
 	}
 
-//	Added Newly due to element not found, so implement wait
 	public WebElement getSkipNowCard() {
         return CommonMethods.waitForVisibility(skipNow);
     }
@@ -66,7 +65,6 @@ public class OnBoarding1Page {
 		return driver.findElement(skipNowText).isDisplayed();
 	}
 	
-//	Added Newly due to element not found, so implement wait
 	public WebElement getContWithOutReportBtn() {
         return CommonMethods.waitForVisibility(btnContWithOutReport);
     }

@@ -26,6 +26,10 @@ public class CommonMethods {
 	public static WebElement waitForVisibility(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
+	
+	public static WebElement waitForVisibility(WebElement webElement) {
+        return wait.until(ExpectedConditions.visibilityOf(webElement));
+    }
     
     public WebElement waitForClickable(By activityInsightBtn) {
         return wait.until(ExpectedConditions.elementToBeClickable(activityInsightBtn));
@@ -51,6 +55,14 @@ public class CommonMethods {
        public boolean isDisplayed(By locator) {
     	   try {
                return waitForVisibility(locator).isDisplayed();
+           } catch (Exception e) {
+               return false;
+           }
+       }
+       
+       public boolean isEnabled(By locator) {
+    	   try {
+               return waitForVisibility(locator).isEnabled();
            } catch (Exception e) {
                return false;
            }
@@ -129,10 +141,8 @@ public class CommonMethods {
     	    }
     	
     	    return texts;
-    	}
-       
+    	}   
      
-
        public static int generateRandomAge() {
     	    return new Random().nextInt(83) + 18;
        }

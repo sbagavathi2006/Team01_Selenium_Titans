@@ -81,18 +81,16 @@ Then "Update your weight and height information" sub text should be visible
 And User clicks Body Metrics Tab
 Then Should display the user’s Weight and Height are as entered during the onboarding process
 
-  @checking
 Scenario Outline: Verify Dropdown for weight measurment presence and state
  When User clicks on profile name and click on edit profile
 And User clicks Body Metrics Tab
+And User clicks on Weight Dropdown
 Then following "<unitValues>" should be visible
 Examples:
 |unitValues|
-|kg|
 |lbs|
+|kg|
 
-
- @checking
 Scenario Outline: Verify Dropdown for Height measurment presence and state
  When User clicks on profile name and click on edit profile
 And User clicks Body Metrics Tab
@@ -103,118 +101,126 @@ Examples:
 |cm|
 
 
-
-
-Scenario: Verify input field alignment and spacing
- When User navigates to Edit Profile
+ Scenario: Verify "Back" button presence and state
+  When User clicks on profile name and click on edit profile
 And User clicks Body Metrics Tab
-Then Weight and Height fields should be properly aligned vertically with equal spacing
+Then "Back" button should be visible and enabled
+
+
+Scenario: Verify “Next: Body Metrics” button presence and navigation
+ When User clicks on profile name and click on edit profile
+ And User clicks Body Metrics Tab
+And User clicks "Next:Preferences" next button
+Then User should see "Preferences & Health" last section
+And User clicks on Back button on  Preferences & Health section
+Then User should see "Body Metrics" section
+
 
 Scenario: Verify BMI Calculation section is visible
- When User navigates to Edit Profile
+ When User clicks on profile name and click on edit profile
 And User clicks Body Metrics Tab
 Then BMI Calculation Number should be displayed with a gradient slider and labels
 
+
 Scenario: Verify BMI Category section is visible
- When User navigates to Edit Profile
+ When User clicks on profile name and click on edit profile
 And User clicks Body Metrics Tab
 Then BMI Category section should present with BMI Category
 
 Scenario: Verify BMI Categary note is visible
- When User navigates to Edit Profile
+ When User clicks on profile name and click on edit profile
 And User clicks Body Metrics Tab
 Then BMI Category note should be visible
 
-Scenario: Verify gradient color representation
- When User navigates to Edit Profile
-And User clicks Body Metrics Tab
-Then slider should display a continuous gradient from blue → yellow → orange → red, representing increasing BMI values
- 
- Scenario: Verify "Back" button presence and state
-  When User navigates to Edit Profile
-And User clicks Body Metrics Tab
-Then "Back" button should be visible and enabled
 
-Scenario: Verify “Next: Body Metrics” button presence and navigation
- When User navigates to Edit Profile
-And User clicks "Next:Preferences" Button
-Then User should see  Prefrences & Health Section
-And User clicks on Back Button on  Preferences & Health section
-Then User should see " Body Metric " section
+Scenario: Verify gradient color representation
+ When User clicks on profile name and click on edit profile
+And User clicks Body Metrics Tab
+Then edit slider should display a continuous gradient from blue → yellow → orange → red, representing increasing BMI values
+ 
+
+
+
 
   #Edit Your Profile-Prefrences and Health  -UI verifications
 
+
 Scenario: Verify Header text 
- When User navigates to Edit Profile
+ When User clicks on profile name and click on edit profile
 And User clicks Preferences & Health Tab
-Then " Preferences & Health " should be visible in edit profile
+Then "Preferences & Health" should be visible in edit profile
 
 Scenario: Verify Sub text for header 
- When User navigates to Edit Profile
+ When User clicks on profile name and click on edit profile
 And User clicks Preferences & Health Tab
-Then "Update your dietery preferences and medications" should be visible
+Then "Update your dietary preferences and medications" preference should be visible
 
-Scenario: Verify Dietary Preferences RadioButtons options presence and state
- When User navigates to Edit Profile
+
+Scenario Outline: Verify Dietary Preferences RadioButtons options presence and state
+ When User clicks on profile name and click on edit profile
 And User clicks Preferences & Health Tab
-Then "Pescatarian Diet ", "Non-Vegitarian","Vegetarian diet", "Vegan Diet" RadioButtons should be visible and enabled
+Then "<diet>" radioButtons should be visible and enabled
+Examples:
+|diet|
+|Pescatarian Diet|
+|Non-Vegetarian|
+|Vegetarian Diet|
+|Vegan Diet| 
+
 
 Scenario: Verify "Add Medication" Button presence and state
- When User navigates to Edit Profile
+ When User clicks on profile name and click on edit profile
 And User clicks Preferences & Health Tab
-Then "Add Medication " button should be visible and enabled
+Then "Add Medication" preference button should be visible and enabled
+
 
 Scenario: Verify Medication & Supplements section pesence 
- When User navigates to Edit Profile
+ When User clicks on profile name and click on edit profile
 And User clicks Preferences & Health Tab
-Then "Information text for Medication & Supplements " should be visible
+Then "Medications & Supplements" medication should be visible
+
+
 
 Scenario: Verify "Back " button presence and state
- When User navigates to Edit Profile
+ When User clicks on profile name and click on edit profile
 And User clicks Preferences & Health Tab
-Then "Back " button should be visible and enabled
+Then "Back" button should be visible and enabled
 
 Scenario: Verify "Save Profile " Button pesence and navigation
- When User navigates to Edit Profile
+ When User clicks on profile name and click on edit profile
 And User clicks Preferences & Health Tab
-Then "Save Profile " button should be visible and enabled
+Then "Save Profile" save button should be visible and enabled
+
 
 Scenario: Verify Message after clicking  Save Profile Button
 When User navigates to Preferences & Health Tab
 And User clicks on Save Profile on  Preferences & Health section after editing values in any field
-Then User should see success message " Your Profle information has been successfully updated"
+Then User should see success message "Your profile information has been successfully updated."
+
 
 Scenario: Verify Navigation of "Add Medication" Button
 When User navigates to Preferences & Health Tab
 And User clicks on Add Medication button
-Then User should see a Pop Up "Enter Medication name"
+Then User should see a Pop Up "Enter medication name"
 
 #Preferences & Health -Add Medication UI verification 
 
 Scenario: Verify Header text
 When User navigates to Preferences & Health Tab
 And User clicks on Add Medication button
-Then Enter Medication name should be visible
+Then "Enter medication name" alert should be visible
 
-Scenario: Verify Enter Medication name Input field presence
-When User navigates to Preferences & Health Tab
-And User clicks on Add Medication button
-Then Should display empty input field for entering medication name
-
-Scenario: Verify Button text
-When User navigates to Preferences & Health Tab
-And User clicks on Add Medication button
-Then "Ok" and "Cancel" buttons should displayed
 
 Scenario: Verify Adding Medication to the profile
 When User navigates to Add Medication button
 And User clicks on Ok button after adding medication
 Then User should see success message " Your Medication name is saved"
 
+
 Scenario: Verify Cancel the Medication pop up window
 When User navigates to Add Medication button
 And User clicks on cancel button without adding medication details
-Then User should naviagte back to Preferences & Health Section page
+Then User should naviagte back to "Preferences & Health" Section page
 
  
 

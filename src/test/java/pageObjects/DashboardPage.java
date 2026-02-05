@@ -49,6 +49,7 @@ public class DashboardPage {
 		   driver.findElement(password).sendKeys("Success@1");
 		   driver.findElement(loginButton).click();	   
 		   commonMethods.waitForVisibility(dashboardTitle);
+		 
 	   }
 	   
 	   

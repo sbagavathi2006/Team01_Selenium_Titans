@@ -125,7 +125,7 @@ public class OnBoarding3FnPage {
 	    try {
 	        comMethods.waitForClickable(btnContinue).click();
 	    } catch (ElementClickInterceptedException e) {
-	        comMethods.waitForPopupToDisappear();
+//	        comMethods.waitForPopupToDisappear();
 	        comMethods.scrollIntoView(continueBtn);
 	        continueBtn.click();
 	    }
@@ -159,7 +159,7 @@ public class OnBoarding3FnPage {
 		try {
 		    selectedBPStatus.click();
 		} catch (ElementClickInterceptedException e) {
-		    comMethods.waitForPopupToDisappear();
+//		    comMethods.waitForPopupToDisappear();
 	        comMethods.scrollIntoView(selectedBPStatus);
 		    selectedBPStatus.click();
 		}

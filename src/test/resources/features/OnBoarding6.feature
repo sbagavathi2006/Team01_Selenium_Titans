@@ -51,8 +51,27 @@ Background:
   | Phase details with day count         |
   | Current phase guidance               |
   | Calendar                             |
-   
-   @test
+  | Left arrow in calender               |
+  | Right arrow in calender              |
+  
+ 
+  
+  Scenario: Display two months in upcoming cycle calendar
+  When User selects last menstrual date
+  Then Current month and next month should be visible
+
+
+  Scenario: Update phase when last menstrual date is changed
+  When User selects last menstrual date
+  And User changes the date using the upcoming cycle calendar
+  Then Phase displayed in the timeline should update accordingly
+ 
+ 
+  Scenario: Display of next expected periods
+  When User selects last menstrual date
+  Then At least three future expected period dates should be listed
+
+  
   Scenario Outline: Verify Step 7 UI elements after completing Step 6
   When User clicks continue after selecting last menstrual date
   Then "<Element>" should be displayed for step7

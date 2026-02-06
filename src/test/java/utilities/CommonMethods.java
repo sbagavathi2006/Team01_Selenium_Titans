@@ -1,6 +1,8 @@
 package utilities;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -151,6 +153,7 @@ public class CommonMethods {
     public static double extractNumber(String text) {
         return Double.parseDouble(text.replaceAll("[^0-9.]", ""));
     }
+
     
   
     public String getAlertMsg(By locator) {
@@ -213,10 +216,25 @@ public class CommonMethods {
     }
 
 
+    public String getCurrentDate() {
+        return LocalDate.now()
+                .format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+    }
+    public List<WebElement> getElements(By locator) {
+        return driver.findElements(locator);
+    }
+
+
     public static void sendKeys(By locator, String text) {
         WebElement element = waitForVisibility(locator);
         element.clear();
         element.sendKeys(text);
+    }
+    
+    public void scrollIntoViewWait(WebElement element) {
+        ((JavascriptExecutor) driver)
+                .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", element);
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 
 }

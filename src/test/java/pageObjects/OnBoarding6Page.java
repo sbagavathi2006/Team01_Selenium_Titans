@@ -1,6 +1,7 @@
 package pageObjects;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
@@ -25,7 +26,7 @@ public class OnBoarding6Page {
 	private By btnRegister = By.xpath("//button[text()='Register']");
 	private By btnContinueWithoutReport=By.xpath("//button[text() = 'Continue Without Report']");
 	private By checkboxSleepApnea = By.xpath("//*[@id='sleep_apnea']");
-	private By ContinueButton = By.xpath("//*[contains(text(),'Continue')]");
+	private By continueButton = By.xpath("//*[contains(text(),'Continue')]");
 	private By inputFirstName = By.id("name");
 	private By inputAge=By.id("age");
 	private By checkbox_Ihave_never_diagnosed=By.xpath("//*[contains(text(),'I have never been diagnosed')]");
@@ -40,8 +41,12 @@ public class OnBoarding6Page {
 	private By section_Header2 = By.xpath("//*[contains(text(),'Your Upcoming Cycle Calendar')]");
 	private By section_Header3 = By.xpath("//*[contains(text(),'Your Next Expected Periods')]");
 	private By phase_Details_DayCount = By.xpath("//h5[contains(normalize-space(.), ' (Day ')]");
+	private By selectDatesoncalender=By.xpath("//button[text()='3']");
 	private By current_PhaseGuidance  =By.xpath("//*[contains(text(),'Your metabolism')]");
 	private By calendar = By.className("rdp-months");
+	private By leftArrowinCalender = By.xpath("//*[@name='previous-month']");
+	private By rightArrowinCalender  =By.xpath("//*[@name='next-month']");
+	private By calendarWithMonths = By.className("rdp-caption_label");
 	private By verify_step7 = By.xpath("//span[normalize-space()='7 of 10']");
 	private By headingText = By.xpath("//*[contains(text(),'Current Weight and Height')]");
 	private By textBelowHeading= By.xpath("//*[contains(text(),'This helps us calculate')]");
@@ -50,6 +55,7 @@ public class OnBoarding6Page {
 	private By question1= By.xpath("//*[contains(text(),'current weight?')]");
 	private By question2= By.xpath("//*[contains(text(),'your height?')]");
 	private By verify_step6 = By.xpath("//span[normalize-space()='6 of 10']");
+	private By nextExpectedPeriodDates = By.xpath("//li[contains(@class,'items-center')]");
 	
 	
 	 public OnBoarding6Page(WebDriver driver) {
@@ -74,6 +80,7 @@ public class OnBoarding6Page {
 			LoggerLoad.info("On boarding started for the emailid: " +email);
 			String password = randomString;
 			clickBtnRegister(email, password);
+			commonMethods.waitForPopupToDisappear();
 			
 		}
 	 public void continueToStep3() {
@@ -83,14 +90,8 @@ public class OnBoarding6Page {
 		}
 		public void continueToStep4() {
 		    driver.findElement(checkboxSleepApnea).click();
-		    try {
-		        Thread.sleep(5000); // Handle InterruptedException locally
-		    } catch (InterruptedException e) {
-		        e.printStackTrace();
-		    }
-
-		   commonMethods.waitForClickable(ContinueButton);
-		   commonMethods.click(ContinueButton);
+		   commonMethods.waitForClickable(continueButton);
+		   commonMethods.click(continueButton);
 		}
 		public void continueToStep5() {
 			String randomString = CommonMethods.generateRandomString();
@@ -100,14 +101,14 @@ public class OnBoarding6Page {
 			int age = CommonMethods.generateRandomAge();
 			driver.findElement(inputAge).sendKeys(String.valueOf(age));
 			driver.findElement(checkbox_Ihave_never_diagnosed).click();
-			commonMethods.click(ContinueButton);
+			commonMethods.click(continueButton);
 			commonMethods.click(checkbox_no);
-			commonMethods.click(ContinueButton);	
+			commonMethods.click(continueButton);	
 	        
 		}
 		
 		public void  clickContinueButton(){
-			commonMethods.click(ContinueButton);		
+			commonMethods.click(continueButton);		
 			
 		}
 		public void onBoarding_step(int n) {
@@ -123,8 +124,10 @@ public class OnBoarding6Page {
 			
 	    }
 	   if(n>=6)
-	   {
-		   
+		 { 
+		    String validDate=commonMethods.getCurrentDate();
+		    passingDate(validDate);
+		    commonMethods.click(continueButton);
 	    	LoggerLoad.info("On boarding for step6 is succesfull");
 	    	
 	    }
@@ -165,6 +168,8 @@ public class OnBoarding6Page {
 		    map.put("Phase details with day count", phase_Details_DayCount);
 		    map.put("Current phase guidance",current_PhaseGuidance );
 		    map.put("Calendar", calendar);
+		    map.put("Left arrow in calender",leftArrowinCalender );
+		    map.put("Right arrow in calender",rightArrowinCalender);
 
 		    return map;
 		}
@@ -198,8 +203,28 @@ public class OnBoarding6Page {
 	        }
 	        return commonMethods.isDisplayed(locator); // Uses your existing isDisplayed method
 	    }
-	    
-	    
+	    public boolean verifyCalenderMonths_step6() {
+	        List<WebElement> monthLabels = driver.findElements(calendarWithMonths);
+
+	        if (monthLabels.size() != 2) {
+	            return false;
+	        }
+
+	        return monthLabels.get(0).isDisplayed() && monthLabels.get(1).isDisplayed();
+	    }
+	    public String getPhaseBeforeDateChange() {
+	        return commonMethods.getText(phase_Details_DayCount);
+	    }
+	    public void changeDateOnCalendar() {
+	        commonMethods.click(selectDatesoncalender);
+	    }
+	    public String getPhaseAfterDateChange() {
+	        return commonMethods.getText(phase_Details_DayCount);
+	    }
+	    public int getExpectedPeriodDatesCount() {
+	        return commonMethods.getElementsCount(nextExpectedPeriodDates);
+	    }
+	   
 	    
 	    }
 		

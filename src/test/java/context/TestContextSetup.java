@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import driverFactorySetUp.DriverFactory;
 import pageObjects.DashboardPage;
 import pageObjects.EditYourProfilePage;
+import pageObjects.LaunchPage;
 import pageObjects.OnBoarding1Page;
 import pageObjects.OnBoarding3FnPage;
 import pageObjects.OnBoarding3Page;
@@ -25,6 +26,7 @@ public class TestContextSetup {
 	private OnBoarding3FnPage onBrdPage3Fn;
 	private OnBoarding4Page onBrdPage4;
 	private SignUpPage signUpPage;
+	private LaunchPage launchPage;
 
 
     
@@ -46,6 +48,7 @@ public class TestContextSetup {
         this.onBrdPage4 = new OnBoarding4Page(driver);
         this.signUpPage = new SignUpPage(driver);
         this.onBrdPage3Fn = new OnBoarding3FnPage(driver);
+        this.launchPage = new LaunchPage(driver); 
 
         this.sharedData = new HashMap<>();
     }
@@ -89,6 +92,11 @@ public class TestContextSetup {
     
     public Object getScenarioData(String key) {
         return sharedData.get(key);
-    }    
+    }
+
+
+	public LaunchPage launchPage() {
+		return launchPage;
+	}    
     
 }

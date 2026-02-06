@@ -226,12 +226,28 @@ Scenario Outline: Verify BMI category labels
        Then Message "Free plan includes basic cycle insights" should be displayed
 
 
+
+
+
+
+
+
+
+
+
+
 # Dashboard - Functionality
 
-Scenario: Verify Sub menu in  profile name
+Scenario Outline: Verify Sub menu in  profile name
 Given User clicks login in button after entering  a valid credential
 When User clicks on profile name
-Then User should see "Home", "Edit profile", "Subscription" , "Logout" options
+Then User should see below "<options>"
+Examples:
+|options|
+|Home|
+|Edit profile|
+|Subscription|
+|Logout| 
 
 Scenario: Verify Sub menu in activity insights 
 Given User clicks login in button after entering  a valid credential

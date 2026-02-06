@@ -14,11 +14,8 @@ import utilities.ExcelUtils;
 public class EditYourProfileStepDef {
 
 	private TestContextSetup testContext;
-	private ExcelUtils excel;
-	private String userName = "mathu";
-	private int age = 40;
-	private int weight = 58;
-	private int height = 155;
+	private ExcelUtils excel = new ExcelUtils(null);;
+	private Map<String, String> testData;
 	
     public EditYourProfileStepDef(TestContextSetup context) {
     	 this.testContext = context;
@@ -26,7 +23,8 @@ public class EditYourProfileStepDef {
     
 	@When("User is on Dashboard page")
 	public void user_is_on_dashboard_page() {
-		testContext.dashboardPage().tempLogin();
+	testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport");
+		testContext.dashboardPage().Login(testData.get("UserName"),testData.get("Password"));
 	}	
 	
 	/*-------------- Free Plan Dashboard UI --------------*/
@@ -80,8 +78,9 @@ public class EditYourProfileStepDef {
 
 	@Then("Should display the user’s Name and age as entered during the onboarding process.")
 	public void should_display_the_user_s_name_and_age_as_entered_during_the_onboarding_process() {
-	   Assert.assertEquals(testContext.editProfilePage().getBasicInfoName(), userName);
-	  Assert.assertEquals(Integer.parseInt(testContext.editProfilePage().getBasicInfoAge()), age);
+		testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport");
+	   Assert.assertEquals(testContext.editProfilePage().getBasicInfoName(), testData.get("First Name"));
+	  Assert.assertEquals(Integer.parseInt(testContext.editProfilePage().getBasicInfoAge()), testData.get("Age"));
 	}
 	
 	@When("User clicks {string} button")
@@ -117,8 +116,9 @@ public class EditYourProfileStepDef {
 
 	@Then("Should display the user’s Weight and Height are as entered during the onboarding process")
 	public void should_display_the_user_s_weight_and_height_are_as_entered_during_the_onboarding_process() {
-	 Assert.assertEquals(Integer.parseInt(testContext.editProfilePage().getBodyMetricsWeight()), weight);
-		  Assert.assertEquals(Integer.parseInt(testContext.editProfilePage().getBodyMetricsHeight()), height);
+		testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport");
+	 Assert.assertEquals(Integer.parseInt(testContext.editProfilePage().getBodyMetricsWeight()), testData.get("Weight in KG"));
+		  Assert.assertEquals(Integer.parseInt(testContext.editProfilePage().getBodyMetricsHeight()),  testData.get("Height in CM"));
 		
 	}
 
@@ -284,9 +284,7 @@ public class EditYourProfileStepDef {
 
 	@When("User clicks on Ok button after adding medication")
 	public void user_clicks_on_ok_button_after_adding_medication() throws Exception {
-		excel = new ExcelUtils(null);
-		Map<String, String> testData =
-	            excel.getRowDataByScenario("EditYourProfile", "AlertText");
+		testData =excel.getRowDataByScenario("EditYourProfile", "AlertText");
 	    String medicationName = testData.get("Value");
 	   testContext.editProfilePage().enterMedicationIsDisplayed(medicationName);
 	}

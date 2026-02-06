@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -122,14 +123,26 @@ public class OnBoarding3FnPage {
 	    
 	    WebElement continueBtn = comMethods.waitForClickable(btnContinue);
 	    
+        comMethods.scrollIntoView(continueBtn);
+
 	    try {
 	        comMethods.waitForClickable(btnContinue).click();
 	    } catch (ElementClickInterceptedException e) {
-	        comMethods.waitForPopupToDisappear();
+//	        comMethods.waitForPopupToDisappear();
 	        comMethods.scrollIntoView(continueBtn);
 	        continueBtn.click();
 	    }
+	    
 	}
+	    
+/*	    try {
+	    	comMethods.scrollIntoView(continueBtn);
+	        continueBtn.click();
+	    } catch (ElementClickInterceptedException e) {
+	        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", continueBtn);
+	    }
+	}*/
+	
 	
 	public String alertMsgValidationName() {
 		return comMethods.getAlertMsg(firstName);
@@ -157,11 +170,20 @@ public class OnBoarding3FnPage {
 		comMethods.scrollIntoView(selectedBPStatus);
 		
 		try {
-		    selectedBPStatus.click();
+	    selectedBPStatus.click();
 		} catch (ElementClickInterceptedException e) {
-		    comMethods.waitForPopupToDisappear();
+//		    comMethods.waitForPopupToDisappear();
 	        comMethods.scrollIntoView(selectedBPStatus);
 		    selectedBPStatus.click();
 		}
+		
 	}
+		
+/*		 try {
+		    	comMethods.scrollIntoView(selectedBPStatus);
+		    	selectedBPStatus.click();
+		    } catch (ElementClickInterceptedException e) {
+		        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", selectedBPStatus);
+		    }
+	}*/
 }

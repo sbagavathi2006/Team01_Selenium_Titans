@@ -33,12 +33,12 @@ Feature: Dashboard page
       When User clicks login in button after entering  a valid credential
       Then User should see "<subHeadings>"
       Examples:
+      |subHeadings|
       |User Name|
       |Activity Insights|
       |Diet Plan|
       |Workout|
       |Water Tracker|
-      |View Full Cycle Details|
       |Upgrade to Premium|
       |Generate 7-Day Plan|
       |See Premium Plans|
@@ -62,8 +62,6 @@ Feature: Dashboard page
          |sections|
          |Weight & Body Metrics|
          |Health Conditions|
-         |Blood Report Insights|
-         |Menstrual Cycle Insights|
          |Subscription Information|
 
 
@@ -72,11 +70,12 @@ Feature: Dashboard page
       Then User should see below body metrics "<values>"
       Examples:
       |values|
-      |Weight|
+      |BMI Reference Guide|
+      |Starting|
       |Height|
       |BMI|
       |7-Day Goal|
-      |BMI Reference Guide|
+
       
 
      Scenario Outline: Verify 7-Day Goal section details
@@ -84,17 +83,16 @@ Feature: Dashboard page
        Then App should have following goal "<values>"
        Examples:
        |values|
-       |Starting weight|
-       |Goal|
+       |Monthly Goal:|
        |Weekly target|
        |Daily Weigh-in|
 
-       @shared
+
       Scenario: Verify Current Weight Value Displayed from Onboarding
         When User clicks login in button after entering  a valid credential
         Then Should display the user’s weight as entered during the onboarding process.
 
-         @shared
+
         Scenario: Verify Height Value Displayed from Onboarding
           When User clicks login in button after entering  a valid credential
           Then Should display the user’s Height as entered during the onboarding process.
@@ -119,34 +117,8 @@ Scenario: Verify subscription details should be displayed in 7-day goal
   When User clicks login in button after entering  a valid credential
   Then Subcription details should be present in goal section
 
-#bmi reference yet to do 
-Scenario: Verify the slider in BMI reference guide
-  When User clicks login in button after entering  a valid credential
-  Then Slider should be present in BMI reference guide
-  And BMI Reference Guide component should be displayed with a gradient slider and labeled ranges
 
-  Scenario: Verify gradient color representation
-    When User clicks login in button after entering  a valid credential
-    Then slider should display a continuous gradient from blue → yellow → orange → red, representing increasing BMI values
-
-
-Scenario: Verify BMI category labels
-  When User clicks login in button after entering  a valid credential
-  Then Labels "Underweight (18.5)", "Normal (25)", "Overweight (30)", and "Obese (40+)" should be visible and color-coded accordingly
-
-
-  Scenario: Verify BMI pointer position based on user’s BMI
-    When User clicks login in button after entering  a valid credential
-    Then Circular pointer should automatically be positioned on the slider corresponding to the user’s BMI value
-
-
-   Scenario: Verify Slider is non-interactive
-     When User clicks login in button after entering  a valid credential
-     Then Slider should not allow manual movement; it should remain fixed based on the user’s BMI
-
-# bmi glider above scenarios yet to complete
-
-   Scenario: Verify Info label visibility
+ Scenario: Verify Info label visibility
      When User clicks login in button after entering  a valid credential
      Then "Info" label should be visible above the slider
 
@@ -156,69 +128,72 @@ Scenario: Verify BMI category labels
       Then Following Message should display "Free plan includes 7 days of limited tracking"
 
 
+Scenario: Verify the slider in BMI reference guide
+  When User clicks login in button after entering  a valid credential
+  Then Slider should be present in BMI reference guide
+  And BMI Reference Guide component should be displayed with a gradient slider and labeled ranges
+
+  Scenario: Verify gradient color representation
+    When User clicks login in button after entering  a valid credential
+    Then slider should display a continuous gradient from blue → yellow → orange → red, representing increasing BMI values
+
+Scenario Outline: Verify BMI category labels
+  When User clicks login in button after entering  a valid credential
+  Then "<Labels>" should be visible and color-coded accordingly
+  Examples:
+  |Labels|
+  |Underweight|
+  |Normal|
+  |Overweight|
+  |Obese|
+
 
     #Health Conditions -with condition
 
 
   Scenario: Verify Automatic data mapping from onboarding
-    Given User has completed onboarding and selected one or more health conditions
-    When User clicks login in button after entering  a valid credential
-    Then Displayed condition(s) match exactly what was selected during onboarding, without requiring user input again
+    When User clicks login in button after entering  a valid credential with healthCondition
+    Then Displayed condition match exactly what was selected during onboarding without requiring user input again
 
-    @shared
-    Scenario Outline: Verify Condition description message
-      Given User has completed onboarding and selected one or more health conditions
+    Scenario: Verify Condition description message
       When User clicks login in button after entering  a valid credential
-      Then "<Message>" appears below "<condition>" card explaining how the plan is adjusted
-      Examples:
-      |condition|Message|
-      |Hypothyroidism|We will moderate certain foods (e.g., raw broccoli, soy) while ensuring your plan has nutrients for thyroid support.|
-      |Kidney Disease|Your plan will carefully manage levels of sodium, potassium, phosphorus, and protein to support kidney function.    |
-      |Liver Disease |To reduce strain on the liver, your plan will strictly limit alcohol, processed fats, added sugars, and sodium.     |
-      |Cardiovascular Disease|To support heart health, your plan will strictly limit sodium, saturated/trans fats, and added sugars.      |
-      |Digestive Issues (IBS, Leaky Gut, etc.)|Your plan will be designed to limit common trigger foods (like high-FODMAPs, gluten, or dairy) to support digestive health.|
-      |Sleep Apnea                            |To improve sleep quality, your meal plan will avoid heavy meals, alcohol, and excessive caffeine near bedtime.             |
-      |High Cholesterol                       |Your plan will restrict saturated and trans fats to help support healthy cholesterol levels.                               |
-      |Insulin Resistance / Pre-diabetes      |We will limit high-glycemic foods and added sugars in your plan to help maintain stable blood sugar.                       |
-      |PCOS                                   |Your plan will be adjusted to limit refined carbohydrates and sugars to support hormone balance.                           |
-
-    Scenario: Verify Styling and icon display
-        Given User has completed onboarding and selected one or more health conditions
-        When User clicks login in button after entering  a valid credential
-      Then Card includes heart icon, condition name , and info icon with related text
+      Then Displayed message appears below healthCondition card explaining how the plan is adjusted
+    
 
    #Health Conditions -without condition
 
-  @fail
   Scenario: Verify No condition scenario
-    Given User has completed onboarding  without health conditions
-    When User clicks login in button after entering  a valid credential
-    Then Message like “No health conditions selected” or an empty state is displayed
+    When User clicks login in button after entering  a valid credential without healthCondition
+    Then Message like "No Health Issues" or an empty state is displayed
 
-#Blood Report Insights - report uploaded
 
-  @fail
-  Scenario: Display Blood Report Insights based on report uploaded
-    Given User has completed onboarding and uploaded report
-    When User clicks login in button after entering  a valid credential
-    Then Blood Report Insights section should display the personalized values and insights
+
+
+
+
+
+
+
 
  #Blood Report Insights - report not uploaded
 
+
   Scenario: Verify Display Blood Report Insights based on report not uploaded
-    Given User has completed onboarding and not uploaded report
     When User clicks login in button after entering  a valid credential
     Then User should see the "Upload Blood Report" button
 
+
  Scenario: Verify Message for Blood report
-   Given User has completed onboarding and not uploaded report
    When User clicks login in button after entering  a valid credential
-   Then "Upload your medical blood test report to receive AI-powered insights on how your results impact weight management and overall health."Message prompting them to upload their medical blood test report
+   Then "Upload your medical blood test report to receive AI-powered insights on how your results impact weight management and overall health." Message prompting them to upload their medical blood test report
+
 
    Scenario: Verify Upload report button
-     Given User has completed onboarding and not uploaded report
      When User clicks login in button after entering  a valid credential
-     Then "Upload Blood Report" button should be enabled
+     Then Upload Blood Report button should be enabled
+
+
+
 
      #Subscription Information
 
@@ -230,82 +205,49 @@ Scenario: Verify BMI category labels
       When User clicks login in button after entering  a valid credential
       Then Todays date should be display
 
-      @shared
      Scenario: Verify Plan details is displayed
        When User clicks login in button after entering  a valid credential
        Then Subcription plan should be displayed
-
-Scenario: Verify Status of the plan
-  When User clicks login in button after entering  a valid credential
-  Then Status of plan should be displayed(how many days left out of 7 days free plan)
 
   Scenario: Verify Presence of Upgrade to Premium button
     When User clicks login in button after entering  a valid credential
     Then "Upgrade to Premium" button should be displayed
 
   #Menstrual Cycle Insights
-
-  Scenario: Verify Current phase details
-    Given User has completed onboarding and last period start date as input
-    When User clicks login in button after entering  a valid credential
-    Then Should display current menstrual phase in cycle insights section based on onboarding input
-
-   Scenario: Verify Remaining days are calculated based on onboarding input
-     Given User has completed onboarding and last period start date as input
-     When User clicks login in button after entering  a valid credential
-     Then Should display accurate number of days left in the cycle
-
-   Scenario: Verify Cycle length label displays correctly
-     Given User has completed onboarding and last period start date as input
-     When User clicks login in button after entering  a valid credential
-     Then "Cycle: [number] days" should be displayed accurately based on onboarding input
-
-   Scenario: Verify Current day count of the cycle is displayed correctly
-     Given User has completed onboarding and last period start date as input
-     When User clicks login in button after entering  a valid credential
-     Then "Day" count displayed should match the number of days since the last period start date
-
-    Scenario: Verify Progress bar represents current phase duration visually
-      Given User has completed onboarding and last period start date as input
-      When User clicks login in button after entering  a valid credential
-      Then Filled portion should visually represent the proportion of days completed in the current cycle
-
-      Scenario: Verify Next period prediction countdown
-        Given User has completed onboarding and last period start date as input
-        When User clicks login in button after entering  a valid credential
-        Then Should display “x days” as the countdown to the next period
-
+ 
       Scenario: Verify View Full Cycle Details button navigation
-        Given User has completed onboarding and last period start date as input
         When User clicks login in button after entering  a valid credential
-        Then User should be redirected to the full Menstrual cycle Tracker page
+        And User click on view full cycle details link
+        Then User should be redirected to the full "Menstrual Cycle Tracker" page
 
-     Scenario: Verify Free plan information message
-       Given User has completed onboarding and last period start date as input
+
+     Scenario: Verify Free plan information messages
        When User clicks login in button after entering  a valid credential
        Then Message "Free plan includes basic cycle insights" should be displayed
 
-     Scenario: Verify Hormonal Impact on Weight message changes dynamically based on phase
-       Given User has completed onboarding and last period start date as input
-       When User clicks login in button after entering  a valid credential
-       Then Hormonal Impact on Weight message should match the expected text for that phase
 
-       Scenario: Verify Likely Symptoms are displayed dynamically based on phase
-         Given User has completed onboarding and last period start date as input
-         When User clicks login in button after entering  a valid credential
-         Then Symptoms listed should correspond to the expected symptoms for that phase
 
-       Scenario: Verify Likely Cravings are displayed dynamically based on phase
-         Given User has completed onboarding and last period start date as input
-         When User clicks login in button after entering  a valid credential
-         Then Cravings displayed should match the expected cravings for that phase
+
+
+
+
+
+
+
+
 
 # Dashboard - Functionality
 
-Scenario: Verify Sub menu in  profile name
+Scenario Outline: Verify Sub menu in  profile name
 Given User clicks login in button after entering  a valid credential
 When User clicks on profile name
-Then User should see "Home", "Edit profile", "Subscription" , "Logout" options
+Then User should see below "<options>"
+Examples:
+|options|
+|Home|
+|Edit profile|
+|Subscription|
+|Logout| 
 
 Scenario: Verify Sub menu in activity insights 
 Given User clicks login in button after entering  a valid credential

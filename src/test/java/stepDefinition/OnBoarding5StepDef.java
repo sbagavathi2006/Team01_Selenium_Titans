@@ -44,16 +44,14 @@ public class OnBoarding5StepDef {
 
 	@When("User clicks continue button without selecting menstrual cycle")
 	public void user_clicks_continue_button_without_selecting_menstrual_cycle() {
-		
-
+		testContext.onBrdPage5().clickBtnContinueStep5(testContext);
 		try {
-			testContext.onBrdPage5().clickBtnContinueStep5(testContext);
 	        String actualErr = testContext.onBrdPage5().getMenstrualCycleErrorMessage();
 	        Assert.assertEquals(actualErr, "Err Msg is not displayed since continue btn is disabled");
 
 	    } catch (NoSuchElementException   e) {
 	        LoggerLoad.info(
-	            "Error message not displayed as continue button is disabled (Expected)"
+	            "Error message not displayed as continue button is disabled"
 	        );
 	    }
 

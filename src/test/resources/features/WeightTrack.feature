@@ -1,5 +1,5 @@
 
-@TestWeightTrack
+
 Feature: Weight Tracking functional verification
 Background:
 
@@ -28,20 +28,12 @@ Background:
       |   Current Weight      |
       |   Goal Weight         |
 
-#  Scenario:  Verify if Starting weight value is displayed
-#    Given User is on Her balance Home page after successful login
-#    When User navigates to the Activity Insights tab - Weight Tracking page
-#    Then Starting Weight value should be mapped from the onboarding process
 
   Scenario:  Verify if Current weight and starting weight value is same for new user
     Given User is on Her balance Home page after successful login
     When User navigates to the Activity Insights tab - Weight Tracking page
     Then Current Weight and starting weight value should be same value for new user
 
- # Scenario:  Verify if Current weight value is displayed based on recent weight log for existing user
-#    Given User is on Her balance Home page after successful login
-#    When User navigates to the Activity Insights tab - Weight Tracking page
-#    Then according to the recent weight log, Weight value should be mapped
 
   Scenario:  Verify if Goal weight value is displayed
     Given User is on Her balance Home page after successful login

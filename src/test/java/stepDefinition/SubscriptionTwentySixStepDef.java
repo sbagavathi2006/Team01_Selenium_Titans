@@ -54,10 +54,7 @@ public class SubscriptionTwentySixStepDef {
     public void the_mentioned_header_text_should_be_displayed(String title) {
         Assert.assertEquals(subscriptionTwentySixPage.getCurrentSubsHeaderTxt(),title,"Header Text"+title+"is not displayed as expected");
     }
-    @Then("The User should see Subscription {string} element as {string}")
-    public void the_user_should_see_subscription_element_as(String element, String value) {
-    //Assert.assertTrue();
-    }
+
 
 
 }

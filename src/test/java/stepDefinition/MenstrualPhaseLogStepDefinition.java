@@ -37,16 +37,7 @@ public class MenstrualPhaseLogStepDefinition {
 	
 	@Given("User clicks Activity Insights button after logged in")
 	public void user_clicks_activity_insights_button_after_logged_in() {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-	/*	WebElement email = wait
-				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='email']")));
-		email.sendKeys("User1@gmail.com");
-		WebElement password = wait
-				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='password']")));
-		password.sendKeys("User1@987&");
-		WebElement loginBtn = wait
-				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type='submit']")));
-		loginBtn.click();         */
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));	
 		commonMethods.loginFromOnBoarding();
 		wait.until(ExpectedConditions.titleContains("HerBalance"));
 		commonMethods.waitForPopupToDisappear();

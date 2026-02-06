@@ -2,6 +2,7 @@ package pageObjects;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -60,8 +61,12 @@ public class MenstrualPhaseLogPage {
     By follicularDate = By.xpath("//*[@id=\"radix-:r3t:-content-overview\"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div[2]");
     By ovulationDate = By.xpath("//*[@id=\"radix-:r3t:-content-overview\"]/div[1]/div[2]/div[1]/div[2]/div/div[3]/div[2]");
     By lutealDate  = By.xpath("//*[@id=\"radix-:r3t:-content-overview\"]/div[1]/div[2]/div[1]/div[2]/div/div[4]/div[2]");
-
-
+    By CurrentPhaseStartedDate=By.xpath("//div[contains(@class,'text-sm') and contains(@class,'text-gray-500')]//span[contains(text(),'Started')]");
+    By PurplePhaseSelect = By.xpath("//div[contains(@class,'p-3') and contains(@class,'border-[#6A5ACD]')]");
+    By recommendedActivities = By.xpath("//h3[text()='Recommended Activities']");
+    By recommendedActivitiesText = By.xpath("//h3[text()='Recommended Activities']/following::ul[1]//span");
+    By nutritionTipsHeading = By.xpath("//h3[text()='Nutrition Tips']");
+    By NutritionTipsTextSection =By.xpath("//h3[text()='Nutrition Tips']/following::ul[1]//span");
 	public void waitforActiviyInsightsButton() {
 		commonMethods.waitForClickable(activityInsightsButton);
 	}	
@@ -229,6 +234,33 @@ public class MenstrualPhaseLogPage {
             LoggerLoad.info("Ovulation Date: " + ovulationDateUI);
             LoggerLoad.info("Luteal Date: " + lutealDateUI);
             return true;    
+    }
+
+    public boolean getCurrentPhaseStartedDate() {
+    	return driver.findElement(CurrentPhaseStartedDate).isDisplayed();       
+        }
+    public boolean isCurrentPhaseHighlighted() {       
+    	return  driver.findElement(PurplePhaseSelect).isDisplayed();            
+        }
+    public boolean isRecommendedActivitiesDisplayed() {        
+    	return  driver.findElement(recommendedActivities).isDisplayed();         
+         }
+   
+    public void VerifyRecommendedActivitiesText() {
+        List<WebElement> activityElements = driver.findElements(recommendedActivitiesText);
+        for (WebElement ele : activityElements) {
+            LoggerLoad.info("Activity: " + ele.getText().trim());
+        }
+    }
+    public boolean isNutritionTipsDisplayed() {        
+    	return  driver.findElement(nutritionTipsHeading).isDisplayed();         
+         }
+    
+    public void VerifyNutritionTipsText() {
+         List<WebElement> tips = driver.findElements(NutritionTipsTextSection);
+           for (WebElement tip : tips) {
+          LoggerLoad.info("Nutrition Tip: " + tip.getText().trim());
+        }
     }
 
 

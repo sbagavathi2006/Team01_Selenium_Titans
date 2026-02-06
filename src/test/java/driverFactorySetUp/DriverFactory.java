@@ -33,8 +33,10 @@ public class DriverFactory {
 	       } else if (browserName.equalsIgnoreCase("Firefox")) {
 	    	   FirefoxOptions options = new FirefoxOptions();
 	    	   if(isHeadless) {
-	          driver.set(new FirefoxDriver(options));
+	    		   options.addArguments("--headless=new");
+	         
 	    	   }
+	    	   driver.set(new FirefoxDriver(options));
 
 	       } else {
 	          throw new IllegalArgumentException("Browser instance can not be initialized");

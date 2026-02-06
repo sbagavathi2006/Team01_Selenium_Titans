@@ -229,60 +229,61 @@ Scenario Outline: Verify BMI category labels
 Scenario Outline: Verify Sub menu in  profile name
 Given User clicks login in button after entering  a valid credential
 When User clicks on profile name
-Then User should see below "<options>"
+Then User should see below profile "<options>"
 Examples:
 |options|
 |Home|
-|Edit profile|
+|Edit Profile|
 |Subscription|
 |Logout| 
 
-Scenario: Verify Sub menu in activity insights 
+Scenario Outline: Verify Sub menu in activity insights 
 Given User clicks login in button after entering  a valid credential
 When User clicks on activity Insight
-Then User should see  Track Weight", Food Intake" , "Menstrual Phase Logs"
+Then User should see below profile "<options>"  
+Examples:
+|options|
+|Track Weight|
+|Food Intake|
+|Menstrual Phase Logs|
+
 
 Scenario: Navigation on diet plan
 Given User clicks login in button after entering  a valid credential
 When User clicks on Diet plan button
-Then User should redirected to diet-plan page
+Then User should redirected to "Create Your Diet Plan" page
 
 Scenario: Verify Navigation on workout plan
 Given User clicks login in button after entering  a valid credential
 When User clicks on workout button
-Then User should redirected to workout page
+Then User should redirected to "Daily Workout Plan" workout page
 
 Scenario: Verify Navigation on water Tracker plan
 Given User clicks login in button after entering  a valid credential
 When User clicks on water tracker button
-Then User should redirected to water tracker page
-
-Scenario: Verify Navigation on View Full cycle details
-Given User clicks login in button after entering  a valid credential
-When User clicks on View Full Cycle Details 
-Then User should be redirected to Menstrual cycle tracker page
+Then User should redirected to "Water Tracker" water page
 
 
-Scenario: Verify Navigation on Upload Blood report
-Given User clicks login in button after entering  a valid credential
-When User clicks on Upload Blood report
-Then User should be redirected to explorer to choose the file
-
-@fail
 Scenario: Verify Navigation on Upgrade premium 
 Given User clicks login in button after entering  a valid credential
 When User clicks on  Upgrade to Premium 
 Then User should be redirected to Subcription page
 
+
 Scenario: Verify Navigation on  generate 7-day Plan
 Given User clicks login in button after entering  a valid credential
-When User clicks on Generate 7-Day Plan
-Then User should be redirected to diet-plan page
+When User clicks on Generate Day Plan
+Then User should redirected to "Create Your Diet Plan" page
+
 
 Scenario: Verify Navigation on see premium plans
 Given User clicks login in button after entering  a valid credential
 When User clicks on See Premium Plans
 Then User should be redirected to Subcription page
+
+
+
+
 
 #Dashboard - Profile sub menu functionality
 
@@ -290,25 +291,30 @@ Scenario: Verify Navigation of Home button
 Given User clicks login in button after entering  a valid credential
 And User clicks on profile name
 When User clicks on Home 
-Then User should be redirected to dashboard option
+Then User should see "Free Plan Dashboard" title
 
 Scenario: Verify Navigation of Profile
 Given User clicks login in button after entering  a valid credential
 And User clicks on profile name
 When User clicks on Edit Profile
-Then User should be redirected to Edit Your Profile page
+Then "Edit Your Profile" should be visible
 
 Scenario: Verify Navigation of Subscription
 Given User clicks login in button after entering  a valid credential
 And User clicks on profile name
 When User clicks on Subscription 
-Then User should be redirected to Subscription Management page
+Then User should be redirected to "Subscription Management" sub page
+
 
 Scenario: Verify Navigation of Logout
 Given User clicks login in button after entering  a valid credential
 And User clicks on profile name
 When User clicks on Logout
-Then User should be logged out of the application
+Then User should logout and see "Logged out successfully" title
+
+
+
+
 
 #Dashboard - Activity Insights sub menu functionality
 
@@ -316,18 +322,18 @@ Scenario: Verify Navigation of Track Weight
 Given User clicks login in button after entering  a valid credential
 And User clicks on activity Insight
 When User clicks on Track Weight
-Then User should be redirected to  track weight page
+Then User should be redirected to "Weight Tracking" page
 
-@fail
+
 Scenario: Verify Navigation of  Food Intake
 Given User clicks login in button after entering  a valid credential
 And User clicks on activity Insight
 When User clicks on Food Intake
-Then User should be redirected to food intake page
+Then User should be redirected to "Food Intake & Macros Log" food intake page
 
 Scenario: Veirfy Navigation of Menstrual Phase Logs
 Given User clicks login in button after entering  a valid credential
 And User clicks on activity Insight
 When User clicks on Menstrual Phase Logs
-Then User should be redirected to menstrual phase log page
+Then User should be redirected to "Menstrual Cycle Tracker" menstrual page
 

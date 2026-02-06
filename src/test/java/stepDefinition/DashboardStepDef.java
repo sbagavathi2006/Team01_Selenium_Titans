@@ -252,10 +252,6 @@ public class DashboardStepDef{
 		  Assert.assertEquals(actualMessage, expectedMessage);
 	}
 	
-	@Then("Card includes heart icon, condition name , and info icon with related text")
-	public void card_includes_heart_icon_condition_name_and_info_icon_with_related_text() {
-	      
-	}
 	
 	
 	/*-------------- Health Conditions - without condition--------------*/
@@ -350,97 +346,72 @@ public class DashboardStepDef{
 	
 	@When("User clicks on profile name")
 	public void user_clicks_on_profile_name() {
-	      
+		testContext.editProfilePage().clickUName();
 	}
 
-	@Then("User should see {string}, {string}, {string} , {string} options")
-	public void user_should_see_options(String string, String string2, String string3, String string4) {
-	      
+	@Then("User should see below profile {string}")
+	public void user_should_see_options(String expectedText) {
+		List<String> actualOptionsText = testContext.dashboardPage().getdashboardMenuItem();
+		 Assert.assertTrue(actualOptionsText.contains(expectedText));
 	}
 	
 	@When("User clicks on activity Insight")
 	public void user_clicks_on_activity_insight() {
-	      
-	}
-
-	@Then("User should see  Track Weight\", Food Intake\" , {string}")
-	public void user_should_see_track_weight_food_intake(String string) {
-	      
+	      testContext.dashboardPage().clickTrackWeight();
 	}
 	
 	@When("User clicks on Diet plan button")
 	public void user_clicks_on_diet_plan_button() {
-	      
+	      testContext.dashboardPage().clickdietPlan();
 	}
 
-	@Then("User should redirected to diet-plan page")
-	public void user_should_redirected_to_diet_plan_page() {
-	      
+	@Then("User should redirected to {string} page")
+	public void user_should_redirected_to_page(String expectedText) {
+	      Assert.assertEquals(testContext.dashboardPage().getdietPlanText(), expectedText);
 	}
 
 	@When("User clicks on workout button")
 	public void user_clicks_on_workout_button() {
-	      
+	      testContext.dashboardPage().clickworkOut();
 	}
 
-	@Then("User should redirected to workout page")
-	public void user_should_redirected_to_workout_page() {
+	@Then("User should redirected to {string} workout page")
+	public void user_should_redirected_to_workout_page(String expectedText) {
 	      
+		 Assert.assertEquals(testContext.dashboardPage().getworkOutText(), expectedText);
+			
 	}
 	
 	@When("User clicks on water tracker button")
 	public void user_clicks_on_water_tracker_button() {
-	      
+	      testContext.dashboardPage().clickwaterTracker();
 	}
 
-	@Then("User should redirected to water tracker page")
-	public void user_should_redirected_to_water_tracker_page() {
-	      
+	@Then("User should redirected to {string} water page")
+	public void user_should_redirected_to_water_page(String expectedText) {
+	      Assert.assertEquals(testContext.dashboardPage().getwaterTrackerText(), expectedText);
 	}
 	
-	@When("User clicks on View Full Cycle Details")
-	public void user_clicks_on_view_full_cycle_details() {
-	      
-	}
-
-	@Then("User should be redirected to Menstrual cycle tracker page")
-	public void user_should_be_redirected_to_menstrual_cycle_tracker_page() {
-	      
-	}
-	
-	@When("User clicks on Upload Blood report")
-	public void user_clicks_on_upload_blood_report() {
-	      
-	}
-
-	@Then("User should be redirected to explorer to choose the file")
-	public void user_should_be_redirected_to_explorer_to_choose_the_file() {
-	      
-	}
 	
 	@When("User clicks on  Upgrade to Premium")
 	public void user_clicks_on_upgrade_to_premium() {
-	      
+	      testContext.dashboardPage().clickupgradePremium();
 	}
 
 	@Then("User should be redirected to Subcription page")
 	public void user_should_be_redirected_to_subcription_page() {
-	      
+		Assert.assertTrue(testContext.dashboardPage().getsubscriptionPlanText());
 	}
 	
-	@When("User clicks on Generate {int}-Day Plan")
-	public void user_clicks_on_generate_day_plan(Integer int1) {
-	      
+	@When("User clicks on Generate Day Plan")
+	public void user_clicks_on_generate_day_plan() {
+	      testContext.dashboardPage().clicksevenDayPlan();
 	}
 
-	@Then("User should be redirected to diet-plan page")
-	public void user_should_be_redirected_to_diet_plan_page() {
-	      
-	}
-	
+
 	@When("User clicks on See Premium Plans")
 	public void user_clicks_on_see_premium_plans() {
-	      
+	      testContext.dashboardPage().clickseePremiumPlan();
 	}
 	
 	
@@ -448,74 +419,68 @@ public class DashboardStepDef{
 	
 	@When("User clicks on Home")
 	public void user_clicks_on_home() {
-	      
+	      testContext.dashboardPage().clickhome();
 	}
 
-	@Then("User should be redirected to dashboard option")
-	public void user_should_be_redirected_to_dashboard_option() {
-	      
-	}
 	
 	@When("User clicks on Edit Profile")
 	public void user_clicks_on_edit_profile() {
-	      
+		 testContext.editProfilePage().clickEditProfile();
 	}
 
-	@Then("User should be redirected to Edit Your Profile page")
-	public void user_should_be_redirected_to_edit_your_profile_page() {
-	      
-	}
-	
+
 	@When("User clicks on Subscription")
 	public void user_clicks_on_subscription() {
-	      
+	      testContext.dashboardPage().clicksubscription();
 	}
 
-	@Then("User should be redirected to Subscription Management page")
-	public void user_should_be_redirected_to_subscription_management_page() {
-	      
+	@Then("User should be redirected to {string} sub page")
+	public void user_should_be_redirected_to_sub_page(String expectedText) {
+	      Assert.assertEquals(testContext.dashboardPage().getsubscriptionNavText(), expectedText);
 	}
 	
 	@When("User clicks on Logout")
 	public void user_clicks_on_logout() {
-	      
+	      testContext.dashboardPage().clicklogout();
 	}
 
-	@Then("User should be logged out of the application")
-	public void user_should_be_logged_out_of_the_application() {
-	      
+	@Then("User should logout and see {string} title")
+	public void user_should_logout_and_see_title(String expectedText) {
+	     Assert.assertEquals(testContext.editProfilePage().getEditMessage(), expectedText); 
 	}
 
 	/*-------------- Dashboard - Activity Insights sub menu functionality --------------*/
 	
 	@When("User clicks on Track Weight")
 	public void user_clicks_on_track_weight() {
-	      
+	      testContext.dashboardPage().clicktrackWeight();
 	}
 
-	@Then("User should be redirected to  track weight page")
-	public void user_should_be_redirected_to_track_weight_page() {
-	      
+	@Then("User should be redirected to {string} page")
+	public void user_should_be_redirected_to_page(String expecteText) {
+	      Assert.assertEquals(testContext.dashboardPage().gettrackWeightNavText(), expecteText);
 	}
-	
-	@When("User clicks on Food Intake")
+	      
+	@When("User clicks on Food Intake")    
 	public void user_clicks_on_food_intake() {
-	      
+	      testContext.dashboardPage().clickfoodIntake();
 	}
 
-	@Then("User should be redirected to food intake page")
-	public void user_should_be_redirected_to_food_intake_page() {
-	      
+	@Then("User should be redirected to {string} food intake page")
+	public void user_should_be_redirected_to_food_intake_page(String expectedText) {
+	      Assert.assertEquals(testContext.dashboardPage().getfoodIntakeText(), expectedText);
 	}
 
+	
 	@When("User clicks on Menstrual Phase Logs")
 	public void user_clicks_on_menstrual_phase_logs() {
-	     
+		testContext.dashboardPage().clickmenstrual();
 	}
 
-	@Then("User should be redirected to menstrual phase log page")
-	public void user_should_be_redirected_to_menstrual_phase_log_page() {
-	   
+	@Then("User should be redirected to {string} menstrual page")
+	public void user_should_be_redirected_to_menstrual_page(String expectedText) {
+		 Assert.assertEquals(testContext.dashboardPage().getmenstrualText(), expectedText);
+
 	}
 
 

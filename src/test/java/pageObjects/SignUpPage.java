@@ -149,9 +149,11 @@ public class SignUpPage {
         String random = CommonMethods.generateRandomString();
         String email = random + "@gmail.com";
         String password = random + "@@123";
+        String userName = random;
         
         context.setScenarioData("EMAIL", email);
         context.setScenarioData("PASSWORD", password);
+        context.setScenarioData("USERNAME", userName);
 
         enterEmail(email);
         enterPassword(password);

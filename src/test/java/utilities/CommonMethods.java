@@ -1,6 +1,8 @@
 package utilities;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -32,6 +34,10 @@ public class CommonMethods {
         return wait.until(ExpectedConditions.elementToBeClickable(activityInsightBtn));
     }
 
+    public WebElement waitForClickable(WebElement element) {
+        return wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+    
        public WebElement waitForPresence(By locator) {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
@@ -147,9 +153,52 @@ public class CommonMethods {
     public static double extractNumber(String text) {
         return Double.parseDouble(text.replaceAll("[^0-9.]", ""));
     }
+
     
   
-
+    public String getAlertMsg(By locator) {
+    	try {
+	    	WebElement element = driver.findElement(locator);
+	    	
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			String validationMsg = (String) js.executeScript(
+		    "return arguments[0].validationMessage;", element);
+			
+			if(validationMsg == null || validationMsg.trim().isEmpty()) {
+			throw new RuntimeException("Failed: Validation message is empty for locator: " + locator.toString());
+		}
+			LoggerLoad.info("Alert Message Found: " + validationMsg);
+		return 	validationMsg;
+    	} catch (NoSuchElementException e) {
+    		throw new RuntimeException("Failed: Unable to find the input element: " + locator.toString());
+    	} catch (Exception e) {
+    		throw new RuntimeException("Failed to retrieve alert message: " + e.getMessage());
+    	}
+    	
+    }	
+    
+    
+    public WebElement randomCheckboxSelection(By locator) {
+    	List<WebElement> checkboxesNew = driver.findElements(locator);
+    	
+    	Random random = new Random();
+    	int randomIndex = random.nextInt(checkboxesNew.size());
+    	WebElement randomCheckbox = checkboxesNew.get(randomIndex);
+       	return randomCheckbox;
+    }
+    
+    
+    public void scrollIntoView(WebElement element) {
+        ((JavascriptExecutor) driver)
+                .executeScript("arguments[0].scrollIntoView({block:'center'});", element);
+    }
+    
+    public void scrollIntoView(By locator) {
+    	 WebElement element =
+    	            wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    	    scrollIntoView(element);
+    }
+    
     public String getAlertText() {
         Alert alert = wait.until(ExpectedConditions.alertIsPresent());
         return alert.getText();
@@ -167,13 +216,30 @@ public class CommonMethods {
     }
 
 
+    public String getCurrentDate() {
+        return LocalDate.now()
+                .format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+    }
+    public List<WebElement> getElements(By locator) {
+        return driver.findElements(locator);
+    }
+
+
     public static void sendKeys(By locator, String text) {
         WebElement element = waitForVisibility(locator);
         element.clear();
         element.sendKeys(text);
     }
+    
+    public void scrollIntoViewWait(WebElement element) {
+        ((JavascriptExecutor) driver)
+                .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", element);
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
 
 }
+
+
 
 
 

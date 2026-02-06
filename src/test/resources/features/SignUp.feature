@@ -1,3 +1,4 @@
+@ui
 Feature: Sign Up Page
 
   Background:

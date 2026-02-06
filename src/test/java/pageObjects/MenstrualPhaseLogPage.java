@@ -1,17 +1,21 @@
 package pageObjects;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import utilities.CommonMethods;
+import utilities.ConfigReader;
+import utilities.ExcelUtils;
+import utilities.LoggerLoad;
 
 public class MenstrualPhaseLogPage {
 	WebDriver driver;
 	CommonMethods commonMethods;
+	ExcelUtils excel ;
 	
 	public MenstrualPhaseLogPage(WebDriver driver) {
 		this.driver = driver;
@@ -23,7 +27,7 @@ public class MenstrualPhaseLogPage {
 	By MentrualPhaseLogDropdown= By.xpath("//div[@role='menuitem']//a[@href='/track/menstrual-cycle']");
 	By menstrualPhaseLogs = By.xpath("//a[@href='/track/menstrual-cycle']");
 	By UpdateCycleInfoBtn = By.xpath("//button[span[text()='Update Cycle Information']]");
-	By currentCycleStatus = By.xpath("//h2[contains(., 'Current Cycle Status')]");
+	By currentCycleStatusUI = By.xpath("//div[contains(@class,'font-medium') and contains(text(),'Day')]");
     By BacktoDashboard = By.xpath("//span[contains(text(),'Back to Dashboard')]");
     By AddPeriodLog = By.xpath("//button[span[text()='Add Period Log']]");
     By cycleOverviewTab = By.xpath("//button[text()='Cycle Overview']");
@@ -39,6 +43,24 @@ public class MenstrualPhaseLogPage {
     By follicularLabel = By.xpath("//div[text()='Follicular']");
     By ovulationLabel = By.xpath("//div[text()='Ovulation']");
     By lutealLabel = By.xpath("//div[text()='Luteal']");
+    By menstrualPhaseSideLabel = By.xpath("//span[contains(text(),'Menstrual Phase')]");
+    By follicularPhaseSideLabel = By.xpath("//span[contains(text(),'Follicular Phase')]");
+    By ovulationPhaseSideLabel = By.xpath("//span[contains(text(),'Ovulation Phase')]");
+    By lutealPhaseSidelabel = By.xpath("//span[contains(text(),'Luteal Phase')]");
+    By perimenopausePhaseSideLabel = By.xpath("//span[contains(text(),'Perimenopause')]");
+    By CurrentPhaseUI = By.xpath("//div[text()='Current Phase']/following-sibling::div[1]");
+    By lastPeriodStartedFromUI = By.xpath("//div[text()='Last period started']/following-sibling::div");
+    By nextPeriodExpectedFromUI = By.xpath("//div[text()='Next period expected']/following-sibling::div");
+    By currentPhaseDetailsUI = By.xpath("//div[@class='text-lg font-medium mb-4']");
+    By currentPhaseDescriptionUI = By.xpath("//div[contains(@class,'rounded-md')]/p");
+    By upcomingPhasesHeader = By.xpath("//h3[contains(text(),'Upcoming Phases')]");
+    By UcomingPhasesText = By.xpath("//p[contains(text(),'Plan ahead with your cycle phases')]");
+    By all5PhaseSideSections = By.xpath("//div[contains(@class,'p-3') and contains(@class,'rounded-lg')]");
+    By menstrualDate = By.xpath("///*[@id=\"radix-:r3t:-content-overview\"]/div[1]/div[2]/div[1]/div[2]/div/div[1]/div[2]/span");
+    By follicularDate = By.xpath("//*[@id=\"radix-:r3t:-content-overview\"]/div[1]/div[2]/div[1]/div[2]/div/div[2]/div[2]");
+    By ovulationDate = By.xpath("//*[@id=\"radix-:r3t:-content-overview\"]/div[1]/div[2]/div[1]/div[2]/div/div[3]/div[2]");
+    By lutealDate  = By.xpath("//*[@id=\"radix-:r3t:-content-overview\"]/div[1]/div[2]/div[1]/div[2]/div/div[4]/div[2]");
+
 
 	public void waitforActiviyInsightsButton() {
 		commonMethods.waitForClickable(activityInsightsButton);
@@ -47,23 +69,19 @@ public class MenstrualPhaseLogPage {
 	    WebElement activityInsights = driver.findElement(activityInsightsButton);
 	    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", activityInsights);
 	    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", activityInsights);
-	//	commonMethods.waitForClickable(activityInsightsButton).click();
-	}
+		}
      
     public boolean isActivityInsightsTextVisible(String expectedText) {
         WebElement btn = commonMethods.waitForVisibility(activityInsightsButton);
         return btn.getText().equals(expectedText);
-    }
-
-    
+    }   
 
     public boolean clickMenstrualPhaseLogs() {         
           WebElement logs = commonMethods.waitForClickable(menstrualPhaseLogs); 
          ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", logs); 
           ((JavascriptExecutor) driver).executeScript("arguments[0].click();", logs);    
             return true; 
-        }
-    
+        }    
     public boolean isUpdateCycleInfoBtnVisible() {
         WebElement btn = commonMethods.waitForVisibility(UpdateCycleInfoBtn);
         return btn.isDisplayed();
@@ -76,6 +94,11 @@ public class MenstrualPhaseLogPage {
     
     public boolean isAddPeriodLogBtnVisible() {
 		return commonMethods.waitForVisibility(AddPeriodLog).isDisplayed();	
+		
+	}
+    public boolean iscurrentCycleStatusVisible() {
+		return commonMethods.waitForVisibility(currentCycleStatusUI).isDisplayed();	
+		
 	}
     public boolean isUpdateCycleInfoPresent() {
         List<WebElement> buttons = driver.findElements(
@@ -133,8 +156,85 @@ public class MenstrualPhaseLogPage {
     public boolean isLutealLabelVisible() {     
             return commonMethods.waitForVisibility(lutealLabel).isDisplayed();        
     }
+    public String getLastPeriodDate() { 
+    	excel = new ExcelUtils(ConfigReader.getProperty("test_data_path"));
+    	String value = excel.getDataAll("onBoarding").get(0) .get("Last Period Date"); 
+    	return value;
+    	}
+    public String getLastPeriodStartedFromUI() { 
+    	return driver.findElement(lastPeriodStarted).getText(); 
+    } 
+    public String getNextPeriodExpectedFromUI() { 
+    	return driver.findElement(nextPeriodExpected).getText();
+    	}
+    public String NextPeriodExpected() { 
+    	String lastPeriodDateFromExcel = getLastPeriodDate(); 
+        DateTimeFormatter excelFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy"); 
+        LocalDate lastPeriod = LocalDate.parse(lastPeriodDateFromExcel, excelFormat); 
+        LocalDate nextPeriod = lastPeriod.plusDays(28); 
+        DateTimeFormatter FromUIpage = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+    	return nextPeriod.format(FromUIpage); 
+    	}
+    public String getCurrentPhaseFromUI() {
+        return driver.findElement(CurrentPhaseUI).getText().trim();
+    }
+    public String getLastPeriodStartedText() {
+    	return driver.findElement(lastPeriodStartedFromUI).getText().trim();
+    }
 
+    public String getNextPeriodExpectedText() {
+        return driver.findElement(nextPeriodExpectedFromUI).getText().trim();
+    }
 
+    public String getCurrentPhaseDetailsHeadingText() {
+    	return driver.findElement(currentPhaseDetailsUI).getText().trim();     
+            }
+    public String getCurrentPhaseDescriptionText() {
+    	return driver.findElement(currentPhaseDescriptionUI).getText().trim();       
+    }
+    public boolean isUpcomingPhasesHeaderDisplayed() {      
+        return driver.findElement(upcomingPhasesHeader).isDisplayed();
+        
+    }
+    public boolean isUpcomingPhaseTextDisplayed() {        
+       return driver.findElement(UcomingPhasesText).isDisplayed();
+     }
+    public boolean areAllFivePhasesVisible() {
+        String menstrual     = commonMethods.waitForVisibility(menstrualPhaseSideLabel).getText();
+        String follicular    = commonMethods.waitForVisibility(follicularPhaseSideLabel).getText();
+        String ovulation     = commonMethods.waitForVisibility(ovulationPhaseSideLabel).getText();
+        String luteal        = commonMethods.waitForVisibility(lutealPhaseSidelabel).getText();
+        String perimenopause = commonMethods.waitForVisibility(perimenopausePhaseSideLabel).getText();
+        LoggerLoad.info("Menstrual Phase UI text: " + menstrual);
+        LoggerLoad.info("Follicular Phase UI text: " + follicular);
+        LoggerLoad.info("Ovulation Phase UI text: " + ovulation);
+        LoggerLoad.info("Luteal Phase UI text: " + luteal);
+        LoggerLoad.info("Perimenopause UI text: " + perimenopause);
+        return true;
+    }
+
+    public boolean isFivePhasesDisplayed() {
+        List<WebElement> FivePhases = driver.findElements(all5PhaseSideSections);
+        LoggerLoad.info("Number of phases displayed: " + FivePhases.size());
+        return FivePhases.size() == 5;
+    }
+
+    public boolean AllFourPhaseDatesDisplayed() {
+                    String menstrualDateUI     = commonMethods.waitForVisibility(menstrualDate).getText();
+            String follicularDateUI    = commonMethods.waitForVisibility(follicularDate).getText();
+            String ovulationDateUI    = commonMethods.waitForVisibility(ovulationDate).getText();
+            String lutealDateUI        = commonMethods.waitForVisibility(lutealDate).getText();
+            LoggerLoad.info("Menstrual Date: " + menstrualDateUI);
+            LoggerLoad.info("Follicular Date: " + follicularDateUI);
+            LoggerLoad.info("Ovulation Date: " + ovulationDateUI);
+            LoggerLoad.info("Luteal Date: " + lutealDateUI);
+            return true;    
+    }
 
 
 }
+
+
+
+
+

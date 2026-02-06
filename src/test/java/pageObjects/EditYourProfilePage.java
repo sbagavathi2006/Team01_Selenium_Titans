@@ -137,6 +137,7 @@ public class EditYourProfilePage {
 	}
 	
 	public List<String> getBodyMetricsWeightDD(){
+		commonMethods.waitForPresence(bodyMetricsWeightDDValues);
 		return commonMethods.getElementsListText(bodyMetricsWeightDDValues);
 	}
 	

@@ -80,7 +80,7 @@ public class EditYourProfileStepDef {
 	public void should_display_the_user_s_name_and_age_as_entered_during_the_onboarding_process() {
 		testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport");
 	   Assert.assertEquals(testContext.editProfilePage().getBasicInfoName(), testData.get("First Name"));
-	  Assert.assertEquals(Integer.parseInt(testContext.editProfilePage().getBasicInfoAge()), testData.get("Age"));
+	   Assert.assertEquals(testContext.editProfilePage().getBasicInfoAge().replace(".0", ""),testData.get("Age").replace(".0", "") );
 	}
 	
 	@When("User clicks {string} button")
@@ -117,8 +117,8 @@ public class EditYourProfileStepDef {
 	@Then("Should display the user’s Weight and Height are as entered during the onboarding process")
 	public void should_display_the_user_s_weight_and_height_are_as_entered_during_the_onboarding_process() {
 		testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport");
-	 Assert.assertEquals(Integer.parseInt(testContext.editProfilePage().getBodyMetricsWeight()), testData.get("Weight in KG"));
-		  Assert.assertEquals(Integer.parseInt(testContext.editProfilePage().getBodyMetricsHeight()),  testData.get("Height in CM"));
+	 Assert.assertEquals(testContext.editProfilePage().getBodyMetricsWeight().replace(".0", ""), testData.get("Weight in KG").replace(".0", ""));
+		  Assert.assertEquals(testContext.editProfilePage().getBodyMetricsHeight().replace(".0", ""),  testData.get("Height in CM").replace(".0", ""));
 		
 	}
 

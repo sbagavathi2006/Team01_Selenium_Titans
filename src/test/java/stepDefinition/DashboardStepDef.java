@@ -112,8 +112,8 @@ public class DashboardStepDef{
 	public void bmi_should_be_correctly_calculated_using_the_formula() {
 		testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport");
 
-		int currentWeightInt = Integer.parseInt(testContext.dashboardPage().getDashboardCurrentWeight().split(" ")[0]);
-		double heightInt = (Integer.parseInt(testData.get("Height in CM")))/100.0;
+		int currentWeightInt = Integer.parseInt(testContext.dashboardPage().getDashboardCurrentWeight().replace(".0", "").split(" ")[0]);
+		double heightInt = (Integer.parseInt(testData.get("Height in CM").replace(".0", "")))/100.0;
 		double bmi = Math.round((currentWeightInt / (heightInt * heightInt))*10.0)/10.0;
 		String expectedBMI = String.valueOf(bmi);
 		 Assert.assertEquals(testContext.dashboardPage().getDashboardBMI(), expectedBMI);

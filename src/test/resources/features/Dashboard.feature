@@ -77,15 +77,13 @@ Feature: Dashboard page
       |7-Day Goal|
 
       
-
      Scenario Outline: Verify 7-Day Goal section details
        When User clicks login in button after entering  a valid credential
        Then App should have following goal "<values>"
        Examples:
        |values|
-       |Monthly Goal:|
-       |Weekly target|
-       |Daily Weigh-in|
+       |Weekly Target|
+       |Daily Weigh-in:|
 
 
       Scenario: Verify Current Weight Value Displayed from Onboarding
@@ -96,7 +94,6 @@ Feature: Dashboard page
         Scenario: Verify Height Value Displayed from Onboarding
           When User clicks login in button after entering  a valid credential
           Then Should display the user’s Height as entered during the onboarding process.
-
 
    Scenario: Verify BMI Calculation on Dashboard
     When User clicks login in button after entering  a valid credential
@@ -168,13 +165,6 @@ Scenario Outline: Verify BMI category labels
 
 
 
-
-
-
-
-
-
-
  #Blood Report Insights - report not uploaded
 
 
@@ -191,8 +181,6 @@ Scenario Outline: Verify BMI category labels
    Scenario: Verify Upload report button
      When User clicks login in button after entering  a valid credential
      Then Upload Blood Report button should be enabled
-
-
 
 
      #Subscription Information

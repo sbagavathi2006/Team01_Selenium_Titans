@@ -47,7 +47,6 @@ Feature: Edit Your Profile page
    When User clicks on profile name and click on edit profile
   Then "Update your name and age" sub text should be visible
   
- 
   Scenario: Verify Name and age input field presence
    When User clicks on profile name and click on edit profile
   Then Should display the user’s Name and age as entered during the onboarding process.
@@ -74,7 +73,6 @@ Scenario: Verify Sub text for header
  When User clicks on profile name and click on edit profile
 And User clicks Body Metrics Tab
 Then "Update your weight and height information" sub text should be visible
-
 
  Scenario: Verify Weight and Height input field presence
  When User clicks on profile name and click on edit profile
@@ -206,8 +204,7 @@ Then User should see a Pop Up "Enter medication name"
 #Preferences & Health -Add Medication UI verification 
 
 Scenario: Verify Header text
-When User navigates to Preferences & Health Tab
-And User clicks on Add Medication button
+When User navigates to Add Medication button
 Then "Enter medication name" alert should be visible
 
 

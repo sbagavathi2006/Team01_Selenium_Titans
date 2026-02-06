@@ -17,7 +17,7 @@ import utilities.GoogleDriveDownloader;
 
 public class Hooks {
 
-    private WebDriver driver;
+  //  private WebDriver driver;
 private static Logger logger = LogManager.getLogger();
 private static boolean isExcelDownloaded = false;
 
@@ -50,7 +50,8 @@ public void setUp(Scenario scenario) {
 
     logger.info("Executing scenario: " + scenario.getName());     
     System.out.println("Set browser type from before setup:" + DriverFactory.getBrowser());
-    DriverFactory.getDriver();
+    WebDriver driver = DriverFactory.getDriver(); //added this line
+  //  DriverFactory.getDriver();
     DriverFactory.setupBrowser();
     
     DriverFactory.getDriver().manage().deleteAllCookies();
@@ -79,11 +80,12 @@ public void afterStep(Scenario scenario) {
 }
 
 @After
-public void tearDown() {
+public void tearDown(Scenario scenario) {
+	WebDriver driver = DriverFactory.getDriver(); //added this line
     if (driver != null) {
         logger.info("Closing WebDriver instance...");
         DriverFactory.quitDriver();
-        driver = null;
+      //  driver = null;
     }
 }
 

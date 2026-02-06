@@ -2,22 +2,23 @@ package stepDefinition;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.openqa.selenium.By;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import context.TestContextSetup;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import utilities.ExcelUtils;
 
 public class DashboardStepDef{
 
 		private TestContextSetup testContext;
-	    private String userName = "mathu";
-	    private String weight = "60";
-	    private String height = "155";
-	    private String subscriptionPlan = "Free Plan";
+		private ExcelUtils excel = new ExcelUtils(null);;
+		private Map<String, String> testData;
+
 	    
 	    public DashboardStepDef(TestContextSetup context) {
 	    	 this.testContext = context;
@@ -28,20 +29,19 @@ public class DashboardStepDef{
 	
 	@When("User clicks login in button after entering  a valid credential")
 	public void user_clicks_login_in_button_after_entering_a_valid_credential() {
-		testContext.dashboardPage().tempLogin();
-//		String username = "mathu";
-//		testContext.setScenarioData("username", username);
+		testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport");
+		testContext.dashboardPage().Login(testData.get("UserName"),testData.get("Password"));
+	
 	}
 	
 	@Then("User should see {string} title")
 	public void user_should_see_title(String expectedTitle) {
 		Assert.assertEquals(testContext.dashboardPage().getTitle(), expectedTitle);
-//	System.out.println("Getting shared data "+ testContext.getScenarioData("sharableData"));
 	}
 	
 	@Then("User should see user name on the top right side")
 	public void user_should_see_user_name_on_the_top_right_side() {
-    Assert.assertEquals(testContext.dashboardPage().getDashboardUserName(), userName);
+    Assert.assertEquals(testContext.dashboardPage().getDashboardUserName(), testData.get("First Name"));
 	}
 	
 	@Then("User should see profile icon near user name")
@@ -62,7 +62,7 @@ public class DashboardStepDef{
 	@Then("User should see {string}")
 	public void user_should_see(String menuName) {
 		if(menuName.equalsIgnoreCase("User Name")) {
-			menuName = userName;
+			menuName = testData.get("First Name");
 		}
 		 List<String> actualMenus = testContext.dashboardPage().getMenusText();
 		 Assert.assertTrue(actualMenus.contains(menuName));
@@ -96,18 +96,24 @@ public class DashboardStepDef{
 	
 	@Then("Should display the user’s weight as entered during the onboarding process.")
 	public void should_display_the_user_s_weight_as_entered_during_the_onboarding_process() {
-	      Assert.assertEquals(testContext.dashboardPage().getDashboardWeight(), weight);
+		testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport");
+		String tempWeight = testData.get("Weight in KG");
+		Assert.assertEquals(testContext.dashboardPage().getDashboardWeight(), tempWeight.replace(".0", "") );
 	}
 	
 	@Then("Should display the user’s Height as entered during the onboarding process.")
 	public void should_display_the_user_s_height_as_entered_during_the_onboarding_process() {
-		  Assert.assertEquals(testContext.dashboardPage().getDashboardHeight(), height);
+		testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport");
+		String tempHeight = testData.get("Height in CM");
+		Assert.assertEquals(testContext.dashboardPage().getDashboardHeight(), tempHeight.replace(".0", ""));
 	}
 	
 	@Then("BMI should be correctly calculated using the formula")
 	public void bmi_should_be_correctly_calculated_using_the_formula() {
+		testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport");
+
 		int currentWeightInt = Integer.parseInt(testContext.dashboardPage().getDashboardCurrentWeight().split(" ")[0]);
-		double heightInt = (Integer.parseInt(height))/100.0;
+		double heightInt = (Integer.parseInt(testData.get("Height in CM")))/100.0;
 		double bmi = Math.round((currentWeightInt / (heightInt * heightInt))*10.0)/10.0;
 		String expectedBMI = String.valueOf(bmi);
 		 Assert.assertEquals(testContext.dashboardPage().getDashboardBMI(), expectedBMI);
@@ -115,7 +121,9 @@ public class DashboardStepDef{
 	
 	@Then("Goal weight should be displayed as the difference from the weekly target")
 	public void goal_weight_should_be_displayed_as_the_difference_from_the_weekly_target() {
-		String expectedGoalWeight = String.valueOf(Integer.parseInt(weight)-0.7);
+		testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport");
+
+		String expectedGoalWeight = String.valueOf(Integer.parseInt(testData.get("Weight in KG").replace(".0", ""))-0.7);
 		System.out.println(testContext.dashboardPage().getDashboardGoalWeight());
 		Assert.assertEquals(testContext.dashboardPage().getDashboardGoalWeight(), expectedGoalWeight);
 	}
@@ -128,19 +136,13 @@ public class DashboardStepDef{
 	
 	@Then("Subcription details should be present in goal section")
 	public void subcription_details_should_be_present_in_goal_section() {
-		Assert.assertEquals(testContext.dashboardPage().getDashboardSubscription(), subscriptionPlan);
+		testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport");
+
+		Assert.assertEquals(testContext.dashboardPage().getDashboardSubscription(), testData.get("Plan"));
 	}
 	
-	@Then("Slider should be present in BMI reference guide")
-	public void slider_should_be_present_in_bmi_reference_guide() {
-	      
-	}
 	
-	@Then("BMI Reference Guide component should be displayed with a gradient slider and labeled ranges")
-	public void bmi_reference_guide_component_should_be_displayed_with_a_gradient_slider_and_labeled_ranges() {
-	      
-	}
-	
+
 	@Then("{string} label should be visible above the slider")
 	public void label_should_be_visible_above_the_slider(String string) {
 	      Assert.assertEquals(testContext.dashboardPage().getDashboardInfo(), "Info");
@@ -152,59 +154,102 @@ public class DashboardStepDef{
 	Assert.assertEquals(testContext.dashboardPage().getDashboardFreePlanINfor(), expectedMessage);	
 	}
 	
-
 	
-	@Then("Slider should not allow manual movement; it should remain fixed based on the user’s BMI")
-	public void slider_should_not_allow_manual_movement_it_should_remain_fixed_based_on_the_user_s_bmi() {
-	      
+	
+	@Then("Slider should be present in BMI reference guide")
+	public void slider_should_be_present_in_bmi_reference_guide() {
+	      Assert.assertTrue(testContext.dashboardPage().sliderIsDisplayed());
 	}
 	
-	
-	
-	
-	
-	
-	
-
+	@Then("BMI Reference Guide component should be displayed with a gradient slider and labeled ranges")
+	public void bmi_reference_guide_component_should_be_displayed_with_a_gradient_slider_and_labeled_ranges() {
+		Assert.assertTrue(testContext.dashboardPage().sliderCategoryIsDisplayed());
+	}
 	
 	@Then("slider should display a continuous gradient from blue → yellow → orange → red, representing increasing BMI values")
 	public void slider_should_display_a_continuous_gradient_from_blue_yellow_orange_red_representing_increasing_bmi_values() {
-	      
+				//Blue color
+				SoftAssert sa = new SoftAssert();
+				sa.assertTrue(testContext.dashboardPage().getDashboardSlider().contains("rgb(96, 165, 250)"));
+				//Green color
+				sa.assertTrue(testContext.dashboardPage().getDashboardSlider().contains("rgb(74, 222, 128)"));
+				//Yello/Orange color
+				sa.assertTrue(testContext.dashboardPage().getDashboardSlider().contains("rgb(251, 191, 36)"));
+				//Red color
+				sa.assertTrue(testContext.dashboardPage().getDashboardSlider().contains("rgb(248, 113, 113)"));
+						sa.assertAll();
 	}
-	
 	
 	
 
 	
-	@Then("Labels {string}, {string}, {string}, and {string} should be visible and color-coded accordingly")
-	public void labels_and_should_be_visible_and_color_coded_accordingly(String string, String string2, String string3, String string4) {
-	      
+	@Then("{string} should be visible and color-coded accordingly")
+	public void should_be_visible_and_color_coded_accordingly(String expectedText) {
+	    String labelText = testContext.dashboardPage().getDashboardSliderCategory(); 
+	    List<String> actualCategoryText = new ArrayList<>();
+	    for (String text : labelText.split("\\r?\\n")) {
+	    	actualCategoryText.add(text.trim());
+	    }
+	    Assert.assertTrue(actualCategoryText.contains(expectedText.trim()));
+	    
 	}
-	
-	@Then("Circular pointer should automatically be positioned on the slider corresponding to the user’s BMI value")
-	public void circular_pointer_should_automatically_be_positioned_on_the_slider_corresponding_to_the_user_s_bmi_value() {
-	      
-	}
-	
 	
 
 	
 	/*-------------- Health Conditions - with condition--------------*/
 	
-	@Given("User has completed onboarding and selected one or more health conditions")
-	public void user_has_completed_onboarding_and_selected_one_or_more_health_conditions() {
-	      
+
+	@When("User clicks login in button after entering  a valid credential with healthCondition")
+	public void user_clicks_login_in_button_after_entering_a_valid_credential_with_healthCondition() {
+		testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport_WithOnlyHealthCondition");
+		testContext.dashboardPage().Login(testData.get("UserName"),testData.get("Password"));
 	}
 	
+	@Then("Displayed condition match exactly what was selected during onboarding without requiring user input again")
+	public void displayed_condition_match_exactly_what_was_selected_during_onboarding_without_requiring_user_input_again() {
+		testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport_WithOnlyHealthCondition");
+		String healthCondition = testData.get("Health Conditions");
+		Assert.assertEquals(testContext.dashboardPage().getDashboardHealthCondition(healthCondition), healthCondition);
 	
-	@Then("Displayed condition\\(s) match exactly what was selected during onboarding, without requiring user input again")
-	public void displayed_condition_s_match_exactly_what_was_selected_during_onboarding_without_requiring_user_input_again() {
-	      
 	}
 	
-	@Then("{string} appears below {string} card explaining how the plan is adjusted")
-	public void appears_below_card_explaining_how_the_plan_is_adjusted(String string, String string2) {
-	      
+	@Then("Displayed message appears below healthCondition card explaining how the plan is adjusted")
+	public void displayed_message_appears_below_healthCondition_card_explaining_how_the_plan_is_adjusted() {   
+		testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport_WithOnlyHealthCondition");
+		String condition = testData.get("Health Conditions");
+		String expectedMessage = "";
+		  switch (condition) {
+	        case "Hypothyroidism":
+	            expectedMessage = "We will moderate certain foods (e.g., raw broccoli, soy) while ensuring your plan has nutrients for thyroid support.";
+	            break;
+	        case "Kidney Disease":
+	            expectedMessage = "Your plan will carefully manage levels of sodium, potassium, phosphorus, and protein to support kidney function.";
+	            break;
+	        case "Liver Disease":
+	            expectedMessage = "To reduce strain on the liver, your plan will strictly limit alcohol, processed fats, added sugars, and sodium.";
+	            break;
+	        case "Cardiovascular Disease":
+	            expectedMessage = "To support heart health, your plan will strictly limit sodium, saturated/trans fats, and added sugars.";
+	            break;
+	        case "Digestive Issues (IBS, Leaky Gut, etc.)":
+	        	expectedMessage = "Your plan will be designed to limit common trigger foods (like high-FODMAPs, gluten, or dairy) to support digestive health.";
+	        	break;
+	        case "Sleep Apnea":
+	        	expectedMessage = "To improve sleep quality, your meal plan will avoid heavy meals, alcohol, and excessive caffeine near bedtime.";
+	        	break;
+	        case "High Cholesterol":
+	        	expectedMessage = "Your plan will restrict saturated and trans fats to help support healthy cholesterol levels.";
+	        	break;
+	        case "Insulin Resistance / Pre-diabetes":
+	        	expectedMessage = "We will limit high-glycemic foods and added sugars in your plan to help maintain stable blood sugar.";
+	        	break;
+	        case "PCOS":
+	        	expectedMessage = "Your plan will be adjusted to limit refined carbohydrates and sugars to support hormone balance.";
+	        default:
+	            throw new RuntimeException("No expected message defined for condition: " + condition);
+	    }
+		  String actualMessage = testContext.dashboardPage().getDashboardHealthConditionMessage(condition);
+		  Assert.assertEquals(actualMessage, expectedMessage);
 	}
 	
 	@Then("Card includes heart icon, condition name , and info icon with related text")
@@ -215,140 +260,90 @@ public class DashboardStepDef{
 	
 	/*-------------- Health Conditions - without condition--------------*/
 
-	@Given("User has completed onboarding  without health conditions")
-	public void user_has_completed_onboarding_without_health_conditions() {
-	      
-	}
 	
-	@Then("Message like “No health conditions selected” or an empty state is displayed")
-	public void message_like_no_health_conditions_selected_or_an_empty_state_is_displayed() {
-	      
+	@When("User clicks login in button after entering  a valid credential without healthCondition")
+	public void user_clicks_login_in_button_after_entering_a_valid_credential_without_healthCondition() {
+		testData = excel.getRowDataByScenario("OnBoarding", "User_WithoutReport_WithoutHealthCondition");
+		testContext.dashboardPage().Login(testData.get("UserName"),testData.get("Password"));
 	}
 	
 	
-	/*-------------- Blood Report Insights - report uploaded--------------*/
-
-	@Given("User has completed onboarding and uploaded report")
-	public void user_has_completed_onboarding_and_uploaded_report() {
+	@Then("Message like {string} or an empty state is displayed")
+	public void message_like_or_an_empty_state_is_displayed(String expectedText) {
 	      
+		Assert.assertEquals(testContext.dashboardPage().getNoHealthText(), expectedText);
+		
 	}
 	
-	@Then("Blood Report Insights section should display the personalized values and insights")
-	public void blood_report_insights_section_should_display_the_personalized_values_and_insights() {
-	      
-	}
+	
+	
+	
+	
+	
 	
 	/*-------------- Blood Report Insights - report not uploaded--------------*/
 
-	@Given("User has completed onboarding and not uploaded report")
-	public void user_has_completed_onboarding_and_not_uploaded_report() {
-	      
-	}
 	
 	@Then("User should see the {string} button")
 	public void user_should_see_the_button(String string) {
-	      
+	      Assert.assertTrue(testContext.dashboardPage().withoutBloodReportIsDisplayed());
 	}
 	
-	@Then("\"Upload your medical blood test report to receive AI-powered insights on how your results impact weight management and overall health.\"Message prompting them to upload their medical blood test report")
-	public void upload_your_medical_blood_test_report_to_receive_ai_powered_insights_on_how_your_results_impact_weight_management_and_overall_health_message_prompting_them_to_upload_their_medical_blood_test_report() {
-	      
+	@Then("{string} Message prompting them to upload their medical blood test report")
+	public void message_prompting_them_to_upload_your_medical_blood_test_report(String expectedText) {
+	      Assert.assertEquals(testContext.dashboardPage().getUploadReportText(), expectedText);
 	}
 	
-	@Then("{string} button should be enabled")
-	public void button_should_be_enabled(String string) {
-	      
+	@Then("Upload Blood Report button should be enabled")
+	public void upload_blood_report_button_should_be_enabled() {
+		
+		 Assert.assertTrue(testContext.dashboardPage().withoutBloodReportIsEnabled());
+
 	}
 	
 	/*-------------- Subscription Information--------------*/
 
 	@Then("Joined date should be displayed")
 	public void joined_date_should_be_displayed() {
-	      
+	      Assert.assertTrue(testContext.dashboardPage().dashboardSubJoinedDateIsDisplayed());
 	}
 	
 	@Then("Todays date should be display")
 	public void todays_date_should_be_display() {
-	      
+		 Assert.assertTrue(testContext.dashboardPage().dashboardSubTodayDateIsDisplayed());
+  
 	}
 	
 	@Then("Subcription plan should be displayed")
 	public void subcription_plan_should_be_displayed() {
-	      
+		Assert.assertEquals(testContext.dashboardPage().dashboardSubPlanNameGet(), testData.get("Plan"));
 	}
 
-	@Then("Status of plan should be displayed\\(how many days left out of {int} days free plan)")
-	public void status_of_plan_should_be_displayed_how_many_days_left_out_of_days_free_plan(Integer int1) {
-	      
-	}
+	
 
 	@Then("{string} button should be displayed")
-	public void button_should_be_displayed(String string) {
-	      
+	public void button_should_be_displayed(String expectedText) {
+	      Assert.assertEquals(testContext.dashboardPage().dashboardSubUpgradeGet(), expectedText);
 	}
 	
 	/*-------------- Menstrual Cycle Insights--------------*/
 	
 	
-	@Given("User has completed onboarding and last period start date as input")
-	public void user_has_completed_onboarding_and_last_period_start_date_as_input() {
-	      
+	@When("User click on view full cycle details link")
+	public void user_click_on_view_full_cycle_details_link() {
+		testContext.dashboardPage().clickdashboardviewFullCycyle();
 	}
 	
-	@Then("Should display current menstrual phase in cycle insights section based on onboarding input")
-	public void should_display_current_menstrual_phase_in_cycle_insights_section_based_on_onboarding_input() {
-	      
-	}
-	
-	@Then("Should display accurate number of days left in the cycle")
-	public void should_display_accurate_number_of_days_left_in_the_cycle() {
-	      
-	}
-	
-	@Then("{string} should be displayed accurately based on onboarding input")
-	public void should_be_displayed_accurately_based_on_onboarding_input(String string) {
-	      
-	}
-	
-	@Then("{string} count displayed should match the number of days since the last period start date")
-	public void count_displayed_should_match_the_number_of_days_since_the_last_period_start_date(String string) {
-	      
-	}
-	
-	@Then("Filled portion should visually represent the proportion of days completed in the current cycle")
-	public void filled_portion_should_visually_represent_the_proportion_of_days_completed_in_the_current_cycle() {
-	      
-	}
-	
-	@Then("Should display “x days” as the countdown to the next period")
-	public void should_display_x_days_as_the_countdown_to_the_next_period() {
-	      
-	}
-	
-	@Then("User should be redirected to the full Menstrual cycle Tracker page")
-	public void user_should_be_redirected_to_the_full_menstrual_cycle_tracker_page() {
-	      
+	@Then("User should be redirected to the full {string} page")
+	public void user_should_be_redirected_to_the_full_page(String expectedText) {
+		Assert.assertEquals(testContext.dashboardPage().getdashboardMenstrualCycle(), expectedText);
 	}
 	
 	@Then("Message {string} should be displayed")
-	public void message_should_be_displayed(String string) {
-	      
+	public void message_should_be_displayed(String expectedText) {
+	      Assert.assertEquals(testContext.dashboardPage().getdashboardMenstrualInfo(), expectedText);
 	}
 	
-	@Then("Hormonal Impact on Weight message should match the expected text for that phase")
-	public void hormonal_impact_on_weight_message_should_match_the_expected_text_for_that_phase() {
-	      
-	}
-	
-	@Then("Symptoms listed should correspond to the expected symptoms for that phase")
-	public void symptoms_listed_should_correspond_to_the_expected_symptoms_for_that_phase() {
-	      
-	}
-	
-	@Then("Cravings displayed should match the expected cravings for that phase")
-	public void cravings_displayed_should_match_the_expected_cravings_for_that_phase() {
-	      
-	}
 	
 	
 	/*-------------- Dashboard - Functionality--------------*/

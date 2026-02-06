@@ -4,14 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.asserts.SoftAssert;
-
 import utilities.CommonMethods;
-import utilities.ExcelUtils;
 
 public class OnBoarding7Page {
 
@@ -41,7 +37,8 @@ public class OnBoarding7Page {
 	private By phaseNote = By.xpath("//h5[contains(normalize-space(),'Phase Note')]");
 	private By feedBack = By.xpath("//h5[contains(text(),'BMI Feedback:')]");
 	private By phaseNoteText=By.xpath("//h5[contains(.,'Phase Note')]/following-sibling::p");
-	
+	private By feedBackText = By.xpath("//p[contains(text(),'Your BMI')]");
+	//p[contains(text(),'Your BMI')]
 	private WebDriver driver;
 	private CommonMethods commonMethods;
 	private OnBoarding6Page onBoard6Pg;
@@ -221,4 +218,34 @@ public class OnBoarding7Page {
         System.out.print("actual:"+expectedNote);
         return actualNote.equals(expectedNote);
     }
+    
+    private static final Map<String, String> BMI_FEEDBACK = Map.of(
+    	    "Underweight", "Your BMI suggests you may need to gain a little weight for optimal health. We're here to guide you every step of the way.",
+    	    "Normal",      "Your BMI is within the normal range. Great job! Keep maintaining a healthy lifestyle.",
+    	    "Overweight",  "Your BMI suggests you may benefit from some weight management. Small changes can make a big difference, and we're here to help.",
+    	    "Obese",       "Your BMI suggests a little weight loss could help with your health. We're here to support you every step of the way."
+    	);
+    public double extractBmiValue(String bmiText) {
+        String value = bmiText.replaceAll("[^0-9.]", "");
+        return Double.parseDouble(value);
+    }
+
+    	public String getBmiFeedbackMessageFromUI() {
+    	    return commonMethods.getText(feedBackText).trim();
+    	}
+    	public String getBmiCategoryFromValue(double bmi) {
+    	    if (bmi < 18.5) return "Underweight";
+    	    if (bmi < 25)   return "Normal";
+    	    if (bmi < 30)   return "Overweight";
+    	    return "Obese";
+    	}
+    	public String getExpectedBmiFeedbackMessage(String weightKgStr, String heightCmStr) {
+    	    String bmiText = buildExpectedBmiText(weightKgStr, heightCmStr);
+    	    double bmiValue = extractBmiValue(bmiText);
+    	    String category = getBmiCategoryFromValue(bmiValue);
+    	    return BMI_FEEDBACK.get(category);
+    	}
+    	
+
+
 }

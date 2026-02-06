@@ -1,22 +1,3 @@
-#Author: your.email@your.domain.com
-#Keywords Summary :
-#Feature: List of scenarios.
-#Scenario: Business rule through list of steps with arguments.
-#Given: Some precondition step
-#When: Some key actions
-#Then: To observe outcomes or validation
-#And,But: To enumerate more Given,When,Then steps
-#Scenario Outline: List of steps for data-driven as an Examples and <placeholder>
-#Examples: Container for s table
-#Background: List of steps run before each of the scenarios
-#""" (Doc Strings)
-#| (Data Tables)
-#@ (Tags/Labels):To group Scenarios
-#<> (placeholder)
-#""
-## (Comments)
-#Sample Feature Definition Template
- 
 
 Feature: Onboarding step 6 Functionality and Step 7 UI verification
 
@@ -45,16 +26,20 @@ Background:
   | UI Element                           |
   | Message related to last period date  |
   | Description for current phase        |
-  | Section headers1                     |
-  | Section headers2                     |
-  | Section headers3                     |
+  | YourCycleTimeline                    |
+  | YourUpcomingCycleCalendar            |         
+  | YourNextExpectedPeriods              |
   | Phase details with day count         |
   | Current phase guidance               |
   | Calendar                             |
   | Left arrow in calender               |
   | Right arrow in calender              |
   
- 
+
+  Scenario: Phase guidance text is visible for current cycle phase
+  When User selects last menstrual date
+  Then Detailed phase guidance text should be visible based on phase
+
   
   Scenario: Display two months in upcoming cycle calendar
   When User selects last menstrual date

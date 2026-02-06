@@ -31,7 +31,7 @@ public class OnBoarding4StepDef {
 					testContext.onBrdPage4().isProgressBar4_10Displayed(),
 			        "User is not on onboarding step 4"
 			    );
-			LoggerLoad.info("User is on Step3 onboarding page");
+			LoggerLoad.info("User is on Step4 onboarding page");
 	}
 
 	@When("User clicks continue button after entering invalid value {string} in first name")

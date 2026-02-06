@@ -26,6 +26,7 @@ public class OnBoarding4Page {
 	private By mcaDescText = By.xpath("//p[contains ( text() , 'Understanding your cycle helps us optimize')]");
 	private By radiobtns = By.xpath("//div[contains(@class, 'border-2')]");
 	private By radioBtnsText = By.xpath("//label[contains(@class , 'text-[#333333]')]");
+	
 	public boolean isProgressBar4_10Displayed() {
 		return driver.findElement(currentStep4).isDisplayed();	
 		}
@@ -75,6 +76,5 @@ public class OnBoarding4Page {
 	public List<String> getRadioBtnsText() {
 		CommonMethods.waitForVisibility(radioBtnsText);
 		return comMethods.getElementsListText(radioBtnsText);
-	}
-	
+	}	
 }

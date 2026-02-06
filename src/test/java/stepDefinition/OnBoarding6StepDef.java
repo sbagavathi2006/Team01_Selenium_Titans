@@ -17,7 +17,7 @@ import utilities.LoggerLoad;
 
 public class OnBoarding6StepDef {
 	private OnBoarding6Page onBrdPage6;
-	
+	String beforePhase;
 	
 	  public OnBoarding6StepDef() {
 		  onBrdPage6 = new OnBoarding6Page(DriverFactory.getDriver());
@@ -82,11 +82,34 @@ public class OnBoarding6StepDef {
 	        String date = row.get("InvalidDate");
 	        onBrdPage6.passingDate(date);
 	    }
-		onBrdPage6 .clickContinueButton();
+		onBrdPage6.clickContinueButton();
 	}
 	@Then("{string} should be displayed for step7")
 	public void should_be_displayed_for_step7(String string) {
 		Assert.assertTrue(onBrdPage6.verifyStep7Element(string), string + " is not displayed");
+	}
+	@Then("Current month and next month should be visible")
+	public void current_month_and_next_month_should_be_visible() {
+		Assert.assertTrue(onBrdPage6.verifyCalenderMonths_step6(),
+			    "Current and next month should be visible in Step 6 calendar");
+	}
+	@When("User changes the date using the upcoming cycle calendar")
+	public void user_changes_the_date_using_the_upcoming_cycle_calendar() {
+		 beforePhase = onBrdPage6.getPhaseBeforeDateChange();
+		    onBrdPage6.changeDateOnCalendar();
+	}
+	@Then("Phase displayed in the timeline should update accordingly")
+	public void phase_displayed_in_the_timeline_should_update_accordingly() {
+		 String afterPhase = onBrdPage6.getPhaseAfterDateChange();
+		    Assert.assertNotEquals(afterPhase,beforePhase,"Phase did not update after date change" );
+	}
+	@Then("At least three future expected period dates should be listed")
+	public void at_least_three_future_expected_period_dates_should_be_listed() {
+		int count = onBrdPage6.getExpectedPeriodDatesCount();
+        Assert.assertTrue(
+	        count >= 3,
+	        "Expected at least 3 future period dates, but found " + count
+	    );
 	}
 	
 	}

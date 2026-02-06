@@ -3,14 +3,10 @@ package pageObjects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import utilities.CommonMethods;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,9 +23,8 @@ public class WeightTrackPage {
         this.commonMethods = new CommonMethods(driver);
 
     }
-   // By items = By.xpath("//div[@class='max-w-7xl mx-auto flex items-center justify-center space-x-4']//button");
-    By activityInsightBtn = By.xpath("//button[.//span[contains(text(),'Activity Insights')]]");
-    By weightTrackLink = By.xpath("//a[contains(@href,'/track/weight')]");
+    By activityInsightBtn = By.xpath("//div[@class='max-w-7xl mx-auto flex items-center justify-center space-x-4']/button");
+    By weightTrackLink = By.xpath("//a[@href='/track/weight']");
     By actualHeaderText = By.xpath("//h1[contains(text(),'Weight Tracking')]");
     By subText = By.xpath("//p[contains(@class, 'capitalize') and contains(normalize-space(), 'free Plan - 7 Days Tracking')]");
     By backToDashBoardBtn = By.xpath("//*[contains(text(),'Back to Dashboard')]");
@@ -53,14 +48,10 @@ public class WeightTrackPage {
     By bmiInputField = By.xpath("//input[@type='text']");
     By graphLine = By.xpath("//*[name()='path' and contains(@class,'recharts-line-curve')]");
     By errorMessage = By.xpath("//div[starts-with(normalize-space(.), 'Please enter a valid weight')]");
-    By weightHistoryValues = By.xpath("//p[contains(normalize-space(),'kg')]");
-    By notesInputField =By.id("note");
 
 
     public void loginToPortal() {
-        driver.findElement(By.xpath("//input[@type='email']")).sendKeys("herbalanceteam1@gmail.com");
-        driver.findElement(By.xpath("//input[@type='password']")).sendKeys("herbalance1@");
-        driver.findElement(By.xpath("//button[@type='submit']")).click();
+        commonMethods.loginFromOnBoarding();
         commonMethods.waitForPopupToDisappear();
     }
     public void activityInsightToBeClickable() {
@@ -68,82 +59,12 @@ public class WeightTrackPage {
     }
 
     public void navigateToActivityInsight() {
-        int maxRetries = 10;
-        int attempts = 0;
-        while (attempts < maxRetries) {
-            try {
-                WebElement btn = commonMethods.waitForVisibility(activityInsightBtn);
-                btn.click();
-                return; // Success!
-            } catch (Exception e) {
-                attempts++;
-                if (attempts >= maxRetries) {
-                    logger.error("Failed to navigate to Activity Insight after 10 attempts");
-                    throw e;
-                }
-                // Small sleep to let the UI settle
-                try { Thread.sleep(500); } catch (InterruptedException ignored) {}
-            }
-        }
+        commonMethods.webClickByLocator(activityInsightBtn);
     }
 
     public void clickWeightTrackingBtn() {
-        commonMethods.waitForPopupToDisappear();
-        int maxRetries = 10;
-        for (int i = 1; i <= maxRetries; i++) {
-            try {
-                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-                WebElement link = wait.until(ExpectedConditions.elementToBeClickable(weightTrackLink));
-                link.click();
-                return;
-            } catch (Exception e) {
-                logger.warn("Attempt " + i + " to click weightTrackLink failed: " + e.getMessage());
-
-                if (i >= 8) {
-                    try {
-                        WebElement jsLink = driver.findElement(weightTrackLink);
-                        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", jsLink);
-                        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", jsLink);
-                        return;
-                    } catch (Exception ignored) {}
-                }
-            }
-        }
-        throw new RuntimeException("Could not click Weight Track button after 10 retries.");
+        commonMethods.webClickByLocator(weightTrackLink);
     }
-//    public void navigateToActivityInsight() throws InterruptedException {
-//        Thread.sleep(2000);
-//         commonMethods.webClickByLocator(activityInsightBtn);
-//
-//        // WebElement btn = commonMethods.waitForClickable(activityInsightBtn);
-//        try {
-//            // 1. Wait for visibility
-//            WebElement btn = commonMethods.waitForVisibility(activityInsightBtn);
-//
-//            // 2. Try standard Selenium click first
-//            btn.click();
-//        } catch (Exception e) {
-//            // 3. If that fails (due to interception or staleness),
-//            // re-find the element and click via JavaScript immediately
-//            WebElement btnRetry = driver.findElement(activityInsightBtn);
-//            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", btnRetry);
-//        }
-//      //  commonMethods.webClickByLocator(activityInsightBtn);
-//        //commonMethods.webClickByLocator(weightTrackingBtn);
-//
-//
-//   List<WebElement> listItems = driver.findElements(items);
-//      WebElement activityInsights = listItems.get(0);
-//   ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", activityInsights);
-//   ((JavascriptExecutor) driver).executeScript("arguments[0].click();", activityInsights);
-//    }
-//public void clickWeightTrackingBtn() {
-//    WebElement link = commonMethods.waitForVisibility(weightTrackLink);
-//    link.click();
-//      // CommonMethods.webClickByLocator(element);
-//    //((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
-//
-//}
 
     public String getHeaderText() {
         WebElement headerText = CommonMethods.waitForVisibility(actualHeaderText);
@@ -168,7 +89,6 @@ public class WeightTrackPage {
 
     public List<String> getCardText(String cardName) {
         List<WebElement> cardsList = driver.findElements(cards);
-        String elementName = cardName;
         List<String> cardNames = new ArrayList<>();
         for (WebElement card : cardsList) {
             String text = card.getText();
@@ -186,10 +106,9 @@ public class WeightTrackPage {
     }
 
     public double verifyCurrentWeight() {
-
-        String currentWeight = commonMethods.waitForVisibility(currentWeightText).getText();
-        double currentWeightValue = extractNumber(currentWeight);
-        return currentWeightValue;
+        WebElement element = commonMethods.waitForVisibility(currentWeightText);
+        String currentWeight = commonMethods.waitForVisibility(element).getText().trim();
+        return extractNumber(currentWeight);
     }
 
     public Object getLatestLogWeight() {
@@ -242,10 +161,6 @@ public class WeightTrackPage {
         return commonMethods.isDisplayed(WeightProgressGraph);
     }
 
-    public Boolean getxAxislabel() {
-        return commonMethods.isDisplayed(xAxislabel);
-    }
-
     public String getxAxisValues(String values) {
         try {
             By locator = By.xpath("//*[name()='svg']//*[name()='tspan' and contains(normalize-space(.), '" + values + "')]");
@@ -260,24 +175,17 @@ public class WeightTrackPage {
         } catch (Exception e) {
             logger.error("Failed to get X-Axis value '" + values + "'. Exception: " + e.getMessage());
         }
-        return ""; // Fallback if try block fails or element isn't displayed
+        return "";
     }
 
     public Boolean getyaxislabel() {
         try {
-            // Change waitForElementVisible -> waitForVisibility
             return commonMethods.waitForVisibility(yAxislabel).isDisplayed();
         } catch (Exception e) {
             return false;
         }
     }
 
-    public Boolean getLogSectionHeader(){
-        return commonMethods.isDisplayed(logSectionHeader);
-    }
-    public String getLogSectionHeaderText(){
-        return driver.findElement(logSectionHeader).getText();
-    }
 
     public Boolean getLogSectionFields(String input, String inputField) {
         try {
@@ -307,29 +215,6 @@ public class WeightTrackPage {
         return driver.findElement(bmiInputField).getAttribute("value");
     }
 
-//    public void selectTrackWeightMenu() {
-//
-//        //CommonMethods.webClickByLocator(weightTrackingBtn);
-//
-//        WebElement trackWeight = CommonMethods.waitForClickable(weightTrackingBtn);
-//
-//        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", trackWeight);
-//
-//        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", trackWeight);
-//    }
-
-
-  /*  public void enterWeightValue(String value){
-        CommonMethods.waitForVisibility(weightInputField);
-        CommonMethods.sendKeys(weightInputField, value);
-//        driver.findElement(weightInputField).clear();
-//        driver.findElement(weightInputField).sendKeys(weight);
-    }*/
-    public void enterNotesValue(String notes){
-        commonMethods.waitForVisibility(notesInputField);
-        commonMethods.sendKeys(notesInputField, notes);
-    }
-
     public Boolean getLogWeightBtnStatus(){
         Boolean logWeightBtnStatus = driver.findElement(logWeightBtn).isEnabled();
         return logWeightBtnStatus;
@@ -353,15 +238,6 @@ public class WeightTrackPage {
         }
     }
 
-    public List<String> getWeightHistoryEntries(){
-        commonMethods.waitForVisibility(weightHistoryValues);
-        List<WebElement> historyElements = driver.findElements(weightHistoryValues);
-        List<String> weights= new ArrayList<>();
-        for(WebElement element : historyElements){
-            weights.add(element.getText().trim());
-        }
-        return weights;
-    }
 
 }
 

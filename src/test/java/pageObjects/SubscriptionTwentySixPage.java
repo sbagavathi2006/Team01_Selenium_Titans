@@ -29,7 +29,6 @@ public class SubscriptionTwentySixPage {
     By visibileSectionList = By.xpath("//div[@class='max-w-7xl mx-auto py-8 px-4 sm:px-6']/div/div/h3");
     By currentSubsText = By.xpath("//h3[contains(text(),'Current Subscription')]");
 
-    //By
     public void loginToPortal() {
         commonMethods.loginFromOnBoarding();
         commonMethods.waitForPopupToDisappear();

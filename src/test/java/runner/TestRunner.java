@@ -16,7 +16,6 @@ import io.cucumber.testng.CucumberOptions;
 
 	//	tags = "@checking",
 
-
 		features = {"src/test/resources/features/"},
 
 		glue = {"stepDefinition"})

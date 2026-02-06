@@ -13,8 +13,8 @@ import pageObjects.OnBoarding1Page;
 import pageObjects.OnBoarding3FnPage;
 import pageObjects.OnBoarding3Page;
 import pageObjects.OnBoarding4Page;
+import pageObjects.OnBoarding5Page;
 import pageObjects.SignUpPage;
-import utilities.ExcelUtils;
 
 public class TestContextSetup {
 
@@ -25,6 +25,7 @@ public class TestContextSetup {
 	private OnBoarding3Page onBrdPage3;
 	private OnBoarding3FnPage onBrdPage3Fn;
 	private OnBoarding4Page onBrdPage4;
+	private OnBoarding5Page onBrdPage5;
 	private SignUpPage signUpPage;
 	private LaunchPage launchPage;
 
@@ -38,6 +39,7 @@ public class TestContextSetup {
     public final String HC = "healthcondition"; //HC-HealthCondition
     public final int AGE = 0;
     public final String BPSTATUS = "bpstatus";
+    public final String MENSTRUAL_CYCLE_IFO = "menstrualCycleInfo";
     
     public TestContextSetup() {
         this.driver = DriverFactory.getDriver();
@@ -46,6 +48,7 @@ public class TestContextSetup {
         this.onBrdPage1 = new OnBoarding1Page(driver);
         this.onBrdPage3 = new OnBoarding3Page(driver);
         this.onBrdPage4 = new OnBoarding4Page(driver);
+        this.onBrdPage5 = new OnBoarding5Page(driver);
         this.signUpPage = new SignUpPage(driver);
         this.onBrdPage3Fn = new OnBoarding3FnPage(driver);
         this.launchPage = new LaunchPage(driver); 
@@ -80,6 +83,10 @@ public class TestContextSetup {
     
     public OnBoarding4Page onBrdPage4() {
         return onBrdPage4;
+    }
+    
+    public OnBoarding5Page onBrdPage5() {
+        return onBrdPage5;
     }
     
     public SignUpPage signUpPage() {

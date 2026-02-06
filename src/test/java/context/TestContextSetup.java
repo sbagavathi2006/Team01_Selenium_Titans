@@ -15,12 +15,13 @@ import pageObjects.OnBoarding3Page;
 import pageObjects.OnBoarding4Page;
 import pageObjects.OnBoarding5Page;
 import pageObjects.SignUpPage;
+import utilities.CommonMethods;
 
 public class TestContextSetup {
 
 	private WebDriver driver;
 	private DashboardPage dashboardPage;
-    private EditYourProfilePage editProfilePage;
+	private EditYourProfilePage editProfilePage;
 	private OnBoarding1Page onBrdPage1;
 	private OnBoarding3Page onBrdPage3;
 	private OnBoarding3FnPage onBrdPage3Fn;
@@ -28,82 +29,81 @@ public class TestContextSetup {
 	private OnBoarding5Page onBrdPage5;
 	private SignUpPage signUpPage;
 	private LaunchPage launchPage;
+	private CommonMethods commonMethods;
+	private Map<String, Object> sharedData;
+	public final String USERNAME = "firstName";
+	public final String EMAIL = "email";
+	public final String PASSWORD = "password";
+	public final String HC = "healthcondition"; // HC-HealthCondition
+	public final int AGE = 0;
+	public final String BPSTATUS = "bpstatus";
+	public final String MENSTRUAL_CYCLE_IFO = "menstrualCycleInfo";
 
+	public TestContextSetup() {
+		this.driver = DriverFactory.getDriver();
+		this.dashboardPage = new DashboardPage(driver);
+		this.editProfilePage = new EditYourProfilePage(driver);
+		this.onBrdPage1 = new OnBoarding1Page(driver);
+		this.onBrdPage3 = new OnBoarding3Page(driver);
+		this.onBrdPage4 = new OnBoarding4Page(driver);
+		this.onBrdPage5 = new OnBoarding5Page(driver);
+		this.signUpPage = new SignUpPage(driver);
+		this.onBrdPage3Fn = new OnBoarding3FnPage(driver);
+		this.launchPage = new LaunchPage(driver);
+		this.commonMethods = new CommonMethods(driver);
+		this.sharedData = new HashMap<>();
+	}
 
-    
-    private Map<String, Object> sharedData;
-    
-    public final String USERNAME = "firstName";
-    public final String EMAIL = "email";
-    public final String PASSWORD = "password";
-    public final String HC = "healthcondition"; //HC-HealthCondition
-    public final int AGE = 0;
-    public final String BPSTATUS = "bpstatus";
-    public final String MENSTRUAL_CYCLE_IFO = "menstrualCycleInfo";
-    
-    public TestContextSetup() {
-        this.driver = DriverFactory.getDriver();
-        this.dashboardPage = new DashboardPage(driver);
-        this.editProfilePage = new EditYourProfilePage(driver);
-        this.onBrdPage1 = new OnBoarding1Page(driver);
-        this.onBrdPage3 = new OnBoarding3Page(driver);
-        this.onBrdPage4 = new OnBoarding4Page(driver);
-        this.onBrdPage5 = new OnBoarding5Page(driver);
-        this.signUpPage = new SignUpPage(driver);
-        this.onBrdPage3Fn = new OnBoarding3FnPage(driver);
-        this.launchPage = new LaunchPage(driver); 
+	public WebDriver getDriver() {
+		return driver;
+	}
 
-        this.sharedData = new HashMap<>();
-    }
+	public DashboardPage dashboardPage() {
+		return dashboardPage;
+	}
 
-    
-    public WebDriver getDriver() {
-        return driver;
-    }
-    
-    public DashboardPage dashboardPage() {
-        return dashboardPage;
-    }
+	public EditYourProfilePage editProfilePage() {
+		return editProfilePage;
+	}
 
-    public EditYourProfilePage editProfilePage() {
-        return editProfilePage;
-    }
-    
-    public OnBoarding1Page onBrdPage1() {
-        return onBrdPage1;
-    }
+	public OnBoarding1Page onBrdPage1() {
+		return onBrdPage1;
+	}
 
-    public OnBoarding3Page onBrdPage3() {
-        return onBrdPage3;
-    }
-    
-    public OnBoarding3FnPage onBrdPage3Fn() {
-        return onBrdPage3Fn;
-    }
-    
-    public OnBoarding4Page onBrdPage4() {
-        return onBrdPage4;
-    }
-    
-    public OnBoarding5Page onBrdPage5() {
-        return onBrdPage5;
-    }
-    
-    public SignUpPage signUpPage() {
-        return signUpPage;
-    }
-    
-    public void setScenarioData(String key, Object value) {
-    	sharedData.put(key, value);
-    }
-    
-    public Object getScenarioData(String key) {
-        return sharedData.get(key);
-    }
+	public OnBoarding3Page onBrdPage3() {
+		return onBrdPage3;
+	}
 
+	public OnBoarding3FnPage onBrdPage3Fn() {
+		return onBrdPage3Fn;
+	}
+
+	public OnBoarding4Page onBrdPage4() {
+		return onBrdPage4;
+	}
+
+	public OnBoarding5Page onBrdPage5() {
+		return onBrdPage5;
+	}
+
+	public SignUpPage signUpPage() {
+		return signUpPage;
+	}
+
+	public CommonMethods commonMethods() {
+		return commonMethods;
+	}
+
+	public void setScenarioData(String key, Object value) {
+		sharedData.put(key, value);
+	}
+
+	public Object getScenarioData(String key) {
+		return sharedData.get(key);
+	}
 
 	public LaunchPage launchPage() {
 		return launchPage;
-	}    
-    
+	}
+
 }

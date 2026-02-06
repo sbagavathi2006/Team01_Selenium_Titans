@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -14,58 +13,56 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class ExcelUtils {
-	
+
 	private String filePath;
 
-    public ExcelUtils(String filePath) {
-        this.filePath = ConfigReader.getProperty("test_data_path");
-    }
-    
-	public List<Map<String, String>> getDataAll(String sheetName){
-        List<Map<String, String>> sheetData = new ArrayList<>();
+	public ExcelUtils(String filePath) {
+		this.filePath = ConfigReader.getProperty("test_data_path");
+	}
 
-        try (FileInputStream fis = new FileInputStream(filePath);
-             Workbook workbook = WorkbookFactory.create(fis)) {
+	public List<Map<String, String>> getDataAll(String sheetName) {
+		List<Map<String, String>> sheetData = new ArrayList<>();
 
-            Sheet sheet = workbook.getSheet(sheetName);
-            Row headerRow = sheet.getRow(0);
+		try (FileInputStream fis = new FileInputStream(filePath); Workbook workbook = WorkbookFactory.create(fis)) {
 
-            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-                Map<String, String> rowData = new LinkedHashMap<>();
-                Row row = sheet.getRow(i);
-                if (row == null) continue;
+			Sheet sheet = workbook.getSheet(sheetName);
+			Row headerRow = sheet.getRow(0);
 
-                for (int j = 0; j < headerRow.getLastCellNum(); j++) {
-                    Cell headerCell = headerRow.getCell(j);
-                    Cell cell = row.getCell(j);
-                    String header = headerCell.getStringCellValue();
-                    String value = (cell == null) ? "" : cell.toString();
-                    rowData.put(header.trim(), value.trim());
-                }
+			for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+				Map<String, String> rowData = new LinkedHashMap<>();
+				Row row = sheet.getRow(i);
+				if (row == null)
+					continue;
 
-                sheetData.add(rowData);
-            }
-        }catch (IOException e) {
-                e.printStackTrace();
-            }
-            return sheetData;
-        }
-	 public Map<String, String> getRowDataByScenario(String sheetName, String scenarioName) {
+				for (int j = 0; j < headerRow.getLastCellNum(); j++) {
+					Cell headerCell = headerRow.getCell(j);
+					Cell cell = row.getCell(j);
+					String header = headerCell.getStringCellValue();
+					String value = (cell == null) ? "" : cell.toString();
+					rowData.put(header.trim(), value.trim());
+				}
 
-	        List<Map<String, String>> allData = getDataAll(sheetName);
+				sheetData.add(rowData);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return sheetData;
+	}
 
-	        for (Map<String, String> row : allData) {
+	public Map<String, String> getRowDataByScenario(String sheetName, String scenarioName) {
 
-	            if (row.containsKey("Scenario") &&
-	                row.get("Scenario").equalsIgnoreCase(scenarioName)) {
+		List<Map<String, String>> allData = getDataAll(sheetName);
 
-	                return row;
-	            }
-	        }
+		for (Map<String, String> row : allData) {
 
-	        throw new RuntimeException(
-	                "No data found in Excel for scenario: " + scenarioName);
-	    }
-	
-	
+			if (row.containsKey("Scenario") && row.get("Scenario").equalsIgnoreCase(scenarioName)) {
+
+				return row;
+			}
+		}
+
+		throw new RuntimeException("No data found in Excel for scenario: " + scenarioName);
+	}
+
 }

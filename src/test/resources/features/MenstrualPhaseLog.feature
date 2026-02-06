@@ -104,7 +104,7 @@ Scenario: Display cycle progress based on onboarding data
      When User clicks on Menstrual Phase Logs from dashboard      
      Then "Current Phase" subsection is highlighted based on cycle data entered during onboarding process 
      
-   ##  Recommended Activities UI Verification
+  
      Scenario: Section heading text for Recommended Activities
       When User clicks on Menstrual Phase Logs from dashboard    
       Then Recommended Activities should be displayed 
@@ -114,7 +114,7 @@ Scenario: Display cycle progress based on onboarding data
       When User clicks on Menstrual Phase Logs from dashboard    
       Then Recommended Activities should be displayed as per the "Current Phase"
       
-   ##   Nutrition Tips UI Verification
+  
       Scenario: Section heading text for Nutrition Tips
       When User clicks on Menstrual Phase Logs from dashboard    
       Then "Nutrtion Tips" is displayed
@@ -123,7 +123,7 @@ Scenario: Display cycle progress based on onboarding data
       When User clicks on Menstrual Phase Logs from dashboard   
       Then Nutrtional Tips should be displayed as per the "Current Phase"
      
-     ## Next Period UI Verification
+    
        Scenario: Section heading text for Next Period UI Verification
       When User clicks on Menstrual Phase Logs from dashboard 
       Then "Next Period" is displayed 

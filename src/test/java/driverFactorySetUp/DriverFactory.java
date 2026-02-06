@@ -13,95 +13,88 @@ import utilities.ConfigReader;
 public class DriverFactory {
 	private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 	private static ThreadLocal<String> browserName = new ThreadLocal<>();
-	    public static void inItBrowser() {
-	       String browserName = getBrowser();
-	       boolean isHeadless = isHeadless();
-	       if (browserName.equalsIgnoreCase("Edge")) {
-	          EdgeOptions options = new EdgeOptions();
-	          if(isHeadless) {
-	          options.addArguments("--headless");
-	          } 
-	          driver.set(new EdgeDriver(options));
 
-	       } else if (browserName.equalsIgnoreCase("Chrome")) {
-	          ChromeOptions options = new ChromeOptions();
-	          if(isHeadless) {
-	          options.addArguments("--headless=new");
-	          }
-	          driver.set(new ChromeDriver(options));
+	public static void inItBrowser() {
+		String browserName = getBrowser();
+		boolean isHeadless = isHeadless();
+		if (browserName.equalsIgnoreCase("Edge")) {
+			EdgeOptions options = new EdgeOptions();
+			if (isHeadless) {
+				options.addArguments("--headless");
+			}
+			driver.set(new EdgeDriver(options));
 
-	       } else if (browserName.equalsIgnoreCase("Firefox")) {
-	    	   FirefoxOptions options = new FirefoxOptions();
-	    	   if(isHeadless) {
-	    		   options.addArguments("--headless=new");
-	         
-	    	   }
-	    	   driver.set(new FirefoxDriver(options));
+		} else if (browserName.equalsIgnoreCase("Chrome")) {
+			ChromeOptions options = new ChromeOptions();
+			if (isHeadless) {
+				options.addArguments("--headless=new");
+			}
+			driver.set(new ChromeDriver(options));
 
-	       } else {
-	          throw new IllegalArgumentException("Browser instance can not be initialized");
-	       }
+		} else if (browserName.equalsIgnoreCase("Firefox")) {
+			FirefoxOptions options = new FirefoxOptions();
+			if (isHeadless) {
+				options.addArguments("--headless=new");
 
-	    }
+			}
+			driver.set(new FirefoxDriver(options));
 
-	    public static String getBrowser() {
-	       String browser = browserName.get();
-	       if (browser == null) {
-	    	    browser = System.getProperty("browser");
-	    	}
-	       if (browser == null) {
-	          browser = ConfigReader.getProperty("browser");
-	       }
-	       return browser;
-	    }
+		} else {
+			throw new IllegalArgumentException("Browser instance can not be initialized");
+		}
 
-	    public static WebDriver getDriver() {
-	       if (driver.get() == null) {
-	          DriverFactory.inItBrowser();
-	       }
-	       return driver.get();
-	    }
+	}
 
-	    public static void quitDriver() {
-	       if (driver.get() != null) {
-	          driver.get().quit();
-	          driver.remove();
-	       }
-	    }
+	public static String getBrowser() {
+		String browser = browserName.get();
+		if (browser == null) {
+			browser = System.getProperty("browser");
+		}
+		if (browser == null) {
+			browser = ConfigReader.getProperty("browser");
+		}
+		return browser;
+	}
 
-	    public static boolean isHeadless() {
-	        String headless = System.getProperty("headless");
+	public static WebDriver getDriver() {
+		if (driver.get() == null) {
+			DriverFactory.inItBrowser();
+		}
+		return driver.get();
+	}
 
-	        if (headless == null || headless.isEmpty()) {
-	            headless = ConfigReader.getProperty("headless");
-	        }
+	public static void quitDriver() {
+		if (driver.get() != null) {
+			driver.get().quit();
+			driver.remove();
+		}
+	}
 
-	        return Boolean.parseBoolean(headless);
-	    }
-	    
-	    public static void setupBrowser() {
-	       WebDriver localDriver = driver.get();
-	       localDriver.manage().deleteAllCookies();
-	       localDriver.get(ConfigReader.getProperty("url"));
-	       localDriver.manage().window().maximize();
-	       localDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // 30 was value 
-		   localDriver.manage().deleteAllCookies();
+	public static boolean isHeadless() {
+		String headless = System.getProperty("headless");
 
-	    }
-	    
-	    public static String getBrowserName() {
-	       return browserName.get();
-	    }
+		if (headless == null || headless.isEmpty()) {
+			headless = ConfigReader.getProperty("headless");
+		}
 
-	    public static void setBrowserName(String browserName) {
-	       DriverFactory.browserName.set(browserName);
-	    }
-         }
+		return Boolean.parseBoolean(headless);
+	}
 
+	public static void setupBrowser() {
+		WebDriver localDriver = driver.get();
+		localDriver.manage().deleteAllCookies();
+		localDriver.get(ConfigReader.getProperty("url"));
+		localDriver.manage().window().maximize();
+		localDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		localDriver.manage().deleteAllCookies();
 
+	}
 
+	public static String getBrowserName() {
+		return browserName.get();
+	}
 
-
-
-
-
+	public static void setBrowserName(String browserName) {
+		DriverFactory.browserName.set(browserName);
+	}
+}

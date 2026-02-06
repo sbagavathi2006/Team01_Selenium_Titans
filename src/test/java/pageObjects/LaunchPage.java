@@ -76,7 +76,7 @@ public class LaunchPage {
 	public boolean isCyclePhaseVisible(String phase) {
 		By locator = By.xpath("//*[contains(text(),'" + phase + "')]");
 		WebElement element = driver.findElement(locator);
-		common.scrollIntoViewWait(element); // scroll + wait
+		common.scrollIntoViewWait(element);
 		return element.isDisplayed();
 	}
 

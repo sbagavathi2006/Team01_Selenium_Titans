@@ -1,24 +1,20 @@
 package stepDefinition;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.Map;
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
 import driverFactorySetUp.DriverFactory;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pageObjects.MenstrualPhaseLogPage;
-import pageObjects.WorkoutPage;
 import utilities.CommonMethods;
 import utilities.ConfigReader;
-import utilities.ExcelUtils;
 import utilities.LoggerLoad;
 
 public class MenstrualPhaseLogStepDefinition {

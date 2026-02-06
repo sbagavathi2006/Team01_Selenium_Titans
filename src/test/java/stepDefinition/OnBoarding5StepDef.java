@@ -1,7 +1,7 @@
 package stepDefinition;
 
 import java.util.NoSuchElementException;
-import java.util.concurrent.TimeoutException;
+
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -87,16 +87,6 @@ public class OnBoarding5StepDef {
 	LoggerLoad.info("User is on Step 6 onboarding page");
 	}
 	
-//	@Then("Redirected to Step Four")
-//	public void redirected_to_step_four() {
-//	     Assert.assertTrue(
-//					testContext.onBrdPage5().isStep4_10Displayed(),
-//			        "User is not on onboarding step 4"
-//			    );
-//		LoggerLoad.info("User is on Step 4 onboarding page");
-//
-//	}
-
 	@Then("Redirected to Step Six")
 	public void redirected_to_step_six() {
 	     Assert.assertTrue(

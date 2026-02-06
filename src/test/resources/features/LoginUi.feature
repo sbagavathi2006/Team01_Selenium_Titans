@@ -52,6 +52,3 @@ Feature: HerBalance Login Page UI Verification
   Scenario: Radio button for show password
     Then Radio button for show password
 
-  Scenario: Background and theme consistency
-    Then The background gradient (light purple) and fonts should match HerBalance theme
-

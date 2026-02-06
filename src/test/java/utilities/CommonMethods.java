@@ -6,11 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
-
 import driverFactorySetUp.DriverFactory;
 
 
@@ -18,10 +16,26 @@ public class CommonMethods {
 	  public static WebDriver driver;
 	   public static WebDriverWait wait;
 	  
+	   ExcelUtils excel ;
+	  
 	   public CommonMethods(WebDriver driver) {
 	        this.driver = driver;
 	        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 	    }
+	   
+	   public By usernameTextbox = By.xpath("//input[@name='username']");
+	   public By passwordTextbox = By.xpath("//input[@name='password']"); 
+	   public By loginButtonUI = By.xpath("//button[@type='submit']");
+	   
+	   public void loginFromOnBoarding() { 
+		   ConfigReader.loadProperties();
+		   ExcelUtils excel = new ExcelUtils(ConfigReader.getProperty("test_data_path")); 
+		   String username = excel.getDataAll("onBoarding").get(0).get("UserName");
+		   String password = excel.getDataAll("onBoarding").get(0).get("Password"); 
+		   driver.findElement(usernameTextbox).sendKeys(username);	
+		   driver.findElement(passwordTextbox).sendKeys(password);
+		   driver.findElement(loginButtonUI).click();
+	   }
 	public static WebElement waitForVisibility(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }

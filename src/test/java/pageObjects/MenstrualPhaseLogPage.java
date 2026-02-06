@@ -67,7 +67,19 @@ public class MenstrualPhaseLogPage {
     By recommendedActivitiesText = By.xpath("//h3[text()='Recommended Activities']/following::ul[1]//span");
     By nutritionTipsHeading = By.xpath("//h3[text()='Nutrition Tips']");
     By NutritionTipsTextSection =By.xpath("//h3[text()='Nutrition Tips']/following::ul[1]//span");
-	public void waitforActiviyInsightsButton() {
+	
+    public String getUserName() {
+        excel = new ExcelUtils(ConfigReader.getProperty("test_data_path"));
+        return excel.getDataAll("onBoarding").get(0).get("UserName");
+    }
+
+    public String getPassword() {
+        excel = new ExcelUtils(ConfigReader.getProperty("test_data_path"));
+        return excel.getDataAll("onBoarding").get(0).get("Password");
+    }
+
+    
+    public void waitforActiviyInsightsButton() {
 		commonMethods.waitForClickable(activityInsightsButton);
 	}	
 	public void clickActivityInsightsButton() {

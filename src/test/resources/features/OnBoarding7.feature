@@ -1,21 +1,3 @@
-#Author: your.email@your.domain.com
-#Keywords Summary :
-#Feature: List of scenarios.
-#Scenario: Business rule through list of steps with arguments.
-#Given: Some precondition step
-#When: Some key actions
-#Then: To observe outcomes or validation
-#And,But: To enumerate more Given,When,Then steps
-#Scenario Outline: List of steps for data-driven as an Examples and <placeholder>
-#Examples: Container for s table
-#Background: List of steps run before each of the scenarios
-#""" (Doc Strings)
-#| (Data Tables)
-#@ (Tags/Labels):To group Scenarios
-#<> (placeholder)
-#""
-## (Comments)
-#Sample Feature Definition Template
 
 Feature: Onboarding step 7 Functionality and Step 8 UI verification
 
@@ -27,7 +9,7 @@ Background:
   When User clicks weight(kg) dropdown
   Then Options "kg" and "lbs" should be displayed for weight
   
- 
+  
   Scenario: Height unit dropdowns visibility
   When User clicks height(cm) dropdown
   Then Options "cm" and "ft/in" should be displayed for height
@@ -77,10 +59,21 @@ Background:
   When User enters valid height and weight for BMIcalculations
   Then BMI should be calculated correctly and displayed
   
-   @test
+
   Scenario: Phase note changes based on current phase
   When User enters valid height and weight
   Then Current Phase Note text should match the displayed phase
+  
+  
+  Scenario: BMI Feedback messages appear correctly based on BMI range
+  When User enters valid height and weight
+  Then BMI feedback message should appear according to the calculated ranges
+  
+ 
+  Scenario: BMI feedback message appears correctly for Overweight
+  When User enters valid height and weight for an Overweight scenario
+  Then BMI feedback message should appear according to the calculated ranges
+  
  
   Scenario Outline: Verify Step 8 UI elements are displayed
   When User clicks continue after entering valid weight and height

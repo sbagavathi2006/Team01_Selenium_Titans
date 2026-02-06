@@ -2,26 +2,20 @@ package stepDefinition;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
-
 import org.testng.Assert;
-
 import driverFactorySetUp.DriverFactory;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pageObjects.OnBoarding6Page;
 import pageObjects.OnBoarding7Page;
 import utilities.ExcelUtils;
-import utilities.LoggerLoad;
 
 public class OnBoarding7StepDef {
 
 	private OnBoarding7Page onBrdPage7;
 	private OnBoarding6Page onBrdPage6;
-
-	private String weight;
+    private String weight;
 	private String height;
 
 	public OnBoarding7StepDef() {
@@ -74,7 +68,6 @@ public class OnBoarding7StepDef {
 	public void user_clicks_continue_button_after_entering_invalid_weight() {
 		ExcelUtils excel = new ExcelUtils("src/test/resources/testdata/step7_onboarding.xlsx");
 		List<Map<String, String>> step7Data = excel.getDataAll("OnBoardingStep7");
-
 		for (Map<String, String> row : step7Data) {
 			String weight = row.get("Invalidweight");
 			String height = row.get("validheight");
@@ -101,7 +94,6 @@ public class OnBoarding7StepDef {
 	public void user_clicks_continue_button_after_entering_invalid_height() {
 		ExcelUtils excel = new ExcelUtils("src/test/resources/testdata/step7_onboarding.xlsx");
 		List<Map<String, String>> step7Data = excel.getDataAll("OnBoardingStep7");
-
 		for (Map<String, String> row : step7Data) {
 			String weight = row.get("validweight");
 			String height = row.get("Invalidheight");
@@ -125,9 +117,7 @@ public class OnBoarding7StepDef {
 			onBrdPage7.enterInputValues(weight, height);
 			onBrdPage7.clickStep7ContinueButton();
 		}
-
 	}
-
 	@Then("Step8 {string} should be displayed")
 	public void step_should_be_displayed(String string) {
 		Assert.assertTrue(onBrdPage7.verifyStep8Element(string), string + " is not displayed");
@@ -149,8 +139,7 @@ public class OnBoarding7StepDef {
 	public void bmi_bar_labels_should_display_in_the_correct_order(String label1, String label2, String label3,
 			String label4) {
 		List<String> actualLabels = onBrdPage7.getBmiBarLabels();
-
-		List<String> expectedLabels = List.of(label1, label2, label3, label4);
+        List<String> expectedLabels = List.of(label1, label2, label3, label4);
 		Assert.assertEquals(actualLabels, expectedLabels, "BMI bar labels are not displayed in the correct order");
 	}
 
@@ -158,20 +147,15 @@ public class OnBoarding7StepDef {
 	public void the_following_bmi_ui_elements_should_be_displayed(io.cucumber.datatable.DataTable dataTable) {
 		List<String> uiElements = dataTable.asMaps(String.class, String.class).stream().map(m -> m.get("uiElement"))
 				.map(String::trim).collect(Collectors.toList());
-
-		onBrdPage7.verifyBmiUiElements(uiElements);
+        onBrdPage7.verifyBmiUiElements(uiElements);
 	}
 
 	@When("User enters valid height and weight for BMIcalculations")
 	public void user_enters_valid_height_and_weight_for_bm_icalculations() {
 		ExcelUtils excel = new ExcelUtils("src/test/resources/testdata/step7_onboarding.xlsx");
-
-		Map<String, String> row = excel.getDataAll("OnBoardingStep7").get(0);
-
+     	Map<String, String> row = excel.getDataAll("OnBoardingStep7").get(0);
 		weight = row.get("validweight");
 		height = row.get("validheight");
-		System.out.print(weight);
-		System.out.print(height);
 		onBrdPage7.enterInputValues(weight, height);
 	}
 
@@ -185,5 +169,20 @@ public class OnBoarding7StepDef {
 	public void current_phase_note_text_should_match_the_displayed_phase() {
 		Assert.assertTrue(onBrdPage7.isPhaseNoteCorrectForCurrentPhase(),"Phase note text does not match the current phase");
 	}
-
+	@Then("BMI feedback message should appear according to the calculated ranges")
+	public void bmi_feedback_message_should_appear_according_to_the_calculated_ranges() {
+		String expectedFeedback = onBrdPage7.getExpectedBmiFeedbackMessage(weight, height);
+        String actualFeedback = onBrdPage7.getBmiFeedbackMessageFromUI();
+	    Assert.assertEquals(actualFeedback, expectedFeedback,"BMI feedback message is incorrect");
+	}
+	@When("User enters valid height and weight for an Overweight scenario")
+	public void user_enters_valid_height_and_weight_for_an_overweight_scenario() {
+		ExcelUtils excel = new ExcelUtils("src/test/resources/testdata/step7_onboarding.xlsx");
+		List<Map<String, String>> step7Data = excel.getDataAll("OnBoardingStep7");
+		for (Map<String, String> row : step7Data) {
+			weight = row.get("validweight_overweight");
+		    height = row.get("validheight_overweight");
+			onBrdPage7.enterInputValues(weight, height);
+		}
+	}
 }

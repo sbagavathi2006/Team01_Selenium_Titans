@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
@@ -66,7 +67,6 @@ public class CommonMethods {
 		}
 		return salt.toString();
 	}
-
 	public boolean isDisplayed(By locator) {
 		try {
 			return waitForVisibility(locator).isDisplayed();
@@ -111,7 +111,7 @@ public class CommonMethods {
 			return false;
 		}
 	}
-
+  
 	public void waitForPopupToDisappear() {
 		try {
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//li[@role='status']")));
@@ -130,7 +130,7 @@ public class CommonMethods {
 			return "";
 		}
 	}
-
+       
 	public int getElementsCount(By locator) {
 		return driver.findElements(locator).size();
 	}
@@ -149,7 +149,6 @@ public class CommonMethods {
 
 		return texts;
 	}
-
 	public static int generateRandomAge() {
 		return new Random().nextInt(83) + 18;
 	}
@@ -231,5 +230,9 @@ public class CommonMethods {
 				element);
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
+
+       public static int generateRandomWeightHeight() {
+    	    return ThreadLocalRandom.current().nextInt(120, 250);
+    	}
 
 }

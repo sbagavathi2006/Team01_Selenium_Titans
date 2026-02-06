@@ -1,119 +1,118 @@
 package pageObjects;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import utilities.CommonMethods;
-import utilities.ConfigReader;
 import utilities.LoggerLoad;
 
 public class OnBoarding6Page {
-	
 	private WebDriver driver;
 	private CommonMethods commonMethods;
-	private OnBoarding6Page onBrd6Page;
-	
 	private By btnSignUp = By.xpath("//button[text()='Sign Up']");
 	private By emailID = By.id(":r5:-form-item");
 	private By pwd = By.name("password");
-    private By confpwd = By.name("confirmPassword");
+	private By confpwd = By.name("confirmPassword");
 	private By termCondi = By.id(":r8:-form-item");
 	private By btnRegister = By.xpath("//button[text()='Register']");
-	private By btnContinueWithoutReport=By.xpath("//button[text() = 'Continue Without Report']");
+	private By btnContinueWithoutReport = By.xpath("//button[text() = 'Continue Without Report']");
 	private By checkboxSleepApnea = By.xpath("//*[@id='sleep_apnea']");
 	private By continueButton = By.xpath("//*[contains(text(),'Continue')]");
 	private By inputFirstName = By.id("name");
-	private By inputAge=By.id("age");
-	private By checkbox_Ihave_never_diagnosed=By.xpath("//*[contains(text(),'I have never been diagnosed')]");
-	private By checkbox_no=By.id("no");
+	private By inputAge = By.id("age");
+	private By checkbox_Ihave_never_diagnosed = By.xpath("//*[contains(text(),'I have never been diagnosed')]");
+	private By checkbox_no = By.id("no");
 	private By backButton = By.xpath("//*[contains(text(),'Back')]");
-    private By Error_without_mensuraldate = By.xpath("//*[contains(text(),'Please select your last period start date')]");
+	private By Error_without_mensuraldate = By
+			.xpath("//*[contains(text(),'Please select your last period start date')]");
 	private By verify_step5 = By.xpath("//span[normalize-space()='5 of 10']");
 	private By calenderToSelect = By.xpath("//*[@type='date']");
 	private By messageRelated_LastPeriod = By.xpath("//*[contains(text(), 'Based on your last period')]");
-	private By description_CurrentPhase =  By.xpath("//*[contains(text(),'This phase influences')]");
+	private By description_CurrentPhase = By.xpath("//*[contains(text(),'This phase influences')]");
 	private By section_Header1 = By.xpath("//*[contains(text(),'Your Cycle Timeline')]");
 	private By section_Header2 = By.xpath("//*[contains(text(),'Your Upcoming Cycle Calendar')]");
 	private By section_Header3 = By.xpath("//*[contains(text(),'Your Next Expected Periods')]");
 	private By phase_Details_DayCount = By.xpath("//h5[contains(normalize-space(.), ' (Day ')]");
-	private By selectDatesoncalender=By.xpath("//button[text()='3']");
-	private By current_PhaseGuidance  =By.xpath("//*[contains(text(),'Your metabolism')]");
+	private By selectDatesoncalender = By.xpath("//button[text()='3']");
+	private By current_PhaseGuidance = By.xpath("//h5[contains(@class,'mb-2')]/following-sibling::p[1]");
 	private By calendar = By.className("rdp-months");
 	private By leftArrowinCalender = By.xpath("//*[@name='previous-month']");
-	private By rightArrowinCalender  =By.xpath("//*[@name='next-month']");
+	private By rightArrowinCalender = By.xpath("//*[@name='next-month']");
 	private By calendarWithMonths = By.className("rdp-caption_label");
 	private By verify_step7 = By.xpath("//span[normalize-space()='7 of 10']");
 	private By headingText = By.xpath("//*[contains(text(),'Current Weight and Height')]");
-	private By textBelowHeading= By.xpath("//*[contains(text(),'This helps us calculate')]");
-	private By inputField1= By.xpath("//*[@id='weight']");
-	private By inputField2= By.xpath("//*[@id='height']");
-	private By question1= By.xpath("//*[contains(text(),'current weight?')]");
-	private By question2= By.xpath("//*[contains(text(),'your height?')]");
+	private By textBelowHeading = By.xpath("//*[contains(text(),'This helps us calculate')]");
+	private By inputField1 = By.xpath("//*[@id='weight']");
+	private By inputField2 = By.xpath("//*[@id='height']");
+	private By question1 = By.xpath("//*[contains(text(),'current weight?')]");
+	private By question2 = By.xpath("//*[contains(text(),'your height?')]");
 	private By verify_step6 = By.xpath("//span[normalize-space()='6 of 10']");
 	private By nextExpectedPeriodDates = By.xpath("//li[contains(@class,'items-center')]");
-	
-	
-	 public OnBoarding6Page(WebDriver driver) {
-		 this.driver = driver;
-		 this.commonMethods = new CommonMethods(driver);
-		
-	}	
-	 
-	 public void clickBtnRegister(String email, String password) {
-		    driver.findElement(emailID).sendKeys(email);
-		    driver.findElement(pwd).sendKeys(password);
-		    driver.findElement(confpwd).sendKeys(password);
-		    commonMethods.click(termCondi);
-		    commonMethods.click(btnRegister);
-		}
-		
-	 public void continueToStep1_2(){
-		    commonMethods.click(btnSignUp);
-			String randomString = CommonMethods.generateRandomString();
-			System.out.println(randomString);
-			String email = randomString + "@gmail.com";
-			LoggerLoad.info("On boarding started for the emailid: " +email);
-			String password = randomString;
-			clickBtnRegister(email, password);
-			commonMethods.waitForPopupToDisappear();
-			
-		}
-	 public void continueToStep3() {
-			commonMethods.waitForClickable(btnContinueWithoutReport);
-			commonMethods.click(btnContinueWithoutReport);
-	    
-		}
-		public void continueToStep4() {
-		    driver.findElement(checkboxSleepApnea).click();
-		   commonMethods.waitForClickable(continueButton);
-		   commonMethods.click(continueButton);
-		}
-		public void continueToStep5() {
-			String randomString = CommonMethods.generateRandomString();
-			System.out.println(randomString);
-			String firstname = randomString;
-			driver.findElement(inputFirstName).sendKeys(firstname);
-			int age = CommonMethods.generateRandomAge();
-			driver.findElement(inputAge).sendKeys(String.valueOf(age));
-			driver.findElement(checkbox_Ihave_never_diagnosed).click();
-			commonMethods.click(continueButton);
-			commonMethods.click(checkbox_no);
-			commonMethods.click(continueButton);	
-	        
-		}
-		
-		public void  clickContinueButton(){
-			commonMethods.click(continueButton);		
-			
-		}
-		public void onBoarding_step(int n) {
-	    	if(n>=5) {
-	    	continueToStep1_2();
+	private By weightTextBox = By.xpath("//*[@id='weight']");
+	private By heightTextBox = By.xpath(" //*[@id='height']");
+
+	public OnBoarding6Page(WebDriver driver) {
+		this.driver = driver;
+		this.commonMethods = new CommonMethods(driver);
+
+	}
+
+	public void clickBtnRegister(String email, String password) {
+		driver.findElement(emailID).sendKeys(email);
+		driver.findElement(pwd).sendKeys(password);
+		driver.findElement(confpwd).sendKeys(password);
+		commonMethods.click(termCondi);
+		commonMethods.click(btnRegister);
+	}
+
+	public void continueToStep1_2() {
+		commonMethods.click(btnSignUp);
+		String randomString = CommonMethods.generateRandomString();
+		System.out.println(randomString);
+		String email = randomString + "@gmail.com";
+		LoggerLoad.info("On boarding started for the emailid: " + email);
+		String password = randomString;
+		clickBtnRegister(email, password);
+		commonMethods.waitForPopupToDisappear();
+
+	}
+
+	public void continueToStep3() {
+		commonMethods.waitForClickable(btnContinueWithoutReport);
+		commonMethods.click(btnContinueWithoutReport);
+
+	}
+
+	public void continueToStep4() {
+		driver.findElement(checkboxSleepApnea).click();
+		commonMethods.waitForClickable(continueButton);
+		commonMethods.click(continueButton);
+	}
+
+	public void continueToStep5() {
+		String randomString = CommonMethods.generateRandomString();
+		System.out.println(randomString);
+		String firstname = randomString;
+		driver.findElement(inputFirstName).sendKeys(firstname);
+		int age = CommonMethods.generateRandomAge();
+		driver.findElement(inputAge).sendKeys(String.valueOf(age));
+		driver.findElement(checkbox_Ihave_never_diagnosed).click();
+		commonMethods.click(continueButton);
+		commonMethods.click(checkbox_no);
+		commonMethods.click(continueButton);
+
+	}
+
+	public void clickContinueButton() {
+		commonMethods.click(continueButton);
+
+	}
+
+	public void onBoarding_step(int n) {
+		if (n >= 5) {
+			continueToStep1_2();
 			LoggerLoad.info("On boarding for step1&2 is succesfull");
 			continueToStep3();
 			LoggerLoad.info("On boarding for step3 is succesfull");
@@ -121,111 +120,147 @@ public class OnBoarding6Page {
 			LoggerLoad.info("On boarding for step4 is succesfull");
 			continueToStep5();
 			LoggerLoad.info("On boarding for step5 is succesfull");
-			
-	    }
-	   if(n>=6)
-		 { 
-		    String validDate=commonMethods.getCurrentDate();
-		    passingDate(validDate);
-		    commonMethods.click(continueButton);
-	    	LoggerLoad.info("On boarding for step6 is succesfull");
-	    	
-	    }
-	   
-		}
-		
-		
-		public void click_step6back_button() {
-			commonMethods.click(backButton);
-		}
-		
-		public String  verify_step6back_button(){
-			return commonMethods.getText(verify_step5);
-			
-		}
-		public String  verify_step7back_button(){
-			return commonMethods.getText(verify_step6);
-			
-		}
-		public void passingDate(String date) {
-		    WebElement calendar = driver.findElement(calenderToSelect);
-		    calendar.sendKeys(date);
-		    
-		}
-		
-		public String Error_without_mensuraldate() {
-			return commonMethods.getText(Error_without_mensuraldate);
-			
-		}
-		private Map<String, By> step6ElementMap() {
-		    Map<String, By> map = new HashMap<>();
 
-		    map.put("Message related to last period date", messageRelated_LastPeriod);
-		    map.put("Description for current phase", description_CurrentPhase);
-		    map.put("Section headers1", section_Header1);
-		    map.put("Section headers2", section_Header2);
-		    map.put("Section headers3", section_Header3);// header presence check
-		    map.put("Phase details with day count", phase_Details_DayCount);
-		    map.put("Current phase guidance",current_PhaseGuidance );
-		    map.put("Calendar", calendar);
-		    map.put("Left arrow in calender",leftArrowinCalender );
-		    map.put("Right arrow in calender",rightArrowinCalender);
+		}
+		if (n >= 6) {
+			String validDate = commonMethods.getCurrentDate();
+			passingDate(validDate);
+			commonMethods.click(continueButton);
+			LoggerLoad.info("On boarding for step6 is succesfull");
 
-		    return map;
+		}
+		if (n >= 7) {
+			continueToStep8();
+			LoggerLoad.info("On boarding for step7 is succesfull");
 		}
 
-		public boolean verifyUIElements_forStep6(String elementName) {
-		    By locator = step6ElementMap().get(elementName);
-		    if (locator == null) {
-		        throw new IllegalArgumentException("No locator found for: " + elementName);
-		    }
+	}
 
-		    return commonMethods.isDisplayed(locator);
+	public void clickBackbutton() {
+		commonMethods.click(backButton);
+	}
+
+	public String verify_step6back_button() {
+		return commonMethods.getText(verify_step5);
+
+	}
+
+	public String verify_step7back_button() {
+		return commonMethods.getText(verify_step6);
+
+	}
+
+	public void passingDate(String date) {
+		WebElement calendar = driver.findElement(calenderToSelect);
+		calendar.sendKeys(date);
+
+	}
+
+	public void continueToStep8() {
+		int weight = CommonMethods.generateRandomWeightHeight();
+		int height = CommonMethods.generateRandomWeightHeight();
+		driver.findElement(weightTextBox).sendKeys(String.valueOf(weight));
+		driver.findElement(heightTextBox).sendKeys(String.valueOf(height));
+		commonMethods.click(continueButton);
+	}
+
+	public String Error_without_mensuraldate() {
+		return commonMethods.getText(Error_without_mensuraldate);
+
+	}
+
+	private Map<String, By> step6ElementMap() {
+		Map<String, By> map = new HashMap<>();
+
+		map.put("Message related to last period date", messageRelated_LastPeriod);
+		map.put("Description for current phase", description_CurrentPhase);
+		map.put("YourCycleTimeline", section_Header1);
+		map.put("YourUpcomingCycleCalendar", section_Header2);
+		map.put("YourNextExpectedPeriods", section_Header3);
+		map.put("Phase details with day count", phase_Details_DayCount);
+		map.put("Current phase guidance", current_PhaseGuidance);
+		map.put("Calendar", calendar);
+		map.put("Left arrow in calender", leftArrowinCalender);
+		map.put("Right arrow in calender", rightArrowinCalender);
+
+		return map;
+	}
+
+	public boolean verifyUIElements_forStep6(String elementName) {
+		By locator = step6ElementMap().get(elementName);
+		if (locator == null) {
+			throw new IllegalArgumentException("No locator found for: " + elementName);
 		}
-		
-		private Map<String, By> step7ElementMap() {
-	        Map<String, By> map = new HashMap<>();
-	        map.put("Progress bar", verify_step7);
-	        map.put("Heading", headingText);
-	        map.put("Description", textBelowHeading);
-	        map.put("Weight input field", inputField1);
-	        map.put("Height input field", inputField2);
-	        map.put("Weight question", question1);
-	        map.put("Height question", question2);
-	        return map;
-	    }
 
-	    // Verify single element
-	    public boolean verifyStep7Element(String elementName) {
-	        By locator = step7ElementMap().get(elementName);
-	        if (locator == null) {
-	            throw new IllegalArgumentException("No locator found for: " + elementName);
-	        }
-	        return commonMethods.isDisplayed(locator); // Uses your existing isDisplayed method
-	    }
-	    public boolean verifyCalenderMonths_step6() {
-	        List<WebElement> monthLabels = driver.findElements(calendarWithMonths);
+		return commonMethods.isDisplayed(locator);
+	}
 
-	        if (monthLabels.size() != 2) {
-	            return false;
-	        }
+	private Map<String, By> step7ElementMap() {
+		Map<String, By> map = new HashMap<>();
+		map.put("Progress bar", verify_step7);
+		map.put("Heading", headingText);
+		map.put("Description", textBelowHeading);
+		map.put("Weight input field", inputField1);
+		map.put("Height input field", inputField2);
+		map.put("Weight question", question1);
+		map.put("Height question", question2);
+		return map;
+	}
 
-	        return monthLabels.get(0).isDisplayed() && monthLabels.get(1).isDisplayed();
-	    }
-	    public String getPhaseBeforeDateChange() {
-	        return commonMethods.getText(phase_Details_DayCount);
-	    }
-	    public void changeDateOnCalendar() {
-	        commonMethods.click(selectDatesoncalender);
-	    }
-	    public String getPhaseAfterDateChange() {
-	        return commonMethods.getText(phase_Details_DayCount);
-	    }
-	    public int getExpectedPeriodDatesCount() {
-	        return commonMethods.getElementsCount(nextExpectedPeriodDates);
-	    }
-	   
-	    
-	    }
-		
+	public boolean verifyStep7Element(String elementName) {
+		By locator = step7ElementMap().get(elementName);
+		if (locator == null) {
+			throw new IllegalArgumentException("No locator found for: " + elementName);
+		}
+		return commonMethods.isDisplayed(locator); // Uses your existing isDisplayed method
+	}
 
+	public boolean verifyCalenderMonths_step6() {
+		List<WebElement> monthLabels = driver.findElements(calendarWithMonths);
+
+		if (monthLabels.size() != 2) {
+			return false;
+		}
+
+		return monthLabels.get(0).isDisplayed() && monthLabels.get(1).isDisplayed();
+	}
+
+	public String getPhaseBeforeDateChange() {
+		return commonMethods.getText(phase_Details_DayCount);
+	}
+
+	public void changeDateOnCalendar() {
+		commonMethods.click(selectDatesoncalender);
+	}
+
+	public String getPhaseAfterDateChange() {
+		return commonMethods.getText(phase_Details_DayCount);
+	}
+
+	public int getExpectedPeriodDatesCount() {
+		return commonMethods.getElementsCount(nextExpectedPeriodDates);
+	}
+
+	private static final Map<String, String> expectedPhaseNotesStep6 = Map.of("Menstrual",
+			"Energy dips, so focus on rest, hydration, and iron-rich foods (spinach, lentils). Gentle movement like yoga and walking can ease cramps. As water retention drops, you may notice a 'whoosh' effect on the scale!",
+
+			"Follicular",
+			"Your energy is rising, metabolism is in high gear, and carbs are processed efficiently—perfect for strength training and intense workouts. Focus on lean proteins, fiber-rich carbs, and healthy fats for muscle recovery!",
+
+			"Ovulation",
+			"Your strength and confidence peak—go for your heaviest lifts or fastest runs! Post-ovulation, your body may store carbs more easily, so shift to fiber-rich foods and healthy fats for sustained energy.",
+
+			"Luteal",
+			"Your metabolism is burning extra calories, but cravings spike! Balance mood and hunger with magnesium-rich foods (dark chocolate, nuts) and complex carbs. Opt for moderate workouts like Pilates or steady-state cardio to reduce stress.");
+
+	public String getExpectPhaseText() {
+		String phaseText = commonMethods.getText(phase_Details_DayCount);
+		String onlyPhase = phaseText.split(" ")[0];
+		return expectedPhaseNotesStep6.get(onlyPhase);
+	}
+
+	public String getActualPhaseText() {
+		return commonMethods.getText(current_PhaseGuidance);
+	}
+
+}

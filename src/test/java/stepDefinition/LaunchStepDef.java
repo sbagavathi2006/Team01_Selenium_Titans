@@ -1,6 +1,5 @@
 package stepDefinition;
 
-
 import static org.testng.Assert.assertTrue;
 
 import java.util.List;
@@ -17,158 +16,126 @@ import pageObjects.LaunchPage;
 
 public class LaunchStepDef {
 
-    private WebDriver driver;
-    private LaunchPage launchPage;
-     
+	private WebDriver driver;
+	private LaunchPage launchPage;
 
+	public LaunchStepDef(TestContextSetup Context) {
+		this.driver = Context.getDriver();
+		this.launchPage = Context.launchPage();
+	}
 
-    public LaunchStepDef(TestContextSetup Context) {
-        this.driver = Context.getDriver();
-        this.launchPage = Context.launchPage();
-    }
+	@Given("User is on the browser")
+	public void user_is_on_the_browser() {
+		assertTrue(driver != null, "Driver is not initialized");
+	}
 
-    // ----------------------------
-    // Background Steps
-    // ----------------------------
+	@When("User enters the Her Balance application URL")
+	public void user_enters_application_url() {
+		assertTrue(driver.getCurrentUrl().contains("herbalance"), "User is not on Her Balance site");
+	}
 
-    @Given("User is on the browser")
-    public void user_is_on_the_browser() {
-        assertTrue(driver != null, "Driver is not initialized");
-    }
+	@Then("{string} should be visiblee")
+	public void element_should_be_visiblee(String element) {
 
-    @When("User enters the Her Balance application URL")
-    public void user_enters_application_url() {
-        assertTrue(driver.getCurrentUrl().contains("herbalance"),
-                "User is not on Her Balance site");
-    }
+		switch (element) {
+		case "Login button":
+			assertTrue(launchPage.isLoginButtonVisible());
+			break;
+		case "Sign Up button":
+			assertTrue(launchPage.isSignUpButtonVisible());
+			break;
+		case "Get Started Now button":
+			assertTrue(launchPage.isGetStartedNowButtonVisible());
+			break;
+		case "Start Your Personalized Journey button":
+			assertTrue(launchPage.isStartPersonalizedJourneyButtonVisible());
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown element: " + element);
+		}
+	}
 
-    // ----------------------------
-    // UI Validation
-    // ----------------------------
+	@Then("Cycle phase cards should be displayed")
+	public void cycle_phase_cards_should_be_displayed(DataTable dataTable) {
 
-    @Then("{string} should be visiblee")
-    public void element_should_be_visiblee(String element) {
+		List<String> phases = dataTable.asList();
 
-        switch (element) {
-            case "Login button":
-                assertTrue(launchPage.isLoginButtonVisible());
-                break;
-            case "Sign Up button":
-                assertTrue(launchPage.isSignUpButtonVisible());
-                break;
-            case "Get Started Now button":
-                assertTrue(launchPage.isGetStartedNowButtonVisible());
-                break;
-            case "Start Your Personalized Journey button":
-                assertTrue(launchPage.isStartPersonalizedJourneyButtonVisible());
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown element: " + element);
-        }
-    }
+		for (String phase : phases) {
+			assertTrue(launchPage.isCyclePhaseVisible(phase), phase + " is not visible");
+		}
+	}
 
-    @Then("Cycle phase cards should be displayed")
-    public void cycle_phase_cards_should_be_displayed(DataTable dataTable) {
+	@Then("Background color should be light purple")
+	public void background_color_should_be_light_purple() {
+		assertTrue(launchPage.getBackgroundColor() != null, "Background color not applied");
+	}
 
-        List<String> phases = dataTable.asList();
+	@Then("Text content should be readable")
+	public void text_content_should_be_readable() {
+		assertTrue(launchPage.isTextContentPresent(), "Text content not present");
+	}
 
-        for (String phase : phases) {
-            assertTrue(
-                launchPage.isCyclePhaseVisible(phase),
-                phase + " is not visible"
-            );
-        }
-    }
+	@Given("User is on Her Balance home page")
+	public void user_is_on_home_page() {
+		assertTrue(driver.getCurrentUrl().contains("/home"), "User is not on home page");
+	}
 
-    @Then("Background color should be light purple")
-    public void background_color_should_be_light_purple() {
-        assertTrue(
-            launchPage.getBackgroundColor() != null,
-            "Background color not applied"
-        );
-    }
+	@When("User clicks on Login button")
+	public void user_clicks_login() {
+		launchPage.clickLogin();
+	}
 
-    @Then("Text content should be readable")
-    public void text_content_should_be_readable() {
-        assertTrue(
-            launchPage.isTextContentPresent(),
-            "Text content not present"
-        );
-    }
+	@When("User clicks on Sign Up button")
+	public void user_clicks_sign_up() {
+		launchPage.clickSignUp();
+	}
 
-    // ----------------------------
-    // Navigation
-    // ----------------------------
+	@When("User clicks on Get Started Now button")
+	public void user_clicks_get_started_now() {
+		launchPage.clickGetStartedNow();
+	}
 
-    @Given("User is on Her Balance home page")
-    public void user_is_on_home_page() {
-        assertTrue(driver.getCurrentUrl().contains("/home"),
-                "User is not on home page");
-    }
+	@When("User clicks on Start Your Personalized Journey button")
+	public void user_clicks_start_journey() {
+		launchPage.clickStartPersonalizedJourney();
+	}
 
-    @When("User clicks on Login button")
-    public void user_clicks_login() {
-        launchPage.clickLogin();
-    }
+	@Then("User should be navigated to authentication page with Login tab selected")
+	public void navigated_to_login_tab() {
+		assertTrue(driver.getCurrentUrl().contains("auth"), "Auth page not opened");
+	}
 
-    @When("User clicks on Sign Up button")
-    public void user_clicks_sign_up() {
-        launchPage.clickSignUp();
-    }
+	@Then("User should be navigated to authentication page with Sign Up tab selected")
+	public void navigated_to_sign_up_tab() {
+		assertTrue(driver.getCurrentUrl().contains("auth"), "Auth page not opened");
+	}
 
-    @When("User clicks on Get Started Now button")
-    public void user_clicks_get_started_now() {
-        launchPage.clickGetStartedNow();
-    }
+	@Then("Details about the {string} and its features should be displayed")
+	public void details_about_the_app_should_be_displayed(String section) {
+		switch (section) {
+		case "Cycle Tracking App":
+			Assert.assertTrue(launchPage.isCycleTrackingAppVisible(), section + " is not visible");
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown section: " + section);
+		}
+	}
 
-    @When("User clicks on Start Your Personalized Journey button")
-    public void user_clicks_start_journey() {
-        launchPage.clickStartPersonalizedJourney();
-    }
+	@Then("Images in {string} section should be displayed")
+	public void images_in_section_should_be_displayed(String section) {
+		switch (section) {
+		case "Sync your weight loss journey":
+			Assert.assertTrue(launchPage.isSyncWeightLossImagesVisible(), section + " images are not visible");
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown section: " + section);
+		}
+	}
 
-    @Then("User should be navigated to authentication page with Login tab selected")
-    public void navigated_to_login_tab() {
-        assertTrue(driver.getCurrentUrl().contains("auth"),
-                "Auth page not opened");
-    }
+	@Then("Display information about hormonal shifts and metabolism during the menstrual cycle")
+	public void display_information_about_hormonal_shifts() {
+		Assert.assertTrue(launchPage.isEmpowerTextVisible(),
+				"Informational text under Empower weight loss section is not visible");
+	}
 
-    @Then("User should be navigated to authentication page with Sign Up tab selected")
-    public void navigated_to_sign_up_tab() {
-        assertTrue(driver.getCurrentUrl().contains("auth"),
-                "Auth page not opened");
-    }
-    
-    @Then("Details about the {string} and its features should be displayed")
-    public void details_about_the_app_should_be_displayed(String section) {
-        switch (section) {
-            case "Cycle Tracking App":
-                Assert.assertTrue(launchPage.isCycleTrackingAppVisible(), section + " is not visible");
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown section: " + section);
-        }
-    }
-
-    @Then("Images in {string} section should be displayed")
-    public void images_in_section_should_be_displayed(String section) {
-        switch (section) {
-            case "Sync your weight loss journey":
-                Assert.assertTrue(launchPage.isSyncWeightLossImagesVisible(), section + " images are not visible");
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown section: " + section);
-        }
-    }
-
-    @Then("Display information about hormonal shifts and metabolism during the menstrual cycle")
-    public void display_information_about_hormonal_shifts() {
-        Assert.assertTrue(launchPage.isEmpowerTextVisible(), "Informational text under Empower weight loss section is not visible");
-    }
-
-   
-    
 }
-
-
-
-

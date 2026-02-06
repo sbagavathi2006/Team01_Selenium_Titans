@@ -14,7 +14,6 @@ import io.cucumber.testng.CucumberOptions;
 		monochrome = false,
 		dryRun=true,
 
-
 	//	tags = "@OnBoarding1 or @OnBoarding3 or @OnBoarding3Fn or @OnBoarding4",
 
 		features = {"src/test/resources/features/"},

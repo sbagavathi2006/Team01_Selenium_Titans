@@ -57,6 +57,30 @@ Background:
   When User clicks back button in step 7
   Then User should be redirected to Step 6
   
+
+  Scenario: Presence of BMI bar labels
+  When User enters valid height and weight
+  Then BMI bar labels should display "Underweight", "Normal", "Overweight", "Obese" in the correct order
+ 
+  
+  Scenario: BMI UI elements visibility after entering height and weight
+  When User enters valid height and weight
+  Then the following BMI UI elements should be displayed:
+  | uiElement          |
+  | BMI bar            |
+  | BMI calculations   |
+  | PhaseNote section  |
+  | Feedback section   |
+  
+ 
+  Scenario: BMI is displayed based on height and weight
+  When User enters valid height and weight for BMIcalculations
+  Then BMI should be calculated correctly and displayed
+  
+   @test
+  Scenario: Phase note changes based on current phase
+  When User enters valid height and weight
+  Then Current Phase Note text should match the displayed phase
  
   Scenario Outline: Verify Step 8 UI elements are displayed
   When User clicks continue after entering valid weight and height

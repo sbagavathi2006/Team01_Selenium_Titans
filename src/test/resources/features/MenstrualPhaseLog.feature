@@ -49,7 +49,6 @@ Feature: Menstrual Cycle Tracker UI Verification
       | Current phase date should be displayed in "Started MMM dd" format                                |
       | "Current Phase" subsection is highlighted based on cycle data entered during onboarding process  |
 
-  
   @RecommendedActivities
   Scenario Outline: Recommended Activities UI Verification
     Then <stepForRecommendedActivites>
@@ -58,5 +57,10 @@ Feature: Menstrual Cycle Tracker UI Verification
       | stepForRecommendedActivites                                           |
       | Recommended Activities should be displayed                            |
       | Recommended Activities should be displayed as per the "Current Phase" |
-  
-    
+@NutritionTips
+  Scenario Outline: Nutrition Tips UI Verification
+    Then <stepsUnderNutritionTips>
+    Examples: 
+      | stepsUnderNutritionTips                                        |
+      | "Nutrtion Tips" is displayed                                   |
+      | Nutrtional Tips should be displayed as per the "Current Phase" |

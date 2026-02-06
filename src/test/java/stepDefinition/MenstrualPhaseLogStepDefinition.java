@@ -37,16 +37,8 @@ public class MenstrualPhaseLogStepDefinition {
 	
 	@Given("User clicks Activity Insights button after logged in")
 	public void user_clicks_activity_insights_button_after_logged_in() {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		WebElement email = wait
-				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='email']")));
-		email.sendKeys("User1@gmail.com");
-		WebElement password = wait
-				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='password']")));
-		password.sendKeys("User1@987&");
-		WebElement loginBtn = wait
-				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type='submit']")));
-		loginBtn.click();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));	
+		commonMethods.loginFromOnBoarding();
 		wait.until(ExpectedConditions.titleContains("HerBalance"));
 		commonMethods.waitForPopupToDisappear();
 		menstrualPhaseLog.waitforActiviyInsightsButton();
@@ -197,44 +189,42 @@ public class MenstrualPhaseLogStepDefinition {
 
 	@Then("All phase start dates should be displayed in {string} format")
 	public void all_phase_start_dates_should_be_displayed_in_format(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		LoggerLoad.info("All phase start dates are displayed");
 	}
 
 	@Then("Current phase date should be displayed in {string} format")
 	public void current_phase_date_should_be_displayed_in_format(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		Assert.assertTrue(menstrualPhaseLog.getCurrentPhaseStartedDate());
+		LoggerLoad.info("Current Phase started date is :" +menstrualPhaseLog.getCurrentPhaseStartedDate());
 	}
 
 	@Then("{string} subsection is highlighted based on cycle data entered during onboarding process")
 	public void subsection_is_highlighted_based_on_cycle_data_entered_during_onboarding_process(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		Assert.assertTrue(menstrualPhaseLog.isCurrentPhaseHighlighted());
+		LoggerLoad.info("Subsection is highlighted on UI ");
 	}
 
 	@Then("Recommended Activities should be displayed")
 	public void recommended_activities_should_be_displayed() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		Assert.assertTrue(menstrualPhaseLog.isRecommendedActivitiesDisplayed());
+		LoggerLoad.info("Recommended Activities is displayed on UI ");
 	}
 
 	@Then("Recommended Activities should be displayed as per the {string}")
 	public void recommended_activities_should_be_displayed_as_per_the(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		menstrualPhaseLog.VerifyRecommendedActivitiesText();	
 	}
 
 	@Then("{string} is displayed")
 	public void is_displayed(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		menstrualPhaseLog.isNutritionTipsDisplayed();
+		LoggerLoad.info("Nutrition Tips is displayed on UI ");
 	}
 
 	@Then("Nutrtional Tips should be displayed as per the {string}")
 	public void nutrtional_tips_should_be_displayed_as_per_the(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		menstrualPhaseLog.VerifyNutritionTipsText();
+		LoggerLoad.info("Nutrition Tips Text is displayed on UI ");
 	}
 
 

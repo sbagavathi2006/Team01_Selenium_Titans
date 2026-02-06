@@ -38,15 +38,7 @@ public class WorkoutStepDefintion {
 	@Given("User logged into the application")
 	public void user_logged_into_the_application() {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		WebElement email = wait
-				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='email']")));
-		email.sendKeys("testuser001@gmail.com");
-		WebElement password = wait
-				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='password']")));
-		password.sendKeys("testuesr001@");
-		WebElement loginBtn = wait
-				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type='submit']")));
-		loginBtn.click();
+		commonMethods.loginFromOnBoarding();
 		wait.until(ExpectedConditions.titleContains("HerBalance"));
 		commonMethods.waitForPopupToDisappear();
 
